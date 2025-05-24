@@ -20,3 +20,8 @@ include .makes/init.mk
 include .makes/this.mk
 include .makes/that.mk
 ```
+
+
+## Example Makefile
+
+The `Makefile` in this repo is a template for new repos.

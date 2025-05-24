@@ -5,6 +5,8 @@ MAKES-INIT := true
 MAKE-ROOT := $(shell pwd -P)
 MAKES := $(MAKE-ROOT)/.makes
 
+include $(MAKES)/env.mk
+
 
 default::
 
