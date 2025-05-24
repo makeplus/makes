@@ -10,13 +10,13 @@ In your (GNU 3.81+) Makefile start with:
 
 ```
 # You can commit the `.mk` files or clone them.
-$(shell [ -d .make ] || \
-  (git clone -q https://github.com/makeplus/makes .make))
+$(shell [ -d .makes ] || \
+  (git clone -q https://github.com/makeplus/makes .makes))
 
 # Include `init.mk` first:
-include .make/init.mk
+include .makes/init.mk
 
 # Then include any others you need:
-include .make/this.mk
-include .make/that.mk
+include .makes/this.mk
+include .makes/that.mk
 ```
