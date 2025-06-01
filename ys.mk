@@ -1,7 +1,7 @@
-ifndef MAKES-INIT
+ifndef MAKES
 $(error Please 'include .makes/init.mk')
 endif
-ifndef MAKES-LOCAL
+ifndef LOCAL-ROOT
 include $(MAKES)/local.mk
 endif
 

@@ -1,5 +1,3 @@
-MAKES-LOCAL := true
-
 # This system is intended only to be used in a Git repository.
 GIT-DIR := $(shell \
   dir=$$(git rev-parse --git-common-dir 2>/dev/null); \

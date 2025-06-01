@@ -1,3 +1,10 @@
+ifndef MAKES
+$(error Please 'include .makes/init.mk')
+endif
+ifndef LOCAL-ROOT
+include $(MAKES)/local.mk
+endif
+
 PYTHON := $(shell command -v python3)
 PYTHON ?= $(shell command -v python)
 ifndef PYTHON

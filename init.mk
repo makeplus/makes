@@ -1,7 +1,6 @@
 # Using bash to run commands gives us a stable foundation to build upon.
 SHELL := bash
 
-MAKES-INIT := true
 MAKE-ROOT := $(shell pwd -P)
 MAKES := $(MAKE-ROOT)/.makes
 
@@ -9,6 +8,9 @@ include $(MAKES)/env.mk
 
 
 default::
+
+bashrc::
+	@echo export PATH=$$PATH
 
 clean::
 
