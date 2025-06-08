@@ -28,5 +28,21 @@ distclean:: realclean
 help::
 	@eval 'echo -e "$$HELP"'
 
+_makes-shell:
+	@( \
+	  cd $(MAKES) && \
+	  bash --rcfile \
+	  <(cat ~/.bashrc; echo 'PS1="(makes) \w > "') \
+	)
+
+_makes-edit:
+	vim $(MAKES)
+
+_makes-status:
+	git -C $(MAKES) status --ignored
+
+_makes-pull _makes-push:
+	git -C $(MAKES) $(@:_makes-%:%)
+
 
 .PHONY: default clean realclean distclean
