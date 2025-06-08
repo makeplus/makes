@@ -3,7 +3,9 @@ ifeq (/bin/sh,$(SHELL))
 SHELL := bash
 endif
 
+# Deprecate MAKE-ROOT
 MAKE-ROOT := $(shell pwd -P)
+ROOT ?= $(shell pwd -P)
 
 MAKES := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
@@ -30,3 +32,7 @@ include $(MAKES)/makes.mk
 
 
 .PHONY: default clean realclean distclean
+
+ifndef NO-PHONY-TEST
+.PHONY: test
+endif

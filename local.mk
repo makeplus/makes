@@ -16,6 +16,10 @@ LOCAL-ROOT := $(GIT-DIR)/.local
 LOCAL-PREFIX := $(LOCAL-ROOT)
 LOCAL-CACHE  := $(LOCAL-ROOT)/cache
 LOCAL-TMPDIR := $(LOCAL-ROOT)/tmp
+LOCAL-BIN    := $(LOCAL-ROOT)/bin
+LOCAL-LIB    := $(LOCAL-ROOT)/lib
+LOCAL-MAN    := $(LOCAL-ROOT)/man
+LOCAL-SHARE  := $(LOCAL-ROOT)/share
 
 ifeq (,$(wildcard $(LOCAL-CACHE)))
 $(shell mkdir -p $(LOCAL-CACHE))
@@ -24,6 +28,6 @@ ifeq (,$(wildcard $(LOCAL-TMPDIR)))
 $(shell mkdir -p $(LOCAL-TMPDIR))
 endif
 
-override PATH := $(LOCAL-PREFIX)/bin:$(PATH)
+override PATH := $(LOCAL-BIN):$(PATH)
 
 export PATH LOCAL-PREFIX LOCAL-TMPDIR
