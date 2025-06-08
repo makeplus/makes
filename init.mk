@@ -16,8 +16,8 @@ include $(MAKES)/help.mk
 
 default::
 
-bashrc::
-	@echo export PATH=$$PATH
+help::
+	@eval 'echo -e "$$HELP"'
 
 clean::
 
@@ -25,24 +25,8 @@ realclean:: clean
 
 distclean:: realclean
 
-help::
-	@eval 'echo -e "$$HELP"'
 
-_makes-shell:
-	@( \
-	  cd $(MAKES) && \
-	  bash --rcfile \
-	  <(cat ~/.bashrc; echo 'PS1="(makes) \w > "') \
-	)
-
-_makes-edit:
-	vim $(MAKES)
-
-_makes-status:
-	git -C $(MAKES) status --ignored
-
-_makes-pull _makes-push:
-	git -C $(MAKES) $(@:_makes-%:%)
+include $(MAKES)/makes.mk
 
 
 .PHONY: default clean realclean distclean
