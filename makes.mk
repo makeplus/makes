@@ -12,12 +12,15 @@ _makes-git:
 	git -C $(MAKES) $(args)
 
 _makes-gll:
-	git log --graph --decorate --pretty=oneline --abbrev-commit $(args)
+	git -C $(MAKES) log --graph --decorate --pretty=oneline --abbrev-commit $(args)
+
+_makes-head:
+	git -C $(MAKES) rev-parse HEAD
 
 _makes-status:
 	git -C $(MAKES) status --ignored $(args)
 
-_makes-diff _makes-fetch _makes-pull:
+_makes-branch _makes-diff _makes-fetch _makes-pull:
 	git -C $(MAKES) $(@:_makes-%=%) $(args)
 
 _makes-add:
