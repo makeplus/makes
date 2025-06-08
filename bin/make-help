@@ -7,7 +7,7 @@ sub main {
         die "Can't open '$file'";
     my $text = do { local $/; <$fh> };
 
-    my @list = ($text =~ /\n\n((?:#.*\n)*)([-\w]+)::?/g);
+    my @list = ($text =~ /\n\n((?:#.*\n)*)([a-zA-Z0-9][-\w]*)::?/g);
 
     my @rules;
     my $max = 0;
@@ -23,9 +23,9 @@ sub main {
             map {
                 my ($rule, $desc) = @$_;
                 if ($desc) {
-                    $desc =~ s/^#+ /'\\n' . ' ' x ($max + 2)/meg;
+                    $desc =~ s/^#+ /'\\n' . ' ' x ($max + 5)/meg;
                     $desc =~ s/^\\n +//;
-                    sprintf "  %-${max}s  %s", $rule, $desc;
+                    sprintf "  %-${max}s - %s", $rule, $desc;
                 }
                 else {
                     sprintf "  %s", $rule;
@@ -36,6 +36,7 @@ sub main {
 
     print <<"...";
 Available 'make' targets:\\n
+\\n
 $rules
 
 ...
