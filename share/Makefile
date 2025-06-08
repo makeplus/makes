@@ -4,19 +4,12 @@
 
 M := .git/.makes
 $(shell [ -d $M ] || (git clone -q https://github.com/makeplus/makes $M))
-include .makes/init.mk
-include $(MAKES)/go.mk
-include $(MAKES)/python.mk
-include $(MAKES)/rust.mk
-include $(MAKES)/ys.mk
+include $M/init.mk
+include $M/go.mk
+include $M/python.mk
+include $M/rust.mk
+include $M/ys.mk
 
 
+# Print Makefile targets summary
 default:: help
-
-help: _makes-help
-
-install: build
-
-# Go:
-build test: $(CARGO)
-	cargo $@
