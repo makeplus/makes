@@ -6,7 +6,7 @@ _makes-shell:
 	)
 
 _makes-edit:
-	vim $(MAKES)/$(file)
+	$${EDITOR:-vim} $(MAKES)/$(file)
 
 _makes-git:
 	git -C $(MAKES) $A
@@ -35,4 +35,3 @@ _makes-push:
 
 _makes-env:
 	@echo export PATH=$$PATH
-
