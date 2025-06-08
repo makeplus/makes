@@ -11,11 +11,20 @@ _makes-edit:
 _makes-git:
 	git -C $(MAKES) $(args)
 
+_makes-gll:
+	git log --graph --decorate --pretty=oneline --abbrev-commit $(args)
+
 _makes-status:
 	git -C $(MAKES) status --ignored $(args)
 
-_makes-fetch _makes-pull:
+_makes-diff _makes-fetch _makes-pull:
 	git -C $(MAKES) $(@:_makes-%=%) $(args)
+
+_makes-add:
+	git -C $(MAKES) add -A .
+
+_makes-commit:
+	git -C $(MAKES) commit -av $(args)
 
 _makes-push:
 	git -C $(MAKES) push git@github.com:makeplus/makes $(args) && \
