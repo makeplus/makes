@@ -1,0 +1,44 @@
+#!/usr/bin/env perl
+
+sub main {
+    my ($file) = @_;
+
+    open my $fh, '<', $file or
+        die "Can't open '$file'";
+    my $text = do { local $/; <$fh> };
+
+    my @list = ($text =~ /\n\n((?:#.*\n)*)([-\w]+)::?/g);
+
+    my @rules;
+    my $max = 0;
+
+    for (my $i=0; $i <= $#list; $i += 2) {
+        my ($desc, $rule) = @list[$i, $i + 1];
+        $max = length($rule) if length($rule) > $max;
+        push @rules, [$rule, $desc];
+    }
+
+    my $rules =
+        join "\\n",
+            map {
+                my ($rule, $desc) = @$_;
+                if ($desc) {
+                    $desc =~ s/^#+ /'\\n' . ' ' x ($max + 2)/meg;
+                    $desc =~ s/^\\n +//;
+                    sprintf "  %-${max}s  %s", $rule, $desc;
+                }
+                else {
+                    sprintf "  %s", $rule;
+                }
+            } @rules;
+
+    $rules =~ s/^ //;
+
+    print <<"...";
+Available 'make' targets:\\n
+$rules
+
+...
+}
+
+main @ARGV;

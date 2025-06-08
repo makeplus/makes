@@ -1,10 +1,17 @@
 # Using bash to run commands gives us a stable foundation to build upon.
+ifeq (/bin/sh,$(SHELL))
 SHELL := bash
+endif
 
 MAKE-ROOT := $(shell pwd -P)
-MAKES := $(MAKE-ROOT)/.makes
+
+MAKES := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
+MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
+# Note: abspath here removes the trailing /
+MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
 include $(MAKES)/env.mk
+include $(MAKES)/help.mk
 
 
 default::
@@ -18,9 +25,8 @@ realclean:: clean
 
 distclean:: realclean
 
-export HELP
-_makes-help:
-	@echo "$$HELP"
+help::
+	@eval 'echo -e "$$HELP"'
 
 
 .PHONY: default clean realclean distclean

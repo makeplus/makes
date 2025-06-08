@@ -2,18 +2,13 @@
 # This is an example Makefile using makes.
 #-------------------------------------------------------------------------------
 
-$(shell [ -d .makes ] || \
-  (git clone -q https://github.com/makeplus/makes .makes))
+M := .git/.makes
+$(shell [ -d $M ] || (git clone -q https://github.com/makeplus/makes $M))
 include .makes/init.mk
+include $(MAKES)/go.mk
+include $(MAKES)/python.mk
 include $(MAKES)/rust.mk
-
-define HELP
-Available targets:
-  install      - Install to $$PREFIX/bin/
-  test         - Run tests
-  clean        - Clean build artifacts
-  help         - Show this help message
-endef
+include $(MAKES)/ys.mk
 
 
 default:: help
@@ -22,5 +17,6 @@ help: _makes-help
 
 install: build
 
+# Go:
 build test: $(CARGO)
 	cargo $@
