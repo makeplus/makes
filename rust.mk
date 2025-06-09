@@ -24,7 +24,7 @@ CARGO-CMDS := \
   test \
 
 
-$(CARGO):
+$(CARGO)::
 	@echo "Installing '$@'"
 	curl --proto '=https' --tlsv1.2 -sSf \
 	  https://sh.rustup.rs | \
@@ -42,4 +42,3 @@ $(CARGO):
 
 distclean::
 	$(RM) -r $(CARGO_HOME) $(RUSTUP_HOME)
-

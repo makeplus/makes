@@ -1,3 +1,5 @@
+_:
+
 _makes-shell:
 	@( \
 	  cd $(MAKES) && \

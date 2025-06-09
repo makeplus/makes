@@ -17,6 +17,7 @@ LOCAL-PREFIX := $(LOCAL-ROOT)
 LOCAL-CACHE  := $(LOCAL-ROOT)/cache
 LOCAL-TMPDIR := $(LOCAL-ROOT)/tmp
 LOCAL-BIN    := $(LOCAL-ROOT)/bin
+_ := $(shell mkdir -p $(LOCAL-BIN))
 LOCAL-LIB    := $(LOCAL-ROOT)/lib
 LOCAL-MAN    := $(LOCAL-ROOT)/man
 LOCAL-SHARE  := $(LOCAL-ROOT)/share

@@ -3,8 +3,6 @@ ifeq (/bin/sh,$(SHELL))
 SHELL := bash
 endif
 
-# Deprecate MAKE-ROOT
-MAKE-ROOT := $(shell pwd -P)
 ROOT ?= $(shell pwd -P)
 
 MAKES := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
@@ -13,25 +11,19 @@ MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
 include $(MAKES)/env.mk
-include $(MAKES)/help.mk
 
 
+ifeq (,$(findstring no-default ,$(MAKES-RULES) ))
 default::
+endif
 
+ifneq (,$(findstring help , $(MAKES-RULES) ))
+include $(MAKES)/help.mk
 help::
 	@eval 'echo -e "$$HELP"'
-
-clean::
-
-realclean:: clean
-
-distclean:: realclean
-
+endif
 
 include $(MAKES)/makes.mk
-
-
-.PHONY: default clean realclean distclean
 
 ifndef NO-PHONY-TEST
 .PHONY: test
