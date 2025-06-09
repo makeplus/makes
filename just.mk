@@ -26,7 +26,7 @@ JUST-CMDS := \
   test \
   test-isolated \
 
-$(JUST):: $(LOCAL-CACHE)/$(JUST-TARBALL)
+$(JUST): $(LOCAL-CACHE)/$(JUST-TARBALL)
 	tar -C $(LOCAL-BIN) -xf $< just
 	[[ -e $@ ]]
 	touch $@

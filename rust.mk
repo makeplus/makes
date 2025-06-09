@@ -13,7 +13,7 @@ CARGO-BIN := $(CARGO_HOME)/bin
 override PATH := $(CARGO-BIN):$(PATH)
 export PATH
 
-CARGO := $(CARGO-BIN)/cargo
+CARGO := $(CARGO-BIN)/rustup
 RUSTUP := $(CARGO-BIN)/rustup
 
 CARGO-CMDS := \
@@ -24,7 +24,7 @@ CARGO-CMDS := \
   test \
 
 
-$(CARGO)::
+$(CARGO):
 	@echo "Installing '$@'"
 	curl --proto '=https' --tlsv1.2 -sSf \
 	  https://sh.rustup.rs | \

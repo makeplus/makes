@@ -15,12 +15,17 @@ LOCAL-ROOT := $(GIT-DIR)/.local
 # We cache under .git/0/ and use .git/0/tmp for /tmp/.
 LOCAL-PREFIX := $(LOCAL-ROOT)
 LOCAL-CACHE  := $(LOCAL-ROOT)/cache
+_ := $(shell mkdir -p $(LOCAL-CACHE))
 LOCAL-TMPDIR := $(LOCAL-ROOT)/tmp
+_ := $(shell mkdir -p $(LOCAL-TMPDIR))
 LOCAL-BIN    := $(LOCAL-ROOT)/bin
 _ := $(shell mkdir -p $(LOCAL-BIN))
 LOCAL-LIB    := $(LOCAL-ROOT)/lib
+_ := $(shell mkdir -p $(LOCAL-LIB))
 LOCAL-MAN    := $(LOCAL-ROOT)/man
+_ := $(shell mkdir -p $(LOCAL-MAN))
 LOCAL-SHARE  := $(LOCAL-ROOT)/share
+_ := $(shell mkdir -p $(LOCAL-SHARE))
 
 ifeq (,$(wildcard $(LOCAL-CACHE)))
 $(shell mkdir -p $(LOCAL-CACHE))
