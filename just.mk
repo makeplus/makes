@@ -33,5 +33,5 @@ $(JUST): $(LOCAL-CACHE)/$(JUST-TARBALL)
 	@echo
 
 $(LOCAL-CACHE)/$(JUST-TARBALL):
-	@echo "Installing 'go' locally"
+	@echo "Installing 'just' locally"
 	curl -Ls $(JUST-DOWNLOAD) > $@

@@ -6,4 +6,5 @@ include $M/go.mk
 include $M/just.mk
 include $M/python.mk
 include $M/rust.mk
+include $M/yq.mk
 include $M/ys.mk

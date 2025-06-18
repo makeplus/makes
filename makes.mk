@@ -4,7 +4,7 @@ _makes-shell:
 	@( \
 	  cd $(MAKES) && \
 	  bash --rcfile \
-	  <(cat ~/.bashrc; echo 'PS1="(makes) \w > "') \
+	  <(cat ~/.bashrc; echo 'PS1="(makes) \w $$ "') \
 	)
 
 _makes-edit:
