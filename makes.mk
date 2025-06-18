@@ -7,6 +7,12 @@ _makes-shell:
 	  <(cat ~/.bashrc; echo 'PS1="(makes) \w $$ "') \
 	)
 
+_makes-bash:
+	@( \
+	  bash --rcfile \
+	  <(cat ~/.bashrc; echo 'PS1="(makes) \w $$ "') \
+	)
+
 _makes-edit:
 	$${EDITOR:-vim} $(MAKES)/$(file)
 

@@ -1,9 +1,5 @@
-ifndef MAKES
-$(error Please 'include .makes/init.mk')
-endif
-ifndef LOCAL-ROOT
-include $(MAKES)/local.mk
-endif
+$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(eval $(call include-local))
 
 export CARGO_HOME := $(LOCAL-ROOT)/cargo
 export RUSTUP_HOME := $(LOCAL-ROOT)/rustup

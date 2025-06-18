@@ -1,9 +1,5 @@
-ifndef MAKES
-$(error Please 'include .makes/init.mk')
-endif
-ifndef LOCAL-ROOT
-include $(MAKES)/local.mk
-endif
+$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(eval $(call include-local))
 
 JUST-VERSION ?= 1.40.0
 

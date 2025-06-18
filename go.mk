@@ -1,9 +1,5 @@
-ifndef MAKES
-$(error Please 'include .makes/init.mk')
-endif
-ifndef LOCAL-ROOT
-include $(MAKES)/local.mk
-endif
+$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(eval $(call include-local))
 
 GO-VERSION ?= 1.24.3
 GO-TARBALL := go$(GO-VERSION).linux-amd64.tar.gz

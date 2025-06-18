@@ -28,3 +28,9 @@ include $(MAKES)/makes.mk
 ifndef NO-PHONY-TEST
 .PHONY: test
 endif
+
+define include-local
+ifndef LOCAL-ROOT
+include $(MAKES)/local.mk
+endif
+endef
