@@ -1,6 +1,6 @@
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 
-LOCAL-ROOT := $(dir $(MAKES))/.local
+LOCAL-ROOT := $(dir $(MAKES)).local
 
 # We intend everything written to disk to be inside this repo by default.
 # We cache under .git/0/ and use .git/0/tmp for /tmp/.
