@@ -11,7 +11,7 @@ In your (GNU 3.81+) Makefile start with:
 ```
 # You can commit the `.mk` files or clone them.
 M := .makes
-$(shell [ -d $M ] || (git clone -q https://github.com/makeplus/makes $M))
+$(shell [ -d $M ] || git clone -q https://github.com/makeplus/makes $M)
 
 # Include `init.mk` first:
 include $M/init.mk
