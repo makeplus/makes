@@ -18,5 +18,5 @@ $(YQ): $(LOCAL-CACHE)/$(YQ-TARBALL)
 	@echo
 
 $(LOCAL-CACHE)/$(YQ-TARBALL):
-	@echo "Installing 'go' locally"
+	@echo "Installing 'yq' locally"
 	curl -Ls $(YQ-DOWNLOAD) > $@
