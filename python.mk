@@ -14,6 +14,5 @@ distclean::
 	$(RM) -r $(PYTHON-VENV)
 
 
-$(PYTHON-VENV):
+$(PYTHON-VENV)::
 	$(PYTHON) -m venv $@
-	$(VENV) && pip install mkdocs-material
