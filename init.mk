@@ -5,22 +5,16 @@ endif
 
 ROOT ?= $(shell pwd -P)
 
+# Note: abspath here removes the trailing / added by dir
 MAKES := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
-# Note: abspath here removes the trailing /
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
 include $(MAKES)/env.mk
 
 
-ifeq (,$(findstring no-default ,$(MAKES-RULES) ))
+ifndef MAKES-NO-RULES
 default::
-endif
-
-ifneq (,$(findstring help , $(MAKES-RULES) ))
-include $(MAKES)/help.mk
-help::
-	@eval 'echo -e "$$HELP"'
 endif
 
 include $(MAKES)/makes.mk

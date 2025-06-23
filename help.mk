@@ -5,3 +5,6 @@ endif
 endif
 
 export HELP
+
+help:
+	@echo "$$HELP"
