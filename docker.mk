@@ -47,6 +47,7 @@ $(DOCKER-RUN-FILE): $(DOCKER-BUILD-FILE)
 	  --workdir $(GIT-REPO-DIR) \
 	  --volume $(GIT-REPO-DIR):$(GIT-REPO-DIR) \
 	  --volume $(DOCKER-BASH-HISTORY):/root/.bash-history \
+	  $(DOCKER-RUN-OPTIONS) \
 	  $(DOCKER-NAME) \
 	  sleep infinity
 
