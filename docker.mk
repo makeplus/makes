@@ -1,6 +1,12 @@
+ifndef DOCKER-LOADED
+DOCKER-LOADED := true
+
 ifneq (,$(wildcard /.dockerenv))
+
 MAKES-IN-DOCKER := true
+
 else
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 include $(MAKES)/git.mk
@@ -58,4 +64,7 @@ $(DOCKER-BUILD-FILE):
 	  $(DOCKER-BUILD-OPTIONS) \
 	  $(DOCKER-CONTEXT)
 	touch $@
+
+endif
+
 endif

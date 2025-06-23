@@ -1,3 +1,6 @@
+ifndef CLOJURE-LOADED
+CLOJURE-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 include $(MAKES)/java.mk
@@ -13,3 +16,5 @@ $(CLOJURE): $(JAVA)
 	@echo "Installing 'clojure' locally"
 	bash <(curl -sL $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
 	touch $@
+
+endif

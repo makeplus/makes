@@ -1,3 +1,6 @@
+ifndef YQ-LOADED
+YQ-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -20,3 +23,5 @@ $(YQ): $(LOCAL-CACHE)/$(YQ-TARBALL)
 $(LOCAL-CACHE)/$(YQ-TARBALL):
 	@echo "Installing 'yq' locally"
 	curl -Ls $(YQ-DOWNLOAD) > $@
+
+endif

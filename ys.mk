@@ -1,3 +1,6 @@
+ifndef YQ-LOADED
+YS-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -14,3 +17,5 @@ $(YS):
 	  PREFIX=$(LOCAL-PREFIX) \
 	  bash
 	@echo
+
+endif

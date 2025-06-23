@@ -1,3 +1,8 @@
+ifdef SHELL-LOADED
+$(error shell.mk already loaded)
+endif
+SHELL-LOADED := true
+
 shell:
 ifndef MAKES_SHELL
 	@( \

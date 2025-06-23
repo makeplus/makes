@@ -1,3 +1,6 @@
+ifndef JAVA-LOADED
+JAVA-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -24,3 +27,5 @@ $(JAVA): $(LOCAL-CACHE)/$(JAVA-TARBALL)
 $(LOCAL-CACHE)/$(JAVA-TARBALL):
 	@echo "Installing 'java' locally"
 	curl -Ls $(JAVA-DOWNLOAD) > $@
+
+endif

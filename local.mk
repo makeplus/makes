@@ -1,3 +1,8 @@
+ifdef LOCAL-LOADED
+$(error local.mk already loaded)
+endif
+LOCAL-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 
 LOCAL-ROOT := $(dir $(MAKES)).local

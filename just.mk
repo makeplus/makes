@@ -1,3 +1,6 @@
+ifndef JUST-LOADED
+JUST-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -31,3 +34,5 @@ $(JUST): $(LOCAL-CACHE)/$(JUST-TARBALL)
 $(LOCAL-CACHE)/$(JUST-TARBALL):
 	@echo "Installing 'just' locally"
 	curl -Ls $(JUST-DOWNLOAD) > $@
+
+endif

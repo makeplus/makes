@@ -1,3 +1,8 @@
+ifdef INIT-LOADED
+$(error init.mk already loaded)
+endif
+INIT-LOADED := true
+
 # Using bash to run commands gives us a stable foundation to build upon.
 ifeq (/bin/sh,$(SHELL))
 ifeq (,$(shell which bash))

@@ -1,3 +1,6 @@
+ifndef PULUMI-LOADED
+PULUMI-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -21,3 +24,5 @@ $(LOCAL-CACHE)/$(PULUMI-TARBALL):
 	@echo "Installing 'pulumi' locally"
 	curl -Ls $(PULUMI-DOWNLOAD) > $@
 	@touch $@
+
+endif

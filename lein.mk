@@ -1,3 +1,6 @@
+ifndef LEIN-LOADED
+LEIN-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 include $(MAKES)/clojure.mk
@@ -27,3 +30,5 @@ $(LEIN): $(CLOJURE) $(MAVEN)
 	@echo "Installing 'lein' locally"
 	curl -sLo $@ $(LEIN-URL)
 	chmod +x $@
+
+endif

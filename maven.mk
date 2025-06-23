@@ -1,3 +1,6 @@
+ifndef MAVEN-LOADED
+MAVEN-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -26,3 +29,5 @@ $(MAVEN): $(MAVEN-DOWNLOAD)
 $(MAVEN-DOWNLOAD):
 	@echo "Installing 'maven' locally"
 	curl -Ls $(MAVEN-URL) > $@
+
+endif

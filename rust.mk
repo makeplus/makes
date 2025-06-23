@@ -1,3 +1,6 @@
+ifndef RUST-LOADED
+RUST-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -38,3 +41,5 @@ $(CARGO):
 
 distclean::
 	$(RM) -r $(CARGO_HOME) $(RUSTUP_HOME)
+
+endif

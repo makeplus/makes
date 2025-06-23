@@ -1,3 +1,6 @@
+ifndef GO-LOADED
+GO-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -73,3 +76,5 @@ $(GO): $(LOCAL-CACHE)/$(GO-TARBALL)
 $(LOCAL-CACHE)/$(GO-TARBALL):
 	@echo "Installing 'go' locally"
 	curl -Ls $(GO-DOWNLOAD) > $@
+
+endif

@@ -1,3 +1,6 @@
+ifndef PYTHON-LOADED
+PYTHON-LOADED := true
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
@@ -21,3 +24,5 @@ $(PYTHON-VENV-DIR):
 	@echo '+++ Installing a Python virtualenv in $@'
 	$(PYTHON) -m venv $@
 	@echo
+
+endif
