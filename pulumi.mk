@@ -14,9 +14,10 @@ $(PULUMI): $(LOCAL-CACHE)/$(PULUMI-TARBALL)
 	tar -C $(LOCAL-CACHE) -xf $<
 	[[ -e $(LOCAL-CACHE)/pulumi/pulumi ]]
 	mv $(LOCAL-CACHE)/pulumi/pulumi* $(LOCAL-BIN)/
-	touch $@
+	@touch $@
 	@echo
 
 $(LOCAL-CACHE)/$(PULUMI-TARBALL):
 	@echo "Installing 'pulumi' locally"
 	curl -Ls $(PULUMI-DOWNLOAD) > $@
+	@touch $@

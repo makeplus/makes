@@ -7,12 +7,17 @@ ifndef PYTHON
   $(error Python doesn't seem to be installed)
 endif
 
-PYTHON-VENV := $(ROOT)/.venv
-VENV := source $(PYTHON-VENV)/bin/activate
+PYTHON-CACHE := __pycache__
 
-distclean::
-	$(RM) -r $(PYTHON-VENV)
+PYTHON-VENV-DIR := $(MAKES-DIR)/.venv
+PYTHON-VENV := $(PYTHON-VENV-DIR)/bin/activate
+VENV := source $(PYTHON-VENV)
 
 
-$(PYTHON-VENV)::
+$(PYTHON-VENV): $(PYTHON-VENV-DIR)
+	@touch $@
+
+$(PYTHON-VENV-DIR):
+	@echo 'Installing a Python virtualenv in $@'
 	$(PYTHON) -m venv $@
+	@echo
