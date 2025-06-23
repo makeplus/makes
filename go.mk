@@ -27,6 +27,8 @@ GO-CMDS := \
   version \
   vet \
 
+GO-CMDS := $(foreach a,$(GO-CMDS),$(if $(findstring $a,$(GO-CMDS-SKIP)),,$a))
+
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
 GO-BIN := $(GO-LOCAL)/bin
