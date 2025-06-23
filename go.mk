@@ -8,7 +8,6 @@ GO-DOWNLOAD := https://go.dev/dl/$(GO-TARBALL)
 GO-CMDS := \
   bug \
   build \
-  clean \
   doc \
   env \
   fix \
@@ -19,7 +18,6 @@ GO-CMDS := \
   list \
   mod \
   work \
-  run \
   telemetry \
   test \
   tool \
@@ -34,7 +32,38 @@ GO := $(GO-BIN)/go
 override PATH := $(GO-BIN):$(PATH)
 export PATH
 
+ifndef GO-PROGRAM
+ifneq (,$(wildcard main.go))
+GO-PROGRAM := main
+endif
+endif
 
+
+# Go command rules:
+ifndef MAKES-NO-RULES
+run: $(GO)
+ifdef GO-PROGRAM
+	go $@ $(GO-PROGRAM).go
+else
+	echo "Set 'GO-PROGRAM' to use 'make run'"
+endif
+
+$(GO-CMDS): $(GO)
+	go $@$(if $(v), -v,) $(opts)
+
+tidy: $(GO)
+	go mod $@
+
+ifndef MAKES-NO-CLEAN
+clean:
+	which go
+	[[ -z '$(wildcard $(GO))' ]] || \
+	  (set -x; go $@)
+endif
+endif
+
+
+# Install rules:
 $(GO): $(LOCAL-CACHE)/$(GO-TARBALL)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	mv $(LOCAL-ROOT)/go $(GO-LOCAL)
