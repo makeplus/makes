@@ -18,6 +18,6 @@ $(PYTHON-VENV): $(PYTHON-VENV-DIR)
 	@touch $@
 
 $(PYTHON-VENV-DIR):
-	@echo 'Installing a Python virtualenv in $@'
+	@echo '+++ Installing a Python virtualenv in $@'
 	$(PYTHON) -m venv $@
 	@echo
