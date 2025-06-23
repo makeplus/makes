@@ -15,8 +15,6 @@ MAKES-DIR := $(abspath $(dir $(MAKES)))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
-include $(MAKES)/env.mk
-
 
 ifndef MAKES-NO-RULES
 default::
@@ -33,3 +31,16 @@ ifndef LOCAL-ROOT
 include $(MAKES)/local.mk
 endif
 endef
+
+OS-TYPE := $(shell bash -c 'echo $$OSTYPE')
+ARCH-TYPE := $(shell bash -c 'echo $$MACHTYPE')
+OS-NAME := $(shell cut -f1 -d- <<<'$(OS-TYPE)')
+ARCH-NAME := $(shell cut -f1 -d- <<<'$(ARCH-TYPE)')
+OS-ARCH := $(OS-NAME)_$(ARCH-NAME)
+
+USER-UID := $(shell id -u)
+USER-GID := $(shell id -g)
+
+ifeq (0,$(USER-UID))
+IS-ROOT := true
+endif

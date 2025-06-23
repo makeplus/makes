@@ -9,7 +9,6 @@ Reusable parts for `Makefile`s
 In your (GNU 3.81+) Makefile start with:
 
 ```
-# You can commit the `.mk` files or clone them.
 M := .cache/makes
 $(shell [ -d $M ] || git clone -q https://github.com/makeplus/makes $M)
 
@@ -32,4 +31,3 @@ To use Makes in a new project just run:
 [[ -f Makefile ]] || wget https://github.com/makeplus/makes/raw/share/Makefile
 make
 ```
-
