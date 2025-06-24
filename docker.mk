@@ -32,6 +32,8 @@ ifneq (,$(shell docker ps | grep $(DOCKER-NAME)))
 $(shell touch $(DOCKER-RUN-FILE))
 endif
 
+realclean:: docker-kill
+
 docker-shell: $(DOCKER-RUN-FILE)
 	docker exec -it $(DOCKER-NAME) bash
 
@@ -50,7 +52,7 @@ endif
 $(DOCKER-RUN-FILE): $(DOCKER-BUILD-FILE)
 	docker run -d --rm \
 	  --name $(DOCKER-NAME) \
-	  --workdir $(GIT-REPO-DIR) \
+	  --workdir $(ROOT) \
 	  --volume $(GIT-REPO-DIR):$(GIT-REPO-DIR) \
 	  --volume $(DOCKER-BASH-HISTORY):/root/.bash-history \
 	  $(DOCKER-RUN-OPTIONS) \
@@ -64,7 +66,6 @@ $(DOCKER-BUILD-FILE): $(DOCKER-FILE)
 	  $(DOCKER-BUILD-OPTIONS) \
 	  $(DOCKER-CONTEXT)
 	touch $@
-	$(RM) $(DOCKER-FILE)
 
 ifdef DOCKER-FILES
 $(DOCKER-FILE): $(DOCKER-FILES)

@@ -20,6 +20,10 @@ MAKES-DIR := $(abspath $(dir $(MAKES)))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
+MAKES-CLEAN :=
+MAKES-REALCLEAN :=
+MAKES-DISTCLEAN :=
+
 
 ifndef MAKES-NO-RULES
 default::
