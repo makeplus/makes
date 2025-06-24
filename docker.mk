@@ -16,7 +16,7 @@ DOCKER-BUILD-FILE := $(LOCAL-CACHE)/docker-build-$(DOCKER-NAME)
 DOCKER-RUN-FILE := $(LOCAL-CACHE)/docker-run-$(DOCKER-NAME)
 DOCKER-BASH-HISTORY := $(LOCAL-CACHE)/bash-history
 DOCKER-EXEC := docker exec -it $(DOCKER-NAME)
-DOCKER-FILE := Dockerfile
+DOCKER-FILE := $(LOCAL-TMP)/Dockerfile
 DOCKER-CONTEXT := .
 
 ifdef DOCKER-USER
@@ -57,13 +57,23 @@ $(DOCKER-RUN-FILE): $(DOCKER-BUILD-FILE)
 	  $(DOCKER-NAME) \
 	  sleep infinity
 
-$(DOCKER-BUILD-FILE):
+$(DOCKER-BUILD-FILE): $(DOCKER-FILE)
 	docker build \
 	  -f $(DOCKER-FILE) \
 	  -t $(DOCKER-NAME) \
 	  $(DOCKER-BUILD-OPTIONS) \
 	  $(DOCKER-CONTEXT)
 	touch $@
+	$(RM) $(DOCKER-FILE)
+
+ifdef DOCKER-FILES
+$(DOCKER-FILE): $(DOCKER-FILES)
+	cat $^ > $@
+else
+$(DOCKER-FILE):
+	@echo 'DOCKER-FILES not defined'
+	@exit 1
+endif
 
 endif
 
