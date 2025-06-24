@@ -27,7 +27,7 @@ GO-CMDS := \
   version \
   vet \
 
-GO-CMDS-SKIP := xxx
+GO-CMDS-SKIP ?= xxx
 GO-CMDS := $(foreach a,$(GO-CMDS),$(if $(findstring $a,$(GO-CMDS-SKIP)),,$a))
 
 
