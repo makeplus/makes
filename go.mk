@@ -47,6 +47,7 @@ endif
 
 # Go command rules:
 ifndef MAKES-NO-RULES
+
 run: $(GO)
 ifdef GO-PROGRAM
 	go $@ $(GO-PROGRAM).go
@@ -54,7 +55,7 @@ else
 	echo "Set 'GO-PROGRAM' to use 'make run'"
 endif
 
-$(GO-CMDS): $(GO)
+$(GO-CMDS): $(GO) $(GO-DEPS)
 	go $@$(if $(v), -v,) $(opts)
 
 tidy: $(GO)
