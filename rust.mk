@@ -39,7 +39,4 @@ $(CARGO):
 	rustup component add rustfmt
 	touch $@
 
-distclean::
-	$(RM) -r $(CARGO_HOME) $(RUSTUP_HOME)
-
 endif

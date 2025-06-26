@@ -62,9 +62,8 @@ tidy: $(GO)
 	go mod $@
 
 ifndef MAKES-NO-CLEAN
-clean:
-	which go
-	[[ -z '$(wildcard $(GO))' ]] || \
+clean::
+	@[[ -z '$(wildcard $(GO))' ]] || \
 	  (set -x; go $@)
 endif
 endif
