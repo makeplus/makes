@@ -23,13 +23,20 @@ MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 MAKES-CLEAN :=
 MAKES-REALCLEAN :=
 MAKES-DISTCLEAN :=
+ifeq (,$(patsubst %/.cache/makes,,$(lastword $(MAKES))))
+_path := $(abspath $(dir $(MAKES)))
+ifneq (,$(wildcard $(_path)))
+MAKES-DISTCLEAN := $(_path)
+endif
+endif
 
 
 ifndef MAKES-NO-RULES
 default::
-endif
 
 include $(MAKES)/makes.mk
+endif
+
 
 ifndef NO-PHONY-TEST
 .PHONY: test
