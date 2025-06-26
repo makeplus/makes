@@ -4,7 +4,7 @@ PULUMI-LOADED := true
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-PULUMI-VERSION ?= 3.178.0
+PULUMI-VERSION ?= 3.180.0
 PULUMI-NAME := pulumi-v$(PULUMI-VERSION)-linux-x64
 PULUMI-TARBALL := $(PULUMI-NAME).tar.gz
 PULUMI-REPO-URL := https://get.pulumi.com/releases/sdk/
