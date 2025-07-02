@@ -5,7 +5,15 @@ LOCAL-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 
+ifdef MAKES_LOCAL_DIR
+LOCAL-ROOT := $(MAKES_LOCAL_DIR)
+else
+ifdef MAKES_REPO_DIR
+LOCAL-ROOT := $(MAKEFILE-DIR)/.cache/.local
+else
 LOCAL-ROOT := $(abspath $(dir $(MAKES)))/.local
+endif
+endif
 
 # We intend everything written to disk to be inside this repo by default.
 LOCAL-PREFIX := $(LOCAL-ROOT)
