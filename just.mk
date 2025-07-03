@@ -35,6 +35,6 @@ $(JUST): $(LOCAL-CACHE)/$(JUST-TARBALL)
 
 $(LOCAL-CACHE)/$(JUST-TARBALL):
 	@echo "Installing 'just' locally"
-	curl -Ls $(JUST-DOWNLOAD) > $@
+	curl+ $(JUST-DOWNLOAD) > $@
 
 endif

@@ -17,23 +17,23 @@ endif
 
 # We intend everything written to disk to be inside this repo by default.
 LOCAL-PREFIX := $(LOCAL-ROOT)
-LOCAL-CACHE  := $(LOCAL-ROOT)/cache
+LOCAL-CACHE  := $(LOCAL-PREFIX)/cache
 _ := $(shell mkdir -p $(LOCAL-CACHE))
-LOCAL-TMP    := $(LOCAL-ROOT)/tmp
+LOCAL-TMP    := $(LOCAL-PREFIX)/tmp
 _ := $(shell mkdir -p $(LOCAL-TMP))
-LOCAL-BIN    := $(LOCAL-ROOT)/bin
+LOCAL-BIN    := $(LOCAL-PREFIX)/bin
 _ := $(shell mkdir -p $(LOCAL-BIN))
-LOCAL-LIB    := $(LOCAL-ROOT)/lib
+LOCAL-LIB    := $(LOCAL-PREFIX)/lib
 _ := $(shell mkdir -p $(LOCAL-LIB))
-LOCAL-MAN    := $(LOCAL-ROOT)/man
+LOCAL-MAN    := $(LOCAL-PREFIX)/man
 _ := $(shell mkdir -p $(LOCAL-MAN))
-LOCAL-SHARE  := $(LOCAL-ROOT)/share
+LOCAL-SHARE  := $(LOCAL-PREFIX)/share
 _ := $(shell mkdir -p $(LOCAL-SHARE))
 
 ifdef MAKES_NO_LOCAL_HOME
 LOCAL-HOME   := $(HOME)
 else
-LOCAL-HOME   := $(LOCAL-ROOT)/home
+LOCAL-HOME   := $(LOCAL-PREFIX)/home
 _ := $(shell mkdir -p $(LOCAL-HOME))
 endif
 

@@ -28,6 +28,6 @@ $(JAVA): $(LOCAL-CACHE)/$(JAVA-TARBALL)
 
 $(LOCAL-CACHE)/$(JAVA-TARBALL):
 	@echo "Installing 'java' locally"
-	curl -Ls $(JAVA-DOWNLOAD) > $@
+	curl+ $(JAVA-DOWNLOAD) > $@
 
 endif

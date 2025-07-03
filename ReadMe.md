@@ -28,6 +28,6 @@ The `share/Makefile` in this repo is a template for new repos.
 To use Makes in a new project just run:
 
 ```bash
-[[ -f Makefile ]] || wget https://github.com/makeplus/makes/raw/share/Makefile
+[[ -f Makefile ]] || wget https://github.com/makeplus/makes/raw/main/share/Makefile
 make
 ```

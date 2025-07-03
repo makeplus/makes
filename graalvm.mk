@@ -30,6 +30,6 @@ $(GRAALVM): $(LOCAL-CACHE)/$(GRAALVM-TARBALL)
 
 $(LOCAL-CACHE)/$(GRAALVM-TARBALL):
 	@echo "Installing 'GraalVM' locally"
-	curl -Ls $(GRAALVM-DOWNLOAD) > $@
+	curl+ $(GRAALVM-DOWNLOAD) > $@
 
 endif

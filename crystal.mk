@@ -28,6 +28,6 @@ $(CRYSTAL): $(LOCAL-CACHE)/$(CRYSTAL-TARBALL)
 
 $(LOCAL-CACHE)/$(CRYSTAL-TARBALL):
 	@echo "Installing 'crystal' locally"
-	curl -Ls $(CRYSTAL-DOWNLOAD) > $@
+	curl+ $(CRYSTAL-DOWNLOAD) > $@
 
 endif

@@ -22,7 +22,7 @@ SHELL-DEPS += $(CLOJURE)
 
 $(CLOJURE): $(CLOJURE-DEPS)
 	@echo "Installing 'clojure' locally"
-	bash <(curl -sL $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
+	bash <(curl+ $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
 	touch $@
 
 endif

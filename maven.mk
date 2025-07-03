@@ -30,6 +30,6 @@ $(MAVEN): $(MAVEN-DOWNLOAD)
 
 $(MAVEN-DOWNLOAD):
 	@echo "Installing 'maven' locally"
-	curl -Ls $(MAVEN-URL) > $@
+	curl+ $(MAVEN-URL) > $@
 
 endif

@@ -80,6 +80,6 @@ $(GO): $(LOCAL-CACHE)/$(GO-TARBALL)
 
 $(LOCAL-CACHE)/$(GO-TARBALL):
 	@echo "Installing 'go' locally"
-	curl -Ls $(GO-DOWNLOAD) > $@
+	curl+ $(GO-DOWNLOAD) > $@
 
 endif

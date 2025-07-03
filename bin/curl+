@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+main() (
+  [[ $# -eq 1 && $1 == https://* ]] ||
+    die "curl+ takes one arg which must be a url"
+
+  url=$1
+
+  if [[ ${MAKES_CACHE_DIR-} ]]; then
+    [[ -d $MAKES_CACHE_DIR ]] ||
+      die "MAKES_CACHE_DIR=$MAKES_CACHE_DIR is not a directory"
+  elif [[ -d ~/.cache/makes ]]; then
+    MAKES_CACHE_DIR=~/.cache/makes
+  fi
+  [[ ${MAKES_CACHE_DIR:-} ]] || {
+    curl -sL "$url"
+    exit
+  }
+
+  file=${url#https://}
+  file=${file//\//__}
+
+  cd "$MAKES_CACHE_DIR" || exit
+
+  [[ -f $file ]] ||
+    curl -sL "$url" > "$file"
+
+  cat "$file"
+)
+
+die() { printf '%s\n' "$@" >&2; exit 1; }
+
+main "$@"

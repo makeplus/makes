@@ -10,7 +10,7 @@ YQ-TARBALL := $(YQ-NAME).tar.gz
 YQ-REPO-URL := https://github.com/mikefarah/yq
 YQ-DOWNLOAD := $(YQ-REPO-URL)/releases/download/v$(YQ-VERSION)/$(YQ-TARBALL)
 
-YQ := $(LOCAL-PREFIX)/bin/yq
+YQ := $(LOCAL-BIN)/yq
 
 SHELL-DEPS += $(YQ)
 
@@ -24,6 +24,6 @@ $(YQ): $(LOCAL-CACHE)/$(YQ-TARBALL)
 
 $(LOCAL-CACHE)/$(YQ-TARBALL):
 	@echo "Installing 'yq' locally"
-	curl -Ls $(YQ-DOWNLOAD) > $@
+	curl+ $(YQ-DOWNLOAD) > $@
 
 endif

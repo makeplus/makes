@@ -15,6 +15,7 @@ ifndef MAKES_SHELL
 	  bash --rcfile \
 	  <(cat ~/.bashrc; \
 	    echo 'PS1="($(SHELL-NAME)) \w $$ "'; \
+	    echo 'export PATH=$(PATH)'; \
 	   ) \
 	)
 else

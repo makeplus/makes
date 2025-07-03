@@ -20,6 +20,8 @@ MAKES-DIR := $(abspath $(dir $(MAKES)))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
+export PATH := $(MAKES)/bin:$(PATH)
+
 
 ifndef MAKES-NO-RULES
 default::

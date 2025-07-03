@@ -24,7 +24,7 @@ $(PULUMI): $(LOCAL-CACHE)/$(PULUMI-TARBALL)
 
 $(LOCAL-CACHE)/$(PULUMI-TARBALL):
 	@echo "Installing 'pulumi' locally"
-	curl -Ls $(PULUMI-DOWNLOAD) > $@
+	curl+ $(PULUMI-DOWNLOAD) > $@
 	@touch $@
 
 endif

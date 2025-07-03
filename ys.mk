@@ -1,23 +1,29 @@
-ifndef YQ-LOADED
+ifndef YS-LOADED
 YS-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
 YS-VERSION ?= 0.1.97
+YS-DIR := ys-$(YS-VERSION)-linux-x64
+YS-TARBALL := $(YS-DIR).tar.xz
+YS-REPO-URL := https://github.com/yaml/yamlscript
+YS-DOWNLOAD := $(YS-REPO-URL)/releases/download/$(YS-VERSION)/$(YS-TARBALL)
 
-YS := $(LOCAL-PREFIX)/bin/ys-$(YS-VERSION)
+YS := $(LOCAL-BIN)/ys-$(YS-VERSION)
 
 SHELL-DEPS += $(YS)
 
 
-$(YS):
-	@echo 'Installing ys-$(YS-VERSION)'
-	curl -s https://yamlscript.org/install | \
-	  BIN=1 \
-	  VERSION=$(YS-VERSION) \
-	  PREFIX=$(LOCAL-PREFIX) \
-	  bash
+$(YS): $(LOCAL-CACHE)/$(YS-TARBALL)
+	tar -C $(LOCAL-CACHE) -xf $<
+	[[ -e $(LOCAL-CACHE)/$(YS-DIR)/ys-$(YS-VERSION) ]]
+	mv $(LOCAL-CACHE)/$(YS-DIR)/ys* $(LOCAL-BIN)
+	touch $@
 	@echo
+
+$(LOCAL-CACHE)/$(YS-TARBALL):
+	@echo "Installing 'ys' locally"
+	curl+ $(YS-DOWNLOAD) > $@
 
 endif
