@@ -11,6 +11,8 @@ JUST-DOWNLOAD := https://github.com/casey/just/releases/download/$(JUST-VERSION)
 
 JUST := $(LOCAL-BIN)/just
 
+SHELL-DEPS += $(JUST)
+
 JUST-CMDS := \
   bench \
   check \

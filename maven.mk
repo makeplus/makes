@@ -15,6 +15,8 @@ MAVEN-BIN := $(MAVEN-DIR)/bin
 MAVEN-REPOSITORY := $(LOCAL-HOME)/.m2/repository
 MAVEN := $(MAVEN-BIN)/mvn
 
+SHELL-DEPS += $(MAVEN)
+
 MAVEN-OPTS := -Duser.home=$(LOCAL-HOME)
 export MAVEN_OPTS := $(MAVEN-OPTS)
 override PATH := $(MAVEN-BIN):$(PATH)

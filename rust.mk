@@ -15,6 +15,8 @@ export PATH
 CARGO := $(CARGO-BIN)/rustup
 RUSTUP := $(CARGO-BIN)/rustup
 
+SHELL-DEPS += $(CARGO)
+
 CARGO-CMDS := \
   build \
   check \

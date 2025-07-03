@@ -35,6 +35,8 @@ GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
 GO-BIN := $(GO-LOCAL)/bin
 GO := $(GO-BIN)/go
 
+SHELL-DEPS += $(GO)
+
 override PATH := $(GO-BIN):$(PATH)
 export PATH
 

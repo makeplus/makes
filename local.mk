@@ -23,14 +23,19 @@ LOCAL-TMP    := $(LOCAL-ROOT)/tmp
 _ := $(shell mkdir -p $(LOCAL-TMP))
 LOCAL-BIN    := $(LOCAL-ROOT)/bin
 _ := $(shell mkdir -p $(LOCAL-BIN))
-LOCAL-HOME   := $(LOCAL-ROOT)/home
-_ := $(shell mkdir -p $(LOCAL-HOME))
 LOCAL-LIB    := $(LOCAL-ROOT)/lib
 _ := $(shell mkdir -p $(LOCAL-LIB))
 LOCAL-MAN    := $(LOCAL-ROOT)/man
 _ := $(shell mkdir -p $(LOCAL-MAN))
 LOCAL-SHARE  := $(LOCAL-ROOT)/share
 _ := $(shell mkdir -p $(LOCAL-SHARE))
+
+ifdef MAKES_NO_LOCAL_HOME
+LOCAL-HOME   := $(HOME)
+else
+LOCAL-HOME   := $(LOCAL-ROOT)/home
+_ := $(shell mkdir -p $(LOCAL-HOME))
+endif
 
 override PATH := $(LOCAL-BIN):$(PATH)
 

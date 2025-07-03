@@ -8,6 +8,8 @@ YS-VERSION ?= 0.1.97
 
 YS := $(LOCAL-PREFIX)/bin/ys-$(YS-VERSION)
 
+SHELL-DEPS += $(YS)
+
 
 $(YS):
 	@echo 'Installing ys-$(YS-VERSION)'

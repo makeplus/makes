@@ -12,6 +12,8 @@ YQ-DOWNLOAD := $(YQ-REPO-URL)/releases/download/v$(YQ-VERSION)/$(YQ-TARBALL)
 
 YQ := $(LOCAL-PREFIX)/bin/yq
 
+SHELL-DEPS += $(YQ)
+
 
 $(YQ): $(LOCAL-CACHE)/$(YQ-TARBALL)
 	tar -C $(LOCAL-CACHE) -xf $< -- ./$(YQ-NAME)

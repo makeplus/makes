@@ -13,6 +13,8 @@ JAVA-LOCAL := $(LOCAL-ROOT)/jdk-$(JAVA-VERSION)
 JAVA-BIN := $(JAVA-LOCAL)/bin
 JAVA := $(JAVA-BIN)/java
 
+SHELL-DEPS += $(JAVA)
+
 export JAVA_HOME := $(JAVA-LOCAL)
 override PATH := $(JAVA-BIN):$(PATH)
 export PATH

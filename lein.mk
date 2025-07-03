@@ -12,6 +12,8 @@ LEIN-URL := \
 
 LEIN := $(LOCAL-BIN)/lein
 
+SHELL-DEPS += $(LEIN)
+
 export LEIN_HOME := $(LOCAL-HOME)
 export LEIN_JVM_OPTS := \
   -XX:+TieredCompilation \

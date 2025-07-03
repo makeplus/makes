@@ -3,7 +3,7 @@ DOCKER-LOADED := true
 
 ifneq (,$(wildcard /.dockerenv))
 
-MAKES-IN-DOCKER := true
+IN-DOCKER := true
 
 else
 

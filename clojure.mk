@@ -3,7 +3,13 @@ CLOJURE-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
+
+ifndef GRAALVM-LOADED
+CLOJURE-DEPS := $(GRAALVM)
+else
 include $(MAKES)/java.mk
+CLOJURE-DEPS := $(JAVA)
+endif
 
 CLOJURE-VERSION ?= 1.12.1.1550
 CLOJURE-INSTALLER := \
@@ -11,8 +17,10 @@ CLOJURE-INSTALLER := \
 
 CLOJURE := $(LOCAL-BIN)/clojure
 
+SHELL-DEPS += $(CLOJURE)
 
-$(CLOJURE): $(JAVA)
+
+$(CLOJURE): $(CLOJURE-DEPS)
 	@echo "Installing 'clojure' locally"
 	bash <(curl -sL $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
 	touch $@
