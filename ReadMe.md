@@ -60,6 +60,29 @@ Every dependency language or tool has its own `<name>.mk` file in `makes`
 repository that does as much of the work as possible for you.
 
 
+## Auto-installation
+
+Auto-installation of the `makes` repo itself is optional.
+
+You can simply add the files you want to your project repository.
+
+Dependency languages and tools will always be auto installed into one of these
+places:
+
+* The directory named by `MAKES_LOCAL_DIR`
+* `./.cache/.local` if `MAKES_REPO_DIR` is set
+* A `.local` directory next to the `makes` repo directory
+
+If you want to make changes to the `makes` repo itself in combination with
+various Makefiles you are working with, you can keep `makes` in a location you
+desire by setting `MAKES_REPO_DIR` and setting the first lne of your Makefiles
+to something like this:
+
+```make
+M := $(or $(MAKES_REPO_DIR),.cache/makes)
+```
+
+
 ## Caching Installation Assets
 
 Each `<dep>.mk` language/tool dependency for Makes installs the tool from a
