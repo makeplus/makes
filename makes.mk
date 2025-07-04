@@ -1,6 +1,4 @@
-ifdef MAKES-LOADED
-$(error makes.mk already loaded)
-endif
+$(if $(MAKES-LOADED),$(error makes.mk already loaded))
 MAKES-LOADED := true
 
 

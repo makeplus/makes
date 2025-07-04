@@ -1,10 +1,14 @@
+MAVEN-VERSION ?= 3.9.10
+
 ifndef MAVEN-LOADED
 MAVEN-LOADED := true
+
+$(if $(or $(JAVA-LOADED),$(GRAALVM-LOADED)),,\
+$(error maven.mk requires including java.mk or graalvm.mk first))
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-MAVEN-VERSION ?= 3.9.10
 MAVEN-SRC := https://dlcdn.apache.org/maven/maven-3/$(MAVEN-VERSION)/binaries
 MAVEN-DIR := apache-maven-$(MAVEN-VERSION)
 MAVEN-TARBALL := $(MAVEN-DIR)-bin.tar.gz

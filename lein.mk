@@ -1,12 +1,14 @@
+LEIN-CLOJURE-VERSION := 0.12.1
+
 ifndef LEIN-LOADED
 LEIN-LOADED := true
 
+$(if $(CLOJURE-LOADED),,\
+$(error lein.mk requires including clojure.mk first))
+
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
-include $(MAKES)/clojure.mk
-include $(MAKES)/maven.mk
 
-LEIN-CLOJURE-VERSION := 0.12.1
 LEIN-URL := \
   https://codeberg.org/leiningen/leiningen/raw/tag/2.11.2/bin/lein
 

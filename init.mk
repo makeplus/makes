@@ -6,9 +6,9 @@ INIT-LOADED := true
 # Using bash to run commands gives us a stable foundation to build upon.
 ifeq (/bin/sh,$(SHELL))
 ifeq (,$(shell which bash))
-$(error Makes requires a 'bash' in your PATH)
+  $(error Makes requires a 'bash' in your PATH)
 endif
-SHELL := bash
+  SHELL := bash
 endif
 
 ROOT ?= $(shell pwd -P)
@@ -35,16 +35,11 @@ ifndef NO-PHONY-TEST
 endif
 
 define include-local
-ifndef LOCAL-ROOT
-include $(MAKES)/local.mk
+$(if $(SHELL-LOADED),$(error shell.mk should be included last))
+ifndef LOCAL-LOADED
+  include $(MAKES)/local.mk
 endif
 endef
-
-OS-TYPE := $(shell bash -c 'echo $$OSTYPE')
-ARCH-TYPE := $(shell bash -c 'echo $$MACHTYPE')
-OS-NAME := $(shell cut -f1 -d- <<<'$(OS-TYPE)')
-ARCH-NAME := $(shell cut -f1 -d- <<<'$(ARCH-TYPE)')
-OS-ARCH := $(OS-NAME)_$(ARCH-NAME)
 
 USER-UID := $(shell id -u)
 USER-GID := $(shell id -g)
@@ -52,3 +47,43 @@ USER-GID := $(shell id -g)
 ifeq (0,$(USER-UID))
 IS-ROOT := true
 endif
+
+OS-TYPE := $(shell bash -c 'echo $$OSTYPE')
+ifneq (,$(findstring darwin,$(OS-TYPE)))
+  OS-NAME := macos
+else ifneq (,$(findstring linux,$(OS-TYPE)))
+  OS-NAME := linux
+else
+  $(error Can't determine OS-TYPE)
+endif
+
+ARCH-TYPE := $(shell bash -c 'echo $$MACHTYPE')
+ifneq (,$(findstring aarch64,$(ARCH-TYPE)))
+  ARCH-NAME := arm64
+else ifneq (,$(findstring x86_64,$(ARCH-TYPE)))
+  ARCH-NAME := int64
+else
+  $(error Can't determine ARCH-TYPE)
+endif
+
+OS-ARCH := $(OS-NAME)-$(ARCH-NAME)
+
+OA1-linux-arm64 := linux-aarch64
+OA1-linux-int64 := linux-x64
+OA1-macos-arm64 := macos-aarch64
+OA1-macos-int64 := macos-x64
+
+OA2-linux-arm64 := linux-arm64
+OA2-linux-int64 := linux-amd64
+OA2-macos-arm64 := darwin-arm64
+OA2-macos-int64 := darwin-amd64
+
+OA2_linux-arm64 := linux_arm64
+OA2_linux-int64 := linux_amd64
+OA2_macos-arm64 := darwin_arm64
+OA2_macos-int64 := darwin_amd64
+
+OA3-linux-arm64 := linux-arm64
+OA3-linux-int64 := linux-x64
+OA3-macos-arm64 := darwin-arm64
+OA3-macos-int64 := darwin-x64

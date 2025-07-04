@@ -1,11 +1,12 @@
+YS-VERSION ?= 0.1.97
+
 ifndef YS-LOADED
 YS-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-YS-VERSION ?= 0.1.97
-YS-DIR := ys-$(YS-VERSION)-linux-x64
+YS-DIR := ys-$(YS-VERSION)-$(OA1-$(OS-ARCH))
 YS-TARBALL := $(YS-DIR).tar.xz
 YS-REPO-URL := https://github.com/yaml/yamlscript
 YS-DOWNLOAD := $(YS-REPO-URL)/releases/download/$(YS-VERSION)/$(YS-TARBALL)

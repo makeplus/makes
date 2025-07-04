@@ -1,11 +1,12 @@
+YQ-VERSION ?= 4.45.4
+
 ifndef YQ-LOADED
 YQ-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-YQ-VERSION ?= 4.45.4
-YQ-NAME := yq_linux_amd64
+YQ-NAME := yq_$(OA2_$(OS-ARCH))
 YQ-TARBALL := $(YQ-NAME).tar.gz
 YQ-REPO-URL := https://github.com/mikefarah/yq
 YQ-DOWNLOAD := $(YQ-REPO-URL)/releases/download/v$(YQ-VERSION)/$(YQ-TARBALL)

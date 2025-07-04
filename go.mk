@@ -1,11 +1,12 @@
+GO-VERSION ?= 1.24.4
+
 ifndef GO-LOADED
 GO-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-GO-VERSION ?= 1.24.3
-GO-TARBALL := go$(GO-VERSION).linux-amd64.tar.gz
+GO-TARBALL := go$(GO-VERSION).$(OA2-$(OS-ARCH)).tar.gz
 GO-DOWNLOAD := https://go.dev/dl/$(GO-TARBALL)
 
 GO-CMDS := \

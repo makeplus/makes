@@ -1,12 +1,18 @@
+CRYSTAL-VERSION ?= 1.16.3
+
 ifndef CRYSTAL-LOADED
 CRYSTAL-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-CRYSTAL-VERSION ?= 1.16.3
+OA-linux-arm64 := XXX
+OA-linux-int64 := linux-x86_64-bundled
+OA-macos-arm64 := darwin-universal
+OA-macos-int64 := darwin-universal
+
 CRYSTAL-DIR := crystal-$(CRYSTAL-VERSION)-1
-CRYSTAL-TARBALL := $(CRYSTAL-DIR)-linux-x86_64-bundled.tar.gz
+CRYSTAL-TARBALL := $(CRYSTAL-DIR)-$(OA-$(OS-ARCH)).tar.gz
 CRYSTAL-DOWNLOAD := https://github.com/crystal-lang/crystal/releases/download
 CRYSTAL-DOWNLOAD := $(CRYSTAL-DOWNLOAD)/$(CRYSTAL-VERSION)/$(CRYSTAL-TARBALL)
 

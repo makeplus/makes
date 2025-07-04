@@ -1,25 +1,33 @@
+GRAALVM-VERSION ?= 24
+
 ifndef GRAALVM-LOADED
 GRAALVM-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-GRAALVM-VERSION ?= 24
-GRAALVM-TARBALL := graalvm-jdk-$(GRAALVM-VERSION)_linux-x64_bin.tar.gz
+$(if $(JAVA-LOADED),$(error Can't use both java.mk and graalvm.mk))
+
+GRAALVM-TARBALL := graalvm-jdk-$(GRAALVM-VERSION)_$(OA1-$(OS-ARCH))_bin.tar.gz
 GRAALVM-DOWNLOAD := https://download.oracle.com/graalvm
 GRAALVM-DOWNLOAD := \
  $(GRAALVM-DOWNLOAD)/$(GRAALVM-VERSION)/latest/$(GRAALVM-TARBALL)
 
 GRAALVM-LOCAL := $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION)
-GRAALVM-BIN := $(GRAALVM-LOCAL)/bin
+GRAALVM-HOME := $(GRAALVM-LOCAL)
+ifeq (macos,$(OS-NAME))
+GRAALVM-HOME := $(GRAALVM-HOME)/Contents/Home
+endif
+export GRAALVM_HOME := $(GRAALVM-HOME)
+export JAVA_HOME := $(GRAALVM_HOME)
+
+GRAALVM-BIN := $(GRAALVM-HOME)/bin
+override PATH := $(GRAALVM-BIN):$(PATH)
+export PATH
+
 GRAALVM := $(GRAALVM-BIN)/native-image
 
 SHELL-DEPS += $(GRAALVM)
-
-export GRAALVM_HOME := $(GRAALVM-LOCAL)
-export JAVA_HOME := $(GRAALVM_HOME)
-override PATH := $(GRAALVM-BIN):$(PATH)
-export PATH
 
 
 $(GRAALVM): $(LOCAL-CACHE)/$(GRAALVM-TARBALL)
