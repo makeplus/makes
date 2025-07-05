@@ -87,3 +87,5 @@ OA3-linux-arm64 := linux-arm64
 OA3-linux-int64 := linux-x64
 OA3-macos-arm64 := darwin-arm64
 OA3-macos-int64 := darwin-x64
+
+include $(MAKES-INCLUDE:%=$(MAKES)/%)
