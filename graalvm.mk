@@ -26,11 +26,12 @@ override PATH := $(GRAALVM-BIN):$(PATH)
 export PATH
 
 GRAALVM := $(GRAALVM-BIN)/native-image
+JAVA := $(GRAALVM-BIN)/java
 
 SHELL-DEPS += $(GRAALVM)
 
 
-$(GRAALVM): $(LOCAL-CACHE)/$(GRAALVM-TARBALL)
+$(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-TARBALL)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
 	touch $@

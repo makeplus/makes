@@ -21,6 +21,8 @@ MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
 export PATH := $(MAKES)/bin:$(PATH)
+export LANG := en_US.UTF-8
+
 
 
 ifndef MAKES-NO-RULES
@@ -51,17 +53,23 @@ endif
 OS-TYPE := $(shell bash -c 'echo $$OSTYPE')
 ifneq (,$(findstring darwin,$(OS-TYPE)))
   OS-NAME := macos
+  IS-MACOS := true
 else ifneq (,$(findstring linux,$(OS-TYPE)))
   OS-NAME := linux
+  IS-LINUX := true
 else
   $(error Can't determine OS-TYPE)
 endif
 
 ARCH-TYPE := $(shell bash -c 'echo $$MACHTYPE')
-ifneq (,$(findstring aarch64,$(ARCH-TYPE)))
+ifneq (,$(or $(findstring arm64,$(ARCH-TYPE)), \
+             $(findstring aarch64,$(ARCH-TYPE))))
+$(error 123)
   ARCH-NAME := arm64
+  IS-ARM := true
 else ifneq (,$(findstring x86_64,$(ARCH-TYPE)))
   ARCH-NAME := int64
+  IS-INTEL := true
 else
   $(error Can't determine ARCH-TYPE)
 endif

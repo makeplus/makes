@@ -19,7 +19,7 @@ CLOJURE := $(LOCAL-BIN)/clojure
 SHELL-DEPS += $(CLOJURE)
 
 
-$(CLOJURE): $(CLOJURE-DEPS)
+$(CLOJURE): $(CLOJURE-DEPS) $(JAVA)
 	@echo "Installing 'clojure' locally"
 	bash <(curl+ $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
 	touch $@

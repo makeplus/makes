@@ -30,7 +30,7 @@ LEIN-CMDS := \
 
 
 
-$(LEIN): $(CLOJURE) $(MAVEN)
+$(LEIN):: $(CLOJURE) $(MAVEN)
 	@echo "Installing 'lein' locally"
 	curl+ $(LEIN-URL) > $@
 	chmod +x $@
