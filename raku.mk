@@ -26,7 +26,6 @@ RAKU := $(RAKU-BIN)/raku
 SHELL-DEPS += $(RAKU)
 
 override PATH := $(RAKU-BIN):$(RAKU-SITE-BIN):$(PATH)
-export PATH
 
 
 $(RAKU): $(LOCAL-CACHE)/$(RAKU-TARBALL)

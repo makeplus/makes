@@ -39,7 +39,6 @@ GO := $(GO-BIN)/go
 SHELL-DEPS += $(GO)
 
 override PATH := $(GO-BIN):$(PATH)
-export PATH
 
 ifndef GO-PROGRAM
 ifneq (,$(wildcard main.go))

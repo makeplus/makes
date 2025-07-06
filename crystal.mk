@@ -23,7 +23,6 @@ CRYSTAL := $(CRYSTAL-BIN)/crystal
 SHELL-DEPS += $(CRYSTAL)
 
 override PATH := $(CRYSTAL-BIN):$(PATH)
-export PATH
 
 
 $(CRYSTAL): $(LOCAL-CACHE)/$(CRYSTAL-TARBALL)

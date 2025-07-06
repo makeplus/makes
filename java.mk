@@ -21,7 +21,6 @@ export JAVA_HOME := $(JAVA-HOME)
 
 JAVA-BIN := $(JAVA-HOME)/bin
 override PATH := $(JAVA-BIN):$(PATH)
-export PATH
 
 JAVA := $(JAVA-BIN)/java
 

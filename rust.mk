@@ -10,7 +10,6 @@ export RUSTUP_HOME := $(LOCAL-ROOT)/rustup
 CARGO-BIN := $(CARGO_HOME)/bin
 
 override PATH := $(CARGO-BIN):$(PATH)
-export PATH
 
 CARGO := $(CARGO-BIN)/rustup
 RUSTUP := $(CARGO-BIN)/rustup

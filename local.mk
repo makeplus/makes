@@ -38,5 +38,3 @@ $(shell mkdir -p \
 )
 
 override PATH := $(LOCAL-BIN):$(PATH)
-
-export PATH

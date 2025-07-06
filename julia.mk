@@ -29,7 +29,6 @@ JULIA := $(JULIA-BIN)/julia
 SHELL-DEPS += $(JULIA)
 
 override PATH := $(JULIA-BIN):$(PATH)
-export PATH
 
 
 $(JULIA): $(LOCAL-CACHE)/$(JULIA-TARBALL)

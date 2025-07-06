@@ -23,7 +23,6 @@ export JAVA_HOME := $(GRAALVM_HOME)
 
 GRAALVM-BIN := $(GRAALVM-HOME)/bin
 override PATH := $(GRAALVM-BIN):$(PATH)
-export PATH
 
 GRAALVM := $(GRAALVM-BIN)/native-image
 JAVA := $(GRAALVM-BIN)/java

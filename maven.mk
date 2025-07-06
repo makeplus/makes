@@ -24,7 +24,6 @@ SHELL-DEPS += $(MAVEN)
 MAVEN-OPTS := -Duser.home=$(LOCAL-HOME)
 export MAVEN_OPTS := $(MAVEN-OPTS)
 override PATH := $(MAVEN-BIN):$(PATH)
-export PATH
 
 
 $(MAVEN): $(MAVEN-DOWNLOAD)
