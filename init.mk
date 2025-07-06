@@ -64,7 +64,6 @@ endif
 ARCH-TYPE := $(shell bash -c 'echo $$MACHTYPE')
 ifneq (,$(or $(findstring arm64,$(ARCH-TYPE)), \
              $(findstring aarch64,$(ARCH-TYPE))))
-$(error 123)
   ARCH-NAME := arm64
   IS-ARM := true
 else ifneq (,$(findstring x86_64,$(ARCH-TYPE)))
