@@ -12,17 +12,19 @@ endif
 
 PYTHON-CACHE := __pycache__
 
-PYTHON-VENV-DIR := $(MAKES-DIR)/.venv
-PYTHON-VENV := $(PYTHON-VENV-DIR)/bin/activate
-VENV := source $(PYTHON-VENV)
+PYTHON-VENV ?= $(MAKES-DIR)/.venv
+# PYTHON-VENV-SETUP ?= true
+
+VENV := source $(PYTHON-VENV)/bin/activate
+
+export VIRTUAL_ENV := $(PYTHON-VENV)
+override PATH := $(PYTHON-VENV)/bin:$(PATH)
 
 
-$(PYTHON-VENV): $(PYTHON-VENV-DIR)
-	@touch $@
-
-$(PYTHON-VENV-DIR):
+$(PYTHON-VENV):
 	@echo '+++ Installing a Python virtualenv in $@'
 	$(PYTHON) -m venv $@
+	$(PYTHON-VENV-SETUP)
 	@echo
 
 endif
