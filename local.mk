@@ -5,6 +5,8 @@ $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 
 ifdef MAKES_LOCAL_DIR
   LOCAL-ROOT := $(MAKES_LOCAL_DIR)
+else ifdef MAKES-LOCAL
+  LOCAL-ROOT := $(MAKES-LOCAL)
 else ifdef MAKES-LOCAL-DIR
   LOCAL-ROOT := $(MAKES-LOCAL-DIR)
 else ifdef MAKES_REPO_DIR

@@ -29,8 +29,7 @@ GO-CMDS := \
   vet \
 
 GO-CMDS-SKIP ?= xxx
-GO-CMDS := $(foreach a,$(GO-CMDS),$(if $(findstring $a,$(GO-CMDS-SKIP)),,$a))
-
+GO-CMDS := $(filter-out $(GO-CMDS-SKIP),$(GO-CMDS))
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
 GO-BIN := $(GO-LOCAL)/bin
@@ -51,13 +50,13 @@ endif
 ifndef MAKES-NO-RULES
 
 run:: $(GO)
-ifdef GO-PROGRAM
-	go $@ $(GO-PROGRAM).go
-else
-	echo "Set 'GO-PROGRAM' to use 'make run'"
+ifndef GO-PROGRAM
+	@echo "Set 'GO-PROGRAM' to use 'make run'"
+	@exit 1
 endif
+	go $@ $(GO-PROGRAM).go
 
-$(GO-CMDS):: $(GO) $(GO-DEPS)
+$(GO-CMDS):: $(if $(GO-NO-DEP-GO),,$(GO)) $(GO-DEPS)
 	go $@$(if $(v), -v,) $(opts)
 
 tidy:: $(GO)
