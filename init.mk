@@ -75,24 +75,4 @@ endif
 
 OS-ARCH := $(OS-NAME)-$(ARCH-NAME)
 
-OA1-linux-arm64 := linux-aarch64
-OA1-linux-int64 := linux-x64
-OA1-macos-arm64 := macos-aarch64
-OA1-macos-int64 := macos-x64
-
-OA2-linux-arm64 := linux-arm64
-OA2-linux-int64 := linux-amd64
-OA2-macos-arm64 := darwin-arm64
-OA2-macos-int64 := darwin-amd64
-
-OA2_linux-arm64 := linux_arm64
-OA2_linux-int64 := linux_amd64
-OA2_macos-arm64 := darwin_arm64
-OA2_macos-int64 := darwin_amd64
-
-OA3-linux-arm64 := linux-arm64
-OA3-linux-int64 := linux-x64
-OA3-macos-arm64 := darwin-arm64
-OA3-macos-int64 := darwin-x64
-
 include $(MAKES-INCLUDE:%=$(MAKES)/%)

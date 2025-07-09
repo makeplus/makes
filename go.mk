@@ -6,7 +6,12 @@ GO-LOADED := true
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-GO-TARBALL := go$(GO-VERSION).$(OA2-$(OS-ARCH)).tar.gz
+OA-linux-arm64 := linux-arm64
+OA-linux-int64 := linux-amd64
+OA-macos-arm64 := darwin-arm64
+OA-macos-int64 := darwin-amd64
+
+GO-TARBALL := go$(GO-VERSION).$(OA-$(OS-ARCH)).tar.gz
 GO-DOWNLOAD := https://go.dev/dl/$(GO-TARBALL)
 
 GO-CMDS := \

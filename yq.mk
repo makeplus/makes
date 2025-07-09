@@ -6,7 +6,12 @@ YQ-LOADED := true
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-YQ-NAME := yq_$(OA2_$(OS-ARCH))
+OA-linux-arm64 := linux_arm64
+OA-linux-int64 := linux_amd64
+OA-macos-arm64 := darwin_arm64
+OA-macos-int64 := darwin_amd64
+
+YQ-NAME := yq_$(OA-$(OS-ARCH))
 YQ-TARBALL := $(YQ-NAME).tar.gz
 YQ-REPO-URL := https://github.com/mikefarah/yq
 YQ-DOWNLOAD := $(YQ-REPO-URL)/releases/download/v$(YQ-VERSION)/$(YQ-TARBALL)

@@ -8,7 +8,12 @@ $(eval $(call include-local))
 
 $(if $(JAVA-LOADED),$(error Can't use both java.mk and graalvm.mk))
 
-GRAALVM-TARBALL := graalvm-jdk-$(GRAALVM-VERSION)_$(OA1-$(OS-ARCH))_bin.tar.gz
+OA-linux-arm64 := linux-aarch64
+OA-linux-int64 := linux-x64
+OA-macos-arm64 := macos-aarch64
+OA-macos-int64 := macos-x64
+
+GRAALVM-TARBALL := graalvm-jdk-$(GRAALVM-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
 GRAALVM-DOWNLOAD := https://download.oracle.com/graalvm
 GRAALVM-DOWNLOAD := \
  $(GRAALVM-DOWNLOAD)/$(GRAALVM-VERSION)/latest/$(GRAALVM-TARBALL)

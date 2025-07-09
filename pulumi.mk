@@ -6,13 +6,15 @@ PULUMI-LOADED := true
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-PULUMI-NAME := pulumi-v$(PULUMI-VERSION)-$(OA3-$(OS-ARCH))
+OA-linux-arm64 := linux-arm64
+OA-linux-int64 := linux-x64
+OA-macos-arm64 := darwin-arm64
+OA-macos-int64 := darwin-x64
+
+PULUMI-NAME := pulumi-v$(PULUMI-VERSION)-$(OA-$(OS-ARCH))
 PULUMI-TARBALL := $(PULUMI-NAME).tar.gz
 PULUMI-RELEASES := https://github.com/pulumi/pulumi/releases/download
 PULUMI-DOWNLOAD := $(PULUMI-RELEASES)/v$(PULUMI-VERSION)/$(PULUMI-TARBALL)
-
-$(info https://github.com/pulumi/pulumi/releases/download/v3.181.0/pulumi-v3.181.0-darwin-arm64.tar.gz)
-$(info $(PULUMI-DOWNLOAD))
 
 PULUMI := $(LOCAL-BIN)/pulumi
 
