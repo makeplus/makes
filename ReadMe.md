@@ -101,6 +101,15 @@ These will start a subshell after installing all the Makes dependencies you
 have already included.
 
 
+## Testing Specific `<tool>.mk` Files
+
+If you want to try out a specific `<name>.mk` file here, just run `make
+<name>`.
+That will start a shell with the `<name>` tooling installed.
+
+For instance, to try out `crystal.mk`, just run `make crystal`.
+
+
 ## Using Gists for Makefiles
 
 If you often want to use a language like Rust on various machines but you don't
