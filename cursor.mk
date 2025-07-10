@@ -10,11 +10,17 @@ CURSOR-HISTORY-JSON := $(shell curl -sL $(CURSOR-HISTORY-URL))
 CURSOR-VERSION ?= $(shell \
   jq -r '.versions[0].version' <<<'$(CURSOR-HISTORY-JSON)')
 
+OA-linux-arm64 := linux-arm64
+OA-linux-int64 := linux-amd64
+OA-macos-arm64 := darwin-arm64
+OA-macos-int64 := darwin-amd64
+
 ifdef CURSOR-VERSION
   CURSOR-DATE := $(shell \
     jq -r '.versions[0].date' <<<'$(CURSOR-HISTORY-JSON)')
   URL-linux-int64 := $(shell \
-    jq -r '.versions[0].platforms."linux-x64"' <<<'$(CURSOR-HISTORY-JSON)')
+    jq -r '.versions[] | select(.version == "$(CURSOR-VERSION)") | \
+    .platforms."linux-x64"' <<<'$(CURSOR-HISTORY-JSON)')
 else
   CURSOR-VERSION := 1.2.2
   CURSOR-DATE := 2025-07-07
