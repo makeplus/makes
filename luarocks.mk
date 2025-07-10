@@ -4,8 +4,6 @@ LUAROCKS-LOADED := true
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 
-include $(MAKES)/lua.mk
-
 LUAROCKS-VERSION ?= 3.12.2
 LUAROCKS-TARBALL := luarocks-$(LUAROCKS-VERSION).tar.gz
 LUAROCKS-DOWNLOAD := \
