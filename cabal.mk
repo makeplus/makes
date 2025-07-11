@@ -7,6 +7,8 @@ $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
 include $(MAKES)/ghc.mk
 
+export CABAL_DIR := $(LOCAL-HOME)/cabal
+
 OA-linux-arm64 := aarch64-linux-deb12
 OA-linux-int64 := x86_64-linux-ubuntu22_04
 OA-macos-arm64 := aarch64-darwin
@@ -29,4 +31,4 @@ $(LOCAL-CACHE)/$(CABAL-TARBALL):
 	@echo "Installing 'Cabal $(CABAL-VERSION)' locally"
 	curl+ $(CABAL-DOWNLOAD) > $@
 
-endif 
+endif
