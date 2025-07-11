@@ -5,7 +5,7 @@ CABAL-LOADED := true
 
 $(if $(MAKES),,$(error Please 'include .makes/init.mk'))
 $(eval $(call include-local))
-include ghc.mk
+include $(MAKES)/ghc.mk
 
 OA-linux-arm64 := aarch64-linux-deb12
 OA-linux-int64 := x86_64-linux-ubuntu22_04
