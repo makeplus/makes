@@ -38,11 +38,12 @@ GO-CMDS := $(filter-out $(GO-CMDS-SKIP),$(GO-CMDS))
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
 GO-BIN := $(GO-LOCAL)/bin
+
+override PATH := $(GO-BIN):$(PATH)
+
 GO := $(GO-BIN)/go
 
 SHELL-DEPS += $(GO)
-
-override PATH := $(GO-BIN):$(PATH)
 
 ifndef GO-PROGRAM
 ifneq (,$(wildcard main.go))

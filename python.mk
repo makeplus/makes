@@ -12,13 +12,15 @@ endif
 
 PYTHON-CACHE := __pycache__
 
-PYTHON-VENV ?= $(MAKES-DIR)/.venv
-# PYTHON-VENV-SETUP ?= true
+PYTHON-VENV ?= $(LOCAL-ROOT)/python-venv
+PYTHON-VENV-SETUP ?= true
 
 VENV := source $(PYTHON-VENV)/bin/activate
 
 export VIRTUAL_ENV := $(PYTHON-VENV)
 override PATH := $(PYTHON-VENV)/bin:$(PATH)
+
+SHELL-DEPS += $(PYTHON-VENV)
 
 
 $(PYTHON-VENV):
