@@ -1,3 +1,8 @@
+ifndef CURSOR-LOADED
+CURSOR-LOADED := true
+$(if $(MAKES),,$(error Please 'include init.mk' first))
+$(eval $(call include-local))
+
 ifndef CURSOR-VERSION
 $(if $(shell command -v jq),,$(error cursor.mk requires jq to be installed))
 endif
@@ -27,11 +32,8 @@ else
   URL-linux-int64 := https://downloads.cursor.com/production/faa03b17cce93e8a80b7d62d57f5eda6bb6ab9fa/linux/x64/Cursor-1.2.2-x86_64.AppImage
 endif
 
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
-$(eval $(call include-local))
-
-CURSOR-DOWNLOAD := $(URL-$(OS-ARCH))
-CURSOR-EXE := $(shell basename $(CURSOR-DOWNLOAD))
+CURSOR-DOWN := $(URL-$(OS-ARCH))
+CURSOR-EXE := $(shell basename $(CURSOR-DOWN))
 
 ifndef CURSOR-EXE
 $(error Unable to determine cursor executable)
@@ -44,7 +46,9 @@ SHELL-DEPS := $(CURSOR)
 
 $(CURSOR):
 	@echo "Installing '$(CURSOR-EXE)'"
-	curl+ $(CURSOR-DOWNLOAD) > $@
+	curl+ $(CURSOR-DOWN) > $@
 	chmod +x $@
 	touch $@
 	@echo
+
+endif

@@ -1,4 +1,4 @@
-$(if $(MAKES-LOADED),$(error makes.mk already loaded))
+ifndef MAKES-LOADED
 MAKES-LOADED := true
 
 
@@ -47,3 +47,5 @@ _makes-push:
 
 _makes-env:
 	@echo export PATH=$$PATH
+
+endif

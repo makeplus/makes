@@ -1,20 +1,19 @@
 DOTNET-VERSION ?= 8.0.412
 
+ifndef DOTNET-LOADED
+DOTNET-LOADED := true
+$(if $(MAKES),,$(error Please 'include init.mk' first))
+$(eval $(call include-local))
+
 OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := osx-arm64
 OA-macos-int64 := osx-x64
 
-ifndef DOTNET-LOADED
-DOTNET-LOADED := true
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
-$(eval $(call include-local))
-
 DOTNET-NAME := dotnet-sdk
-DOTNET-TARBALL := $(DOTNET-NAME)-$(DOTNET-VERSION)-$(OA-$(OS-ARCH)).tar.gz
-DOTNET-DOWNLOAD := https://builds.dotnet.microsoft.com/dotnet/Sdk
-DOTNET-DOWNLOAD := $(DOTNET-DOWNLOAD)/$(DOTNET-VERSION)/$(DOTNET-TARBALL)
+DOTNET-TAR := $(DOTNET-NAME)-$(DOTNET-VERSION)-$(OA-$(OS-ARCH)).tar.gz
+DOTNET-DOWN := https://builds.dotnet.microsoft.com/dotnet/Sdk
+DOTNET-DOWN := $(DOTNET-DOWN)/$(DOTNET-VERSION)/$(DOTNET-TAR)
 
 DOTNET-ROOT := $(LOCAL-ROOT)/$(DOTNET-NAME)-$(DOTNET-VERSION)
 export DOTNET_ROOT := $(DOTNET-ROOT)
@@ -29,12 +28,12 @@ $(DOTNET): $(DOTNET-ROOT)
 	touch $@
 	@echo
 
-$(DOTNET-ROOT): $(LOCAL-CACHE)/$(DOTNET-TARBALL)
+$(DOTNET-ROOT): $(LOCAL-CACHE)/$(DOTNET-TAR)
 	mkdir -p $@
 	tar -C $@ -xzf $<
 
-$(LOCAL-CACHE)/$(DOTNET-TARBALL):
+$(LOCAL-CACHE)/$(DOTNET-TAR):
 	@echo "Installing 'GraalVM' locally"
-	curl+ $(DOTNET-DOWNLOAD) > $@
+	curl+ $(DOTNET-DOWN) > $@
 
 endif

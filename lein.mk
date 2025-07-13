@@ -1,26 +1,11 @@
-LEIN-CLOJURE-VERSION := 0.12.1
+LEIN-VERSION ?= 2.11.2
 
 ifndef LEIN-LOADED
 LEIN-LOADED := true
-
-$(if $(CLOJURE-LOADED),,\
-$(error lein.mk requires including clojure.mk first))
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
-
-LEIN-URL := \
-  https://codeberg.org/leiningen/leiningen/raw/tag/2.11.2/bin/lein
-
-LEIN := $(LOCAL-BIN)/lein
-
-SHELL-DEPS += $(LEIN)
-
-export LEIN_HOME := $(LOCAL-HOME)
-export LEIN_JVM_OPTS := \
-  -XX:+TieredCompilation \
-  -XX:TieredStopAtLevel=1 \
-  $(MAVEN-OPTS)
+include $(MAKES)/clojure.mk
+include $(MAKES)/maven.mk
 
 LEIN-CMDS := \
   help \
@@ -28,11 +13,23 @@ LEIN-CMDS := \
   repl \
   version \
 
+export LEIN_HOME := $(LOCAL-HOME)
+export LEIN_JVM_OPTS := \
+  -XX:+TieredCompilation \
+  -XX:TieredStopAtLevel=1 \
+  $(MAVEN-OPTS)
+
+LEIN-DOWN := https://codeberg.org/leiningen/leiningen/raw/tag
+LEIN-DOWN := $(LEIN-DOWN)/$(LEIN-VERSION)/bin/lein
+
+LEIN := $(LOCAL-BIN)/lein
+
+SHELL-DEPS += $(LEIN)
 
 
 $(LEIN):: $(CLOJURE) $(MAVEN)
 	@echo "Installing 'lein' locally"
-	curl+ $(LEIN-URL) > $@
+	curl+ $(LEIN-DOWN) > $@
 	chmod +x $@
 
 endif

@@ -2,8 +2,7 @@ BB-VERSION ?= 1.12.204
 
 ifndef BB-LOADED
 BB-LOADED := true
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 OA-linux-arm64 := linux-aarch64
@@ -12,24 +11,24 @@ OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-amd64
 
 BB-NAME := babashka-$(BB-VERSION)-$(OA-$(OS-ARCH))
-BB-TARBALL := $(BB-NAME).tar.gz
-BB-REPO-URL := https://github.com/babashka/babashka
-BB-DOWNLOAD := $(BB-REPO-URL)/releases/download/v$(BB-VERSION)/$(BB-TARBALL)
+BB-TAR := $(BB-NAME).tar.gz
+BB-DOWN := https://github.com/babashka/babashka
+BB-DOWN := $(BB-DOWN)/releases/download/v$(BB-VERSION)/$(BB-TAR)
 
 BB := $(LOCAL-BIN)/bb
 
 SHELL-DEPS += $(BB)
 
 
-$(BB): $(LOCAL-CACHE)/$(BB-TARBALL)
+$(BB): $(LOCAL-CACHE)/$(BB-TAR)
 	tar -C $(LOCAL-CACHE) -xf $< -- bb
 	[[ -e $(LOCAL-CACHE)/bb ]]
 	mv $(LOCAL-CACHE)/bb $@
 	touch $@
 	@echo
 
-$(LOCAL-CACHE)/$(BB-TARBALL):
+$(LOCAL-CACHE)/$(BB-TAR):
 	@echo "Installing 'bb' locally"
-	curl+ $(BB-DOWNLOAD) > $@
+	curl+ $(BB-DOWN) > $@
 
 endif

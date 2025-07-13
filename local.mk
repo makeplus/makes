@@ -1,7 +1,6 @@
 $(if $(LOCAL-LOADED),$(error local.mk already loaded))
 LOCAL-LOADED := true
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 
 ifdef MAKES_LOCAL_DIR
   LOCAL-ROOT := $(MAKES_LOCAL_DIR)

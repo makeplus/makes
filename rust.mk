@@ -1,20 +1,7 @@
 ifndef RUST-LOADED
 RUST-LOADED := true
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
-
-export CARGO_HOME := $(LOCAL-ROOT)/cargo
-export RUSTUP_HOME := $(LOCAL-ROOT)/rustup
-
-CARGO-BIN := $(CARGO_HOME)/bin
-
-override PATH := $(CARGO-BIN):$(PATH)
-
-CARGO := $(CARGO-BIN)/rustup
-RUSTUP := $(CARGO-BIN)/rustup
-
-SHELL-DEPS += $(CARGO)
 
 CARGO-CMDS := \
   build \
@@ -22,6 +9,17 @@ CARGO-CMDS := \
   clippy \
   fmt \
   test \
+
+export CARGO_HOME := $(LOCAL-ROOT)/cargo
+export RUSTUP_HOME := $(LOCAL-ROOT)/rustup
+
+CARGO-BIN := $(CARGO_HOME)/bin
+override PATH := $(CARGO-BIN):$(PATH)
+
+CARGO := $(CARGO-BIN)/rustup
+RUSTUP := $(CARGO-BIN)/rustup
+
+SHELL-DEPS += $(CARGO)
 
 
 $(CARGO):

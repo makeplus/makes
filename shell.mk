@@ -1,4 +1,4 @@
-$(if $(SHELL-LOADED),$(error shell.mk already loaded))
+ifndef SHELL-LOADED
 SHELL-LOADED := true
 
 SHELL-NAME ?= makes
@@ -30,4 +30,6 @@ ifndef MAKES_SHELL
 	)
 else
 	@echo 'You are already in a Makes bash shell'
+endif
+
 endif

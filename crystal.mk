@@ -2,8 +2,7 @@ CRYSTAL-VERSION ?= 1.16.3
 
 ifndef CRYSTAL-LOADED
 CRYSTAL-LOADED := true
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 OA-linux-arm64 := XXX
@@ -12,27 +11,27 @@ OA-macos-arm64 := darwin-universal
 OA-macos-int64 := darwin-universal
 
 CRYSTAL-DIR := crystal-$(CRYSTAL-VERSION)-1
-CRYSTAL-TARBALL := $(CRYSTAL-DIR)-$(OA-$(OS-ARCH)).tar.gz
-CRYSTAL-DOWNLOAD := https://github.com/crystal-lang/crystal/releases/download
-CRYSTAL-DOWNLOAD := $(CRYSTAL-DOWNLOAD)/$(CRYSTAL-VERSION)/$(CRYSTAL-TARBALL)
+CRYSTAL-TAR := $(CRYSTAL-DIR)-$(OA-$(OS-ARCH)).tar.gz
+CRYSTAL-DOWN := https://github.com/crystal-lang/crystal/releases/download
+CRYSTAL-DOWN := $(CRYSTAL-DOWN)/$(CRYSTAL-VERSION)/$(CRYSTAL-TAR)
 
 CRYSTAL-LOCAL := $(LOCAL-ROOT)/$(CRYSTAL-DIR)
 CRYSTAL-BIN := $(CRYSTAL-LOCAL)/bin
+override PATH := $(CRYSTAL-BIN):$(PATH)
+
 CRYSTAL := $(CRYSTAL-BIN)/crystal
 
 SHELL-DEPS += $(CRYSTAL)
 
-override PATH := $(CRYSTAL-BIN):$(PATH)
 
-
-$(CRYSTAL): $(LOCAL-CACHE)/$(CRYSTAL-TARBALL)
+$(CRYSTAL): $(LOCAL-CACHE)/$(CRYSTAL-TAR)
 	tar -C $(LOCAL-CACHE) -xzf $<
 	mv $(LOCAL-CACHE)/$(CRYSTAL-DIR) $(CRYSTAL-LOCAL)
 	touch $@
 	@echo
 
-$(LOCAL-CACHE)/$(CRYSTAL-TARBALL):
+$(LOCAL-CACHE)/$(CRYSTAL-TAR):
 	@echo "Installing 'crystal' locally"
-	curl+ $(CRYSTAL-DOWNLOAD) > $@
+	curl+ $(CRYSTAL-DOWN) > $@
 
 endif

@@ -7,7 +7,7 @@ IN-DOCKER := true
 
 else
 
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 include $(MAKES)/git.mk
 
@@ -31,6 +31,7 @@ $(shell $(RM) $(DOCKER-RUN-FILE))
 ifneq (,$(shell docker ps | grep $(DOCKER-NAME)))
 $(shell touch $(DOCKER-RUN-FILE))
 endif
+
 
 realclean:: docker-kill
 

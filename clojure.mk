@@ -2,17 +2,16 @@ CLOJURE-VERSION ?= 1.12.1.1550
 
 ifndef CLOJURE-LOADED
 CLOJURE-LOADED := true
-
-$(if $(or $(JAVA-LOADED),$(GRAALVM-LOADED)),,\
-$(error clojure.mk requires including java.mk or graalvm.mk first))
-
-include $(MAKES)/maven.mk
-
-$(if $(MAKES),,$(error Please 'include .makes/init.mk'))
+$(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
+ifndef JAVA-LOADED
+ifndef GRAALVM-LOADED
+include $(MAKES)/java.mk
+endif
+endif
 
-CLOJURE-INSTALLER := \
-  https://github.com/clojure/brew-install/releases/download/$(CLOJURE-VERSION)/posix-install.sh
+CLOJURE-DOWN := https://github.com/clojure/brew-install/releases/download
+CLOJURE-DOWN := $(CLOJURE-DOWN)/$(CLOJURE-VERSION)/posix-install.sh
 
 CLOJURE := $(LOCAL-BIN)/clojure
 
@@ -21,7 +20,7 @@ SHELL-DEPS += $(CLOJURE)
 
 $(CLOJURE): $(CLOJURE-DEPS) $(JAVA)
 	@echo "Installing 'clojure' locally"
-	bash <(curl+ $(CLOJURE-INSTALLER)) -p $(LOCAL-PREFIX)
+	bash <(curl+ $(CLOJURE-DOWN)) -p $(LOCAL-PREFIX)
 	touch $@
 
 endif
