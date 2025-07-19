@@ -18,6 +18,9 @@ DOCKER-BASH-HISTORY := $(LOCAL-CACHE)/bash-history
 DOCKER-EXEC := docker exec -it $(DOCKER-NAME)
 DOCKER-FILE := $(LOCAL-TMP)/Dockerfile
 DOCKER-CONTEXT := .
+DOCKER-RUNNING := \
+  $(shell curl -s --unix-socket /var/run/docker.sock http/_ping \
+	  2>&1 >/dev/null && echo true)
 
 ifdef DOCKER-USER
 ifdef DOCKER-VERSION
