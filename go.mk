@@ -52,6 +52,9 @@ GO := $(GO-LOCAL)/bin/go
 SHELL-DEPS += $(GO)
 
 
+clean::
+	chmod -R +w $(LOCAL-ROOT)
+
 # Go command rules:
 ifndef MAKES-NO-RULES
 
@@ -77,13 +80,13 @@ endif
 
 
 # Install rules:
-$(GO): $(LOCAL-CACHE)/$(GO-TAR)
+$(GO):: $(LOCAL-CACHE)/$(GO-TAR)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	mv $(LOCAL-ROOT)/go $(GO-LOCAL)
 	touch $@
 	@echo
 
-$(LOCAL-CACHE)/$(GO-TAR):
+$(LOCAL-CACHE)/$(GO-TAR)::
 	@echo "Installing 'go' locally"
 	curl+ $(GO-DOWN) > $@
 

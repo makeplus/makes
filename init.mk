@@ -23,6 +23,10 @@ MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 export PATH := $(MAKES)/bin:$(PATH)
 export LANG := en_US.UTF-8
 
+# For commands dealing with space characters
+null :=
+space := $(null) #
+
 
 
 ifndef MAKES-NO-RULES
