@@ -86,7 +86,7 @@ $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
 	touch $@
 	@echo
 
-$(LOCAL-CACHE)/$(GO-TAR)::
+$(LOCAL-CACHE)/$(GO-TAR):
 	@echo "Installing 'go' locally"
 	curl+ $(GO-DOWN) > $@
 
