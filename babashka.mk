@@ -1,34 +1,34 @@
-BB-VERSION ?= 1.12.204
+BABASHKA-VERSION ?= 1.12.207
 
-ifndef BB-LOADED
-BB-LOADED := true
+ifndef BABASHKA-LOADED
+BABASHKA-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
-OA-linux-arm64 := linux-aarch64
+OA-linux-arm64 := linux-aarch64-static
 OA-linux-int64 := linux-amd64-static
 OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-amd64
 
-BB-NAME := babashka-$(BB-VERSION)-$(OA-$(OS-ARCH))
-BB-TAR := $(BB-NAME).tar.gz
-BB-DOWN := https://github.com/babashka/babashka
-BB-DOWN := $(BB-DOWN)/releases/download/v$(BB-VERSION)/$(BB-TAR)
+BABASHKA-DIR := babashka-$(BABASHKA-VERSION)-$(OA-$(OS-ARCH))
+BABASHKA-TAR := $(BABASHKA-DIR).tar.gz
+BABASHKA-DOWN := https://github.com/babashka/babashka
+BABASHKA-DOWN := $(BABASHKA-DOWN)/releases/download/v$(BABASHKA-VERSION)/$(BABASHKA-TAR)
 
 BB := $(LOCAL-BIN)/bb
 
 SHELL-DEPS += $(BB)
 
 
-$(BB): $(LOCAL-CACHE)/$(BB-TAR)
-	tar -C $(LOCAL-CACHE) -xf $< -- bb
+$(BB): $(LOCAL-CACHE)/$(BABASHKA-TAR)
+	tar -C $(LOCAL-CACHE) -xf $<
 	[[ -e $(LOCAL-CACHE)/bb ]]
-	mv $(LOCAL-CACHE)/bb $@
+	mv $(LOCAL-CACHE)/bb $(LOCAL-BIN)
 	touch $@
 	@echo
 
-$(LOCAL-CACHE)/$(BB-TAR):
+$(LOCAL-CACHE)/$(BABASHKA-TAR):
 	@echo "Installing 'bb' locally"
-	curl+ $(BB-DOWN) > $@
+	curl+ $(BABASHKA-DOWN) > $@
 
 endif
