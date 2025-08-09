@@ -11,11 +11,14 @@ OA-macos-arm64 := darwin_arm64
 OA-macos-int64 := darwin_amd64
 OA := $(OA-$(OS-ARCH))
 
-ifneq (main,$(GLOJURE-VERSION))
-override GLOJURE-VERSION := v$(GLOJURE-VERSION)
-endif
+override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
+  ,v$(GLOJURE-VERSION),$(GLOJURE-VERSION))
+
 GLOJURE-DIR := $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
-GLOJURE-REPO := https://github.com/glojurelang/glojure
+GLOJURE-REPO ?= https://github.com/glojurelang/glojure
+
+override GLOJURE-REPO := $(if $(findstring https://,$(GLOJURE-REPO)) \
+  ,$(GLOJURE-REPO),https://github.com/$(GLOJURE-REPO))
 
 GLOJURE := $(LOCAL-BIN)/glj
 
@@ -33,6 +36,6 @@ $(GLOJURE-DIR)/bin/$(OA)/glj: $(GLOJURE-DIR) $(GO)
 $(GLOJURE-DIR):
 	@echo "Installing 'glj' locally"
 	git clone $(GLOJURE-REPO) $@
-	git -C $@ reset --hard $(GLOJURE-VERSION)
+	git -C $@ checkout $(GLOJURE-VERSION)
 
 endif
