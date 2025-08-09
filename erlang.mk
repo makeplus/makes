@@ -1,4 +1,4 @@
-ERLANG-VERSION ?= 27.3.4.2
+ERLANG-VERSION ?= 28.0.2
 
 ifndef ERLANG-LOADED
 ERLANG-LOADED := true
@@ -43,4 +43,4 @@ $(LOCAL-CACHE)/$(ERLANG-TAR):
 	@echo "Installing 'erlang' locally"
 	curl+ $(ERLANG-DOWN) > $@
 
-endif 
+endif

@@ -1,0 +1,54 @@
+#!/usr/bin/env ys-0
+
+skip =: qw(clean clojure cursor docker erlang git graalvm help
+           initjava local luajit makes python rust shell zild)
+  .map(\(_ + '.mk'))
+
+files =: bash('ls *.mk').out:lines
+  .remove(\(_.in?(skip)))
+
+parse-re =: qr("(?x)
+  [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
+  (?s:.*)
+  (https://github\.com/[-\w]+/[-\w]+)\n
+  ")
+
+defn cmd(url): |
+  git -c 'versionsort.suffix=-' \
+      ls-remote \
+      --tags \
+      --sort='v:refname' \
+      $url | \
+    cut -d/ -f3 | \
+    grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$' | \
+    sed 's/^v//'
+
+defn highest(list):
+  last:
+    sort-by _ list:
+      fn(v):
+        reduce _ "" v.split(/[-.]/):
+          fn(w s):
+            if s =~ /^\d+$/: +
+              "$w-$(format('%05d' s:I))"
+              "$w.$s"
+
+files =:
+  # reduce _ [] ['arturo.mk']:
+  reduce _ [] files:
+    fn(files file):
+      _ ver url =:
+        file:read =~ parse-re
+      if ver:
+        then:
+          say: "file - $url"
+          new =: bash(url:cmd).out:lines:highest
+            .replace(/^(?:v|OTP-)/)
+            .replace(/(?:\.ROLLING)$/)
+          if new != ver:
+            conj files: +[file ver new url]
+            else: files
+        else: files
+
+each file files:
+  say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
