@@ -1,4 +1,5 @@
 CLOJURE-VERSION ?= 1.12.1.1550
+# https://www.github.com/clojure/brew-install/releases/
 
 ifndef CLOJURE-LOADED
 CLOJURE-LOADED := true

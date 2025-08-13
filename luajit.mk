@@ -1,5 +1,6 @@
 LUAJIT-VERSION ?= 2.1
 LUAJIT-COMMIT ?= f9140a622a0c44a99efb391cc1c2358bc8098ab7
+# https://www.github.com/LuaJIT/LuaJIT/tags
 
 ifndef LUAJIT-LOADED
 LUAJIT-LOADED := true

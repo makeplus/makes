@@ -1,5 +1,6 @@
-JULIA-VERSION ?= 1.11.5
+JULIA-VERSION ?= 1.11.6
 JULIA-VER ?= 1.11
+# https://github.com/JuliaLang/julia
 
 ifndef JULIA-LOADED
 JULIA-LOADED := true

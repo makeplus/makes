@@ -1,3 +1,6 @@
+RUST-VERSION := 1.89.0
+# https://github.com/rust-lang/rust
+
 ifndef RUST-LOADED
 RUST-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
@@ -34,6 +37,8 @@ $(CARGO):
 	    --profile minimal \
 	    --no-modify-path \
 	> /dev/null
+	rustup install $(RUST-VERSION)
+	rustup default $(RUST-VERSION)
 	rustup component add clippy
 	rustup component add rustfmt
 	touch $@

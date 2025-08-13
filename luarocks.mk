@@ -1,4 +1,5 @@
 LUAROCKS-VERSION ?= 3.12.2
+# https://github.com/luarocks/luarocks
 
 ifndef LUAROCKS-LOADED
 LUAROCKS-LOADED := true

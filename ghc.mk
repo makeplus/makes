@@ -1,4 +1,5 @@
 GHC-VERSION ?= 9.12.1
+# https://www.github.com/ghc/ghc/tags
 
 ifndef GHC-LOADED
 GHC-LOADED := true

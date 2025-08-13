@@ -1,25 +1,5 @@
 #!/usr/bin/env ys-0
 
-skip =::
-- clean
-- clojure
-- cursor
-- docker
-- erlang
-- git
-- graalvm
-- help
-- initjava
-- local
-- luajit
-- makes
-- python
-- rust
-- shell
-- zild
-
-skip .=: map(\(_ + '.mk'))
-
 parse-re =: qr("(?x)
   [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
   (?s:.*)
@@ -28,10 +8,10 @@ parse-re =: qr("(?x)
 
 defn main():
   files =: bash('ls *.mk').out:lines
-    .remove(\(_.in?(skip)))
+    .remove(\(_:read.re-find(/www\.github/)))
 
   files =:
-    # reduce _ [] ['arturo.mk']:
+    # reduce _ [] ['go.mk']:
     reduce _ [] files:
       fn(files file):
         _ ver url =:
@@ -51,16 +31,15 @@ defn main():
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
 
 defn cmd(url): |
-  git -c 'versionsort.suffix=-' \
-      ls-remote \
+  git ls-remote \
       --tags \
-      --sort='v:refname' \
       $url | \
     cut -d/ -f3 | \
-    grep -E '^v?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$'
+    grep -E '^([a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
+#    grep -E '^(v|go)?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$'
 
 defn highest(list):
-  list .=: map(\(_.replace(/^v/)))
+  list .=: map(\(_.replace(/^([a-z]+-?)/)))
   last:
     sort-by _ list:
       fn(v):

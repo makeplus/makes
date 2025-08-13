@@ -1,4 +1,5 @@
 MAVEN-VERSION ?= 3.9.11
+# https://github.com/apache/maven
 
 ifndef MAVEN-LOADED
 MAVEN-LOADED := true

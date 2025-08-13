@@ -16,6 +16,9 @@ shell:
 	$(MAKE) -f <(curl -sL $(MAKEFILE-SHELL-URL)) shell \
 	  MAKES-INCLUDE='$m'
 
+version-check:
+	bin/check-versions
+
 $(SHELL-TARGETS):
 	$(MAKE) -f <(curl -sL $(MAKEFILE-TEST-URL)) shell \
 	  MAKES-FILE=$(@:%-shell=%)

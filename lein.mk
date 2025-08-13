@@ -1,4 +1,5 @@
 LEIN-VERSION ?= 2.11.2
+# https://codeberg.org/leiningen/leiningen/tags
 
 ifndef LEIN-LOADED
 LEIN-LOADED := true

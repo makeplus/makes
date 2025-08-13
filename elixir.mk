@@ -1,5 +1,6 @@
 ELIXIR-VERSION ?= 1.18.4
 ELIXIR-OTP-VERSION ?= 27
+# https://github.com/elixir-lang/elixir
 
 ifndef ELIXIR-LOADED
 ELIXIR-LOADED := true
