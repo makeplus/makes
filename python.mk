@@ -1,13 +1,22 @@
+PYTHON-VERSION := 3.13.7
+
 ifndef PYTHON-LOADED
 PYTHON-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
-$(eval $(call include-local))
+include $(MAKES)/uv.mk
 
-PYTHON := $(shell command -v python3)
-PYTHON ?= $(shell command -v python)
-ifndef PYTHON
-  $(error Python doesn't seem to be installed)
-endif
+OA-linux-arm64 := linux-aarch64-none
+OA-linux-int64 := linux-x86_64-gnu
+OA-macos-arm64 := macos-aarch64-none
+OA-macos-int64 := macos-x86_64-gnu
+
+PYTHON-NAME := cpython-$(PYTHON-VERSION)-$(OA-$(OS-ARCH))
+PYTHON-TAR := $(PYTHON-NAME).tar.gz
+PYTHON-BIN := $(LOCAL-ROOT)/$(PYTHON-NAME)/bin
+PYTHON := $(PYTHON-BIN)/python
+
+export UV_PYTHON_INSTALL_DIR := $(LOCAL-ROOT)
+override PATH := $(PYTHON-BIN):$(PATH)
 
 PYTHON-VENV-SETUP ?= true
 PYTHON-CACHE := __pycache__
@@ -16,8 +25,11 @@ VENV := source $(PYTHON-VENV)/bin/activate
 export VIRTUAL_ENV := $(PYTHON-VENV)
 override PATH := $(PYTHON-VENV)/bin:$(PATH)
 
-SHELL-DEPS += $(PYTHON-VENV)
+SHELL-DEPS += $(PYTHON) $(PYTHON-VENV)
 
+
+$(PYTHON):
+	uv python install $(PYTHON-NAME)
 
 $(PYTHON-VENV):
 	@echo '+++ Installing a Python virtualenv in $@'
