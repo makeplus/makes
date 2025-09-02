@@ -84,6 +84,7 @@ endif
 $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	mv $(LOCAL-ROOT)/go $(GO-LOCAL)
+	ln $@ $@$(GO-VERSION)
 	touch $@
 	@echo
 
