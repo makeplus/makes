@@ -28,10 +28,10 @@ override PATH := $(PYTHON-VENV)/bin:$(PATH)
 SHELL-DEPS += $(PYTHON) $(PYTHON-VENV)
 
 
-$(PYTHON):
+$(PYTHON): $(UV)
 	uv python install $(PYTHON-NAME)
 
-$(PYTHON-VENV):
+$(PYTHON-VENV): $(PYTHON)
 	@echo '+++ Installing a Python virtualenv in $@'
 	$(PYTHON) -m venv $@
 	$(PYTHON-VENV-SETUP)
