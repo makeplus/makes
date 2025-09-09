@@ -14,7 +14,7 @@ include $(MAKES)/git.mk
 DOCKER-NAME ?= makes-$(GIT-REPO-NAME)
 DOCKER-BUILD-FILE := $(LOCAL-CACHE)/docker-build-$(DOCKER-NAME)
 DOCKER-RUN-FILE := $(LOCAL-CACHE)/docker-run-$(DOCKER-NAME)
-DOCKER-BASH-HISTORY := $(LOCAL-CACHE)/bash-history
+DOCKER-BASH-HISTORY ?= $(LOCAL-CACHE)/bash-history
 DOCKER-EXEC := docker exec -it $(DOCKER-NAME)
 DOCKER-FILE := $(LOCAL-TMP)/Dockerfile
 DOCKER-CONTEXT := .
@@ -54,6 +54,7 @@ docker-push: $(DOCKER-BUILD-FILE)
 endif
 
 $(DOCKER-RUN-FILE): $(DOCKER-BUILD-FILE)
+	touch $(DOCKER-BASH-HISTORY)
 	docker run -d --rm \
 	  --name $(DOCKER-NAME) \
 	  --workdir $(ROOT) \

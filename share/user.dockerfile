@@ -3,7 +3,7 @@ ARG UID
 ARG GID
 
 RUN set -x \
- && userdel ubuntu \
+ && (userdel ubuntu || true) \
  && groupadd -g $GID $USER \
  && useradd -rm \
         -u $UID \
