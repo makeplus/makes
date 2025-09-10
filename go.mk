@@ -44,11 +44,12 @@ GO-DOWN := https://go.dev/dl/$(GO-TAR)
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
 
+ifndef GO-NO-DEP-GO
 export GOROOT := $(GO-LOCAL)
 export GOPATH := $(LOCAL-ROOT)/go
 override PATH := $(GOPATH)/bin:$(GO-LOCAL)/bin:$(PATH)
-
 GO := $(GO-LOCAL)/bin/go
+endif
 
 SHELL-DEPS += $(GO)
 
@@ -66,7 +67,7 @@ ifndef GO-PROGRAM
 endif
 	go $@ $(GO-PROGRAM).go
 
-$(GO-CMDS):: $(if $(GO-NO-DEP-GO),,$(GO)) $(GO-DEPS)
+$(GO-CMDS):: $(GO) $(GO-DEPS)
 	go $@$(if $(v), -v,) $(opts)
 
 tidy:: $(GO)
