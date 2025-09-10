@@ -11,8 +11,9 @@ else ifdef MAKES-LOCAL-DIR
 else ifdef MAKES_REPO_DIR
   LOCAL-ROOT := $(MAKEFILE-DIR)/.cache/.local
 else
-  LOCAL-ROOT := $(abspath $(dir $(MAKES)))/.local
+  LOCAL-ROOT := $(dir $(MAKES))/.local
 endif
+LOCAL-ROOT := $(abspath $(LOCAL-ROOT))
 
 LOCAL-PREFIX := $(LOCAL-ROOT)
 LOCAL-CACHE  := $(LOCAL-PREFIX)/cache
