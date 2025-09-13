@@ -13,11 +13,19 @@ LUA := $(LOCAL-BIN)/lua
 
 SHELL-DEPS += $(LUA)
 
+ifdef IS-LINUX
+BUILD-OS := linux
+else ifdef IS-MACOS
+BUILD-OS := macosx
+else
+$(error Can't build lua on this OS)
+endif
+
 
 $(LUA): $(LOCAL-CACHE)/$(LUA-TAR)
 	tar -C $(LOCAL-CACHE) -xf $<
 	$(MAKE) -C $(LOCAL-CACHE)/lua-$(LUA-VERSION) \
-	  linux install INSTALL_TOP=$(LOCAL-PREFIX)
+	  $(BUILD-OS) install INSTALL_TOP=$(LOCAL-PREFIX)
 	touch $@
 	@echo
 
