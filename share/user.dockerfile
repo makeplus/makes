@@ -2,6 +2,8 @@ ARG USER
 ARG UID
 ARG GID
 
+ENV LANG en_US.UTF-8
+
 RUN set -x \
  && (userdel ubuntu || true) \
  && groupadd -g $GID $USER \

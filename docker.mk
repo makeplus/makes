@@ -31,8 +31,10 @@ endif
 
 $(shell $(RM) $(DOCKER-RUN-FILE))
 
+ifneq (,$(shell command -v docker))
 ifneq (,$(shell docker ps | grep $(DOCKER-NAME)))
 $(shell touch $(DOCKER-RUN-FILE))
+endif
 endif
 
 
