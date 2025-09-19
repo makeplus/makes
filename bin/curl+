@@ -24,8 +24,10 @@ main() (
 
   cd "$MAKES_CACHE_DIR" || exit
 
-  [[ -f $file ]] ||
-    curl -sL "$url" > "$file"
+  if ! [[ -f $file ]]; then
+    curl -sL "$url" > "$file-"
+    mv "$file-" "$file"
+  fi
 
   cat "$file"
 )
