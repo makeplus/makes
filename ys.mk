@@ -1,4 +1,4 @@
-YS-VERSION ?= 0.2.3
+YS-VERSION ?= 0.2.4
 
 ifndef YS-LOADED
 YS-LOADED := true

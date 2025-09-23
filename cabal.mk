@@ -1,4 +1,4 @@
-CABAL-VERSION ?= 3.16.0.0
+CABAL-VERSION ?= 3.14.2.0
 # https://www.github.com/haskell/cabal/releases
 
 ifndef CABAL-LOADED

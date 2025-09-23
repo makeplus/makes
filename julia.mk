@@ -1,4 +1,4 @@
-JULIA-VERSION ?= 1.11.6
+JULIA-VERSION ?= 1.11.7
 JULIA-VER ?= 1.11
 # https://github.com/JuliaLang/julia
 

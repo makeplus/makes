@@ -1,4 +1,4 @@
-ERLANG-VERSION ?= 28.0.2
+ERLANG-VERSION ?= 28.1
 # https://www.github.com/erlang/otp/releases
 
 ifndef ERLANG-LOADED

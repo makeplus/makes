@@ -1,5 +1,5 @@
-RAKU-VERSION ?= 2025.06.1-01
-# https://www.github.com/rakudo/rakudo/releases
+RAKU-VERSION ?= 2025.08-01
+# https://rakudo.org/dl/rakudo
 
 ifndef RAKU-LOADED
 RAKU-LOADED := true

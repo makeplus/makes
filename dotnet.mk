@@ -1,5 +1,5 @@
-DOTNET-VERSION ?= 8.0.413
-# https://www.github.com/dotnet/sdk/tree/v8.0.413
+DOTNET-VERSION ?= 8.0.414
+# https://www.github.com/dotnet/sdk/tree/v8.0.414
 
 ifndef DOTNET-LOADED
 DOTNET-LOADED := true
