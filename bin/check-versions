@@ -3,7 +3,7 @@
 parse-re =: qr("(?x)
   [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
   (?s:.*)
-  (https://github\.com/[-\w]+/[-\w]+)\n
+  (https://(?:www\.)?github\.com/[-\w]+/[-\w]+)\n
   ")
 
 defn main():
@@ -31,12 +31,13 @@ defn main():
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
 
   files =: bash('ls *.mk').out:lines
-    .keep(\(_:read.re-find(qr("https://www\.github\.com/.*")))):sort
+    .filter(\(_:read.re-find(qr("https://www\.github\.com/.*")))):sort
+    .map(\([_:read.re-find(qr("https://www\.github\.com/.*"))
+            _:read.re-find(parse-re).1]))
 
-  say: |
-
-    Check these by hand:
-    * $(files.join("\n* "))
+  say: "\nCheck these by hand:"
+  each file files:
+    say: format("%-60s - %s" file*)
 
 defn cmd(url): |
   git ls-remote \

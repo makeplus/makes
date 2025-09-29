@@ -1,4 +1,4 @@
-UV-VERSION ?= 0.8.20
+UV-VERSION ?= 0.8.22
 
 ifndef UV-LOADED
 UV-LOADED := true
