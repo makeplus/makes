@@ -58,7 +58,7 @@ clean::
 	chmod -R +w $(LOCAL-ROOT)
 
 # Go command rules:
-ifndef MAKES-NO-RULES
+ifdef GO-CMD-RULES
 
 run:: $(GO)
 ifndef GO-PROGRAM

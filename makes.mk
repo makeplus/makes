@@ -2,50 +2,50 @@ ifndef MAKES-LOADED
 MAKES-LOADED := true
 
 
-_:
+makes-default:
 
-_makes-shell:
+makes-shell:
 	@( \
 	  cd $(MAKES) && \
 	  bash --rcfile \
 	  <(cat ~/.bashrc; echo 'PS1="(makes) \w $$ "') \
 	)
 
-_makes-bash:
+makes-bash:
 	@( \
 	  bash --rcfile \
 	  <(cat ~/.bashrc; echo 'PS1="(makes) \w $$ "') \
 	)
 
-_makes-edit:
+makes-edit:
 	$${EDITOR:-vim} $(MAKES)/$(file)
 
-_makes-git:
+makes-git:
 	git -C $(MAKES) $A
 
-_makes-gll:
+makes-gll:
 	git -C $(MAKES) log --graph --decorate --pretty=oneline --abbrev-commit $A
 
-_makes-head:
+makes-head:
 	git -C $(MAKES) rev-parse HEAD
 
-_makes-status:
+makes-status:
 	git -C $(MAKES) status --ignored $A
 
-_makes-branch _makes-diff _makes-fetch _makes-pull:
+makes-branch _makes-diff _makes-fetch _makes-pull:
 	git -C $(MAKES) $(@:_makes-%=%) $A
 
-_makes-add:
+makes-add:
 	git -C $(MAKES) add -A .
 
-_makes-commit:
+makes-commit:
 	git -C $(MAKES) commit -av $A
 
-_makes-push:
+makes-push:
 	git -C $(MAKES) push git@github.com:makeplus/makes $A && \
 	  git -C $(MAKES) fetch
 
-_makes-env:
+makes-env:
 	@echo export PATH=$$PATH
 
 endif

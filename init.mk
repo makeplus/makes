@@ -28,11 +28,8 @@ null :=
 space := $(null) #
 
 
-
-ifndef MAKES-NO-RULES
+ifndef MAKES-NO-DEFAULT
 default::
-
-include $(MAKES)/makes.mk
 endif
 
 
