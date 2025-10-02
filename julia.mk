@@ -38,7 +38,7 @@ $(JULIA): $(LOCAL-CACHE)/$(JULIA-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(JULIA-TAR):
-	@echo "Installing 'julia' locally"
+	@echo "* Installing 'julia' locally"
 	curl+ $(JULIA-DOWN) > $@
 
 endif

@@ -35,7 +35,7 @@ $(RAKU): $(LOCAL-CACHE)/$(RAKU-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(RAKU-TAR):
-	@echo "Installing 'raku' locally"
+	@echo "* Installing 'raku' locally"
 	curl+ $(RAKU-DOWN) > $@
 
 endif

@@ -41,7 +41,7 @@ $(JUST): $(LOCAL-CACHE)/$(JUST-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(JUST-TAR):
-	@echo "Installing 'just' locally"
+	@echo "* Installing 'just' locally"
 	curl+ $(JUST-DOWN) > $@
 
 endif

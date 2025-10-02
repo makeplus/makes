@@ -30,7 +30,7 @@ $(LUA): $(LOCAL-CACHE)/$(LUA-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(LUA-TAR):
-	@echo "Installing 'Lua $(LUA-VERSION)' locally"
+	@echo "* Installing 'Lua $(LUA-VERSION)' locally"
 	curl+ $(LUA-DOWN) >$@
 
 endif

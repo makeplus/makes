@@ -37,7 +37,7 @@ $(JAVA): $(LOCAL-CACHE)/$(JAVA-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(JAVA-TAR):
-	@echo "Installing 'java' locally"
+	@echo "* Installing 'java' locally"
 	curl+ $(JAVA-DOWN) > $@
 
 endif

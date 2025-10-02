@@ -36,7 +36,7 @@ $(ARTURO): $(LOCAL-CACHE)/$(ARTURO-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(ARTURO-TAR):
-	@echo "Installing 'arturo' locally"
+	@echo "* Installing 'arturo' locally"
 	curl+ $(ARTURO-DOWN) > $@
 
 endif

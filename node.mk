@@ -29,7 +29,7 @@ $(NODE): $(LOCAL-CACHE)/$(NODE-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(NODE-TAR):
-	@echo "Installing 'node' and 'npm' locally"
+	@echo "* Installing 'node' and 'npm' locally"
 	curl+ $(NODE-DOWN) > $@
 
 endif

@@ -29,7 +29,7 @@ $(CABAL): $(LOCAL-CACHE)/$(CABAL-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(CABAL-TAR):
-	@echo "Installing 'Cabal $(CABAL-VERSION)' locally"
+	@echo "* Installing 'Cabal $(CABAL-VERSION)' locally"
 	curl+ $(CABAL-DOWN) > $@
 
 endif

@@ -20,7 +20,7 @@ SHELL-DEPS += $(CLOJURE)
 
 
 $(CLOJURE): $(CLOJURE-DEPS) $(JAVA)
-	@echo "Installing 'clojure' locally"
+	@echo "* Installing 'clojure' locally"
 	bash <(curl+ $(CLOJURE-DOWN)) -p $(LOCAL-PREFIX)
 	touch $@
 

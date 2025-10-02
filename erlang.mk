@@ -41,7 +41,7 @@ $(ERL): $(LOCAL-CACHE)/$(ERLANG-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(ERLANG-TAR):
-	@echo "Installing 'erlang' locally"
+	@echo "* Installing 'erlang' locally"
 	curl+ $(ERLANG-DOWN) > $@
 
 endif

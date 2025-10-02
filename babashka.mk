@@ -21,14 +21,14 @@ SHELL-DEPS += $(BB)
 
 
 $(BB): $(LOCAL-CACHE)/$(BABASHKA-TAR)
-	tar -C $(LOCAL-CACHE) -xf $<
-	[[ -e $(LOCAL-CACHE)/bb ]]
-	mv $(LOCAL-CACHE)/bb $(LOCAL-BIN)
-	touch $@
-	@echo
+	$Q tar -C $(LOCAL-CACHE) -xf $<
+	$Q [[ -e $(LOCAL-CACHE)/bb ]]
+	$Q mv $(LOCAL-CACHE)/bb $(LOCAL-BIN)
+	$Q touch $@
+	@$(ECHO)
 
 $(LOCAL-CACHE)/$(BABASHKA-TAR):
-	@echo "Installing 'bb' locally"
-	curl+ $(BABASHKA-DOWN) > $@
+	@$(ECHO) "* Installing 'bb' locally"
+	$Q curl+ $(BABASHKA-DOWN) > $@
 
 endif

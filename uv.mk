@@ -27,7 +27,7 @@ $(UV): $(LOCAL-CACHE)/$(UV-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(UV-TAR):
-	@echo "Installing 'uv' locally"
+	@echo "* Installing 'uv' locally"
 	curl+ $(UV-DOWN) > $@
 
 endif

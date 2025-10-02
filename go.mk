@@ -84,14 +84,14 @@ endif
 
 # Install rules:
 $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
-	tar -C $(LOCAL-ROOT) -xzf $<
-	mv $(LOCAL-ROOT)/go $(GO-LOCAL)
-	ln $@ $@$(GO-VERSION)
-	touch $@
-	@echo
+	$Q tar -C $(LOCAL-ROOT) -xzf $<
+	$Q mv $(LOCAL-ROOT)/go $(GO-LOCAL)
+	$Q ln $@ $@$(GO-VERSION)
+	$Q touch $@
+	@$(ECHO)
 
 $(LOCAL-CACHE)/$(GO-TAR):
-	@echo "Installing 'go' locally"
-	curl+ $(GO-DOWN) > $@
+	@$(ECHO) "Installing 'go' locally"
+	$Q curl+ $(GO-DOWN) > $@
 
 endif

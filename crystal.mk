@@ -31,7 +31,7 @@ $(CRYSTAL): $(LOCAL-CACHE)/$(CRYSTAL-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(CRYSTAL-TAR):
-	@echo "Installing 'crystal' locally"
+	@echo "* Installing 'crystal' locally"
 	curl+ $(CRYSTAL-DOWN) > $@
 
 endif

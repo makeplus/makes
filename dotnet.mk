@@ -34,7 +34,7 @@ $(DOTNET-ROOT): $(LOCAL-CACHE)/$(DOTNET-TAR)
 	tar -C $@ -xzf $<
 
 $(LOCAL-CACHE)/$(DOTNET-TAR):
-	@echo "Installing 'GraalVM' locally"
+	@echo "* Installing 'GraalVM' locally"
 	curl+ $(DOTNET-DOWN) > $@
 
 endif

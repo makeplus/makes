@@ -30,7 +30,7 @@ $(ELIXIR): $(LOCAL-CACHE)/$(ELIXIR-ZIP)
 	@echo
 
 $(LOCAL-CACHE)/$(ELIXIR-ZIP):
-	@echo "Installing 'elixir' locally"
+	@echo "* Installing 'elixir' locally"
 	curl+ $(ELIXIR-DOWN) > $@
 
 endif

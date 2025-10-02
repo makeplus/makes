@@ -35,7 +35,7 @@ $(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(MAVEN-TAR):
-	@echo "Installing 'maven' locally"
+	@echo "* Installing 'maven' locally"
 	curl+ $(MAVEN-DOWN) > $@
 
 endif

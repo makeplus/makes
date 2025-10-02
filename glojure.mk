@@ -25,10 +25,10 @@ SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
 $(GLJ): $(GO)
-	go install $(GLOJURE-GET-URL)
+	$Q go install $(GLOJURE-GET-URL) $O
 
 $(GLOJURE-DIR):
-	git clone $(GLOJURE-REPO) $@
-	git -C $@ reset --hard $(GLOJURE-COMMIT)
+	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
+	$Q git -C $@ reset$(if $Q, -q) --hard $(GLOJURE-COMMIT)
 
 endif

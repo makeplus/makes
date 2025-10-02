@@ -31,7 +31,7 @@ $(WASMTIME): $(LOCAL-CACHE)/$(WASMTIME-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(WASMTIME-TAR):
-	@echo "Installing 'wasmtime' locally"
+	@echo "* Installing 'wasmtime' locally"
 	curl+ $(WASMTIME-DOWN) > $@
 
 endif

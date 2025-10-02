@@ -28,7 +28,7 @@ $(YS): $(LOCAL-CACHE)/$(YAMLSCRIPT-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(YAMLSCRIPT-TAR):
-	@echo "Installing 'ys' locally"
+	@echo "* Installing 'ys' locally"
 	curl+ $(YAMLSCRIPT-DOWN) > $@
 
 endif

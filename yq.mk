@@ -28,7 +28,7 @@ $(YQ): $(LOCAL-CACHE)/$(YQ-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(YQ-TAR):
-	@echo "Installing 'yq' locally"
+	@echo "* Installing 'yq' locally"
 	curl+ $(YQ-DOWN) > $@
 
 endif

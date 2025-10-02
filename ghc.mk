@@ -30,7 +30,7 @@ $(GHC): $(LOCAL-CACHE)/$(GHC-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(GHC-TAR):
-	@echo "Installing 'GHC $(GHC-VERSION)' locally"
+	@echo "* Installing 'GHC $(GHC-VERSION)' locally"
 	curl+ $(GHC-DOWN) > $@
 
 endif

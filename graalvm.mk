@@ -39,7 +39,7 @@ $(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(GRAALVM-TAR):
-	@echo "Installing 'GraalVM' locally"
+	@echo "* Installing 'GraalVM' locally"
 	curl+ $(GRAALVM-DOWN) > $@
 
 endif

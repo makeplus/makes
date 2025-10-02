@@ -27,11 +27,18 @@ export LANG := en_US.UTF-8
 null :=
 space := $(null) #
 
+ifdef MAKES-QUIET
+Q ?= @
+O ?= &>/dev/null
+ECHO ?= :$(space)
+else
+ECHO ?= echo
+endif
+
 
 ifndef MAKES-NO-DEFAULT
 default::
 endif
-
 
 ifndef NO-PHONY-TEST
 .PHONY: test

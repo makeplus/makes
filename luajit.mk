@@ -21,7 +21,7 @@ $(LUAJIT): $(LOCAL-CACHE)/$(LUAJIT-NAME)
 	@echo
 
 $(LOCAL-CACHE)/$(LUAJIT-NAME):
-	@echo "Installing 'LuaJIT $(LUAJIT-VERSION)' locally"
+	@echo "* Installing 'LuaJIT $(LUAJIT-VERSION)' locally"
 	git clone $(LUAJIT-DOWN) $@
 
 endif

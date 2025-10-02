@@ -28,7 +28,7 @@ $(LUAROCKS): $(LOCAL-CACHE)/$(LUAROCKS-TAR) $(LUA)
 	@echo
 
 $(LOCAL-CACHE)/$(LUAROCKS-TAR):
-	@echo "Installing 'Lua $(LUAROCKS-VERSION)' locally"
+	@echo "* Installing 'Lua $(LUAROCKS-VERSION)' locally"
 	curl+ $(LUAROCKS-DOWN) >$@
 
 endif
