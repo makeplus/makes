@@ -43,12 +43,13 @@ GO-TAR := go$(GO-VERSION).$(OA-$(OS-ARCH)).tar.gz
 GO-DOWN := https://go.dev/dl/$(GO-TAR)
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
+GO-LOCAL-BIN := $(GO-LOCAL)/bin
 
 ifndef GO-NO-DEP-GO
 export GOROOT := $(GO-LOCAL)
 export GOPATH := $(LOCAL-ROOT)/go
-override PATH := $(GOPATH)/bin:$(GO-LOCAL)/bin:$(PATH)
-GO := $(GO-LOCAL)/bin/go
+override PATH := $(GOPATH)/bin:$(GO-LOCAL-BIN):$(PATH)
+GO := $(GO-LOCAL-BIN)/go
 endif
 
 SHELL-DEPS += $(GO)
