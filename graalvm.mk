@@ -33,13 +33,13 @@ SHELL-DEPS += $(GRAALVM)
 
 
 $(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-TAR)
-	tar -C $(LOCAL-ROOT) -xzf $<
-	mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
-	touch $@
-	@echo
+	$Q tar -C $(LOCAL-ROOT) -xzf $<
+	$Q mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
+	$Q touch $@
+	@$(ECHO)
 
 $(LOCAL-CACHE)/$(GRAALVM-TAR):
-	@echo "* Installing 'GraalVM' locally"
-	curl+ $(GRAALVM-DOWN) > $@
+	@$(ECHO) "* Installing 'GraalVM' locally"
+	$Q curl+ $(GRAALVM-DOWN) > $@
 
 endif
