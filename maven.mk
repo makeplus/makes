@@ -11,7 +11,9 @@ include $(MAKES)/java.mk
 endif
 endif
 
-MAVEN-OPTS := -Duser.home=$(LOCAL-HOME)
+MAVEN-HOME := $(MAVEN_HOME)
+MAVEN-HOME ?= $(LOCAL-HOME)
+MAVEN-OPTS := -Duser.home=$(MAVEN-HOME)
 export MAVEN_OPTS := $(MAVEN-OPTS)
 
 MAVEN-DOWN := https://dlcdn.apache.org/maven/maven-3
