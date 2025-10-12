@@ -1,4 +1,3 @@
-# https://github.com/bufbuild/buf/releases
 BUF-VERSION ?= 1.18.0
 
 ifndef BUF-LOADED
