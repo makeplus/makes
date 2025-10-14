@@ -1,12 +1,34 @@
 #!/usr/bin/env ys-0
 
+defn main():
+  show-missing:
+  show-by-hand:
+  show-versions:
+
+defn show-missing():
+  say: |-
+    Check support missing:
+    * cabal.mk
+    * cursor.mk
+    * git.mk
+    * graalvm.mk
+    * java.mk
+    * lein.mk
+    * python.mk
+    * raku.mk
+    * rust.mk
+    * zild.mk
+
 parse-re =: qr("(?x)
   [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
   (?s:.*)
   (https://(?:www\.)?github\.com/[-\w]+/[-\w]+)\n
   ")
 
-defn main():
+defn show-versions():
+  say:
+  say: 'Checking current versions:'
+
   files =: bash('ls *.mk').out:lines
     .remove(\(_:read.re-find(/www\.github/)))
 
@@ -30,6 +52,7 @@ defn main():
   each file files:
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
 
+defn show-by-hand():
   files =: bash('ls *.mk').out:lines
     .filter(\(_:read.re-find(qr("https://www\.github\.com/.*")))):sort
     .map(\([_:read.re-find(qr("https://www\.github\.com/.*"))
