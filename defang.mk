@@ -23,7 +23,6 @@ SHELL-DEPS += $(DEFANG)
 $(DEFANG): $(LOCAL-CACHE)/$(DEFANG-TAR)
 ifdef IS-MACOS
 	cd $(LOCAL-BIN) && unzip $< defang
-	$(error 123)
 else
 	tar -C $(LOCAL-BIN) -xf $< defang
 endif
