@@ -4,12 +4,8 @@ $(if $(INIT-LOADED),,$(error Please 'include init.mk' first))
 
 ifdef MAKES_LOCAL_DIR
   LOCAL-ROOT := $(MAKES_LOCAL_DIR)
-else ifdef MAKES-LOCAL
-  LOCAL-ROOT := $(MAKES-LOCAL)
 else ifdef MAKES-LOCAL-DIR
   LOCAL-ROOT := $(MAKES-LOCAL-DIR)
-else ifdef MAKES_REPO_DIR
-  LOCAL-ROOT := $(MAKEFILE-DIR)/.cache/.local
 else
   LOCAL-ROOT := $(dir $(MAKES))/.local
 endif
