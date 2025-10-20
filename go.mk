@@ -85,8 +85,9 @@ endif
 # Install rules:
 $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
 	$Q tar -C $(LOCAL-ROOT) -xzf $<
+	$Q rm -fr $(GO-LOCAL)
 	$Q mv $(LOCAL-ROOT)/go $(GO-LOCAL)
-	$Q ln $@ $@$(GO-VERSION)
+	$Q ln -fs $@ $@$(GO-VERSION)
 	$Q touch $@
 	@$(ECHO)
 
