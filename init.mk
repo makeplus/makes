@@ -62,9 +62,11 @@ OS-TYPE := $(shell bash -c 'echo $$OSTYPE')
 ifneq (,$(findstring darwin,$(OS-TYPE)))
   OS-NAME := macos
   IS-MACOS := true
+  SO := dylib
 else ifneq (,$(findstring linux,$(OS-TYPE)))
   OS-NAME := linux
   IS-LINUX := true
+  SO := so
 else
   $(error Can't determine OS-TYPE)
 endif

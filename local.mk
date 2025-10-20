@@ -16,6 +16,7 @@ LOCAL-CACHE  := $(LOCAL-PREFIX)/cache
 LOCAL-TMP    := $(LOCAL-PREFIX)/tmp
 LOCAL-BIN    := $(LOCAL-PREFIX)/bin
 LOCAL-LIB    := $(LOCAL-PREFIX)/lib
+LOCAL-INC    := $(LOCAL-PREFIX)/include
 LOCAL-MAN    := $(LOCAL-PREFIX)/man
 LOCAL-SHARE  := $(LOCAL-PREFIX)/share
 
@@ -30,6 +31,7 @@ $(shell mkdir -p \
   $(LOCAL-TMP) \
   $(LOCAL-BIN) \
   $(LOCAL-LIB) \
+  $(LOCAL-INC) \
   $(LOCAL-MAN) \
   $(LOCAL-SHARE) \
   $(LOCAL-HOME) \
