@@ -8,7 +8,9 @@ MAKES-SHELL ?= bash
 shell: $(MAKES-SHELL)
 
 bash: $(SHELL-DEPS)
-ifndef MAKES_SHELL
+ifdef MAKES_SHELL
+	@$(error You are already in a Makes shell)
+endif
 	@( \
 	  export MAKES_SHELL=1; \
 	  bash --rcfile \
@@ -17,19 +19,15 @@ ifndef MAKES_SHELL
 	    echo 'export PATH=$(PATH)'; \
 	   ) \
 	)
-else
-	@echo 'You are already in a Makes bash shell'
-endif
 
 zsh: $(SHELL-DEPS)
-ifndef MAKES_SHELL
-	( \
+ifdef MAKES_SHELL
+	@$(error You are already in a Makes shell)
+endif
+	@( \
 	  export MAKES_SHELL=1; \
 	  export PATH='$(PATH)'; \
 	  zsh; \
 	)
-else
-	@echo 'You are already in a Makes bash shell'
-endif
 
 endif

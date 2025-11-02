@@ -8,6 +8,8 @@ GNU Makefiles Simplified
 
 Makes automatically installs all dependencies locally inside the current
 working directory.
+Those dependencies include this repo itself, which is cloned the first time
+you run `make` on a Makefile using Makes.
 
 It works on Linux or MacOS (Intel and ARM) without worrying about specifics.
 
@@ -27,7 +29,8 @@ include $M/java.mk
 include $M/clojure.mk
 include $M/lein.mk
 
-# Define your rules:
+# Define your rules. The $(LEIN) dependency comes from lein.mk and triggers a
+# local install of lein which will be in your PATH here.
 test repl: $(LEIN)
 	lein $@
 ```
@@ -35,7 +38,7 @@ test repl: $(LEIN)
 Users just run `make test` out of the box.
 
 They don't need `java`, `clojure` or `lein` installed on their system.
-Makes wouldn't use their versions if they did have them installed.
+Makes wouldn't use their system versions if they did have them installed.
 
 This makes for very reliable builds and testing.
 
@@ -75,7 +78,7 @@ places:
 
 If you want to make changes to the `makes` repo itself in combination with
 various Makefiles you are working with, you can keep `makes` in a location you
-desire by setting `MAKES_REPO_DIR` and setting the first lne of your Makefiles
+desire by setting `MAKES_REPO_DIR` and setting the first line of your Makefiles
 to something like this:
 
 ```make
@@ -104,10 +107,40 @@ have already included.
 ## Testing Specific `<tool>.mk` Files
 
 If you want to try out a specific `<name>.mk` file here, just run `make
-<name>`.
+<name>-shell`.
 That will start a shell with the `<name>` tooling installed.
 
-For instance, to try out `crystal.mk`, just run `make crystal`.
+For instance, to try out `crystal.mk`, just run `make crystal-shell`.
+
+
+## Makes Shells
+
+If you want to start a shell with any of the Makes tools installed from
+anywhere, you can define a shell function called `msh` like this:
+
+```bash
+msh() (
+  with=() vars=()
+  for arg; do
+    if [[ $arg == *=* ]]; then
+      vars+=("$arg")
+    else
+      with+=("$arg")
+    fi
+  done
+  set -x
+  make -f <(curl -sL https://github.com/makeplus/makes/raw/main/makefile.mk) \
+    shell WITH="${with[*]}" "${vars[@]}"
+)
+```
+
+then you can run `msh` like this from anywhere, any time:
+
+```
+$ msh crystal go rust GO-VERSION=1.23.4
+```
+
+and start a subshell with crystal go and rust installed.
 
 
 ## Using Gists for Makefiles
