@@ -5,19 +5,19 @@ defn main():
   show-by-hand:
   show-versions:
 
+missing =::
+- cabal
+- cursor
+- graalvm
+- java
+- lein
+- raku
+
 defn show-missing():
-  say: |-
-    Check support missing:
-    * cabal.mk
-    * cursor.mk
-    * git.mk
-    * graalvm.mk
-    * java.mk
-    * lein.mk
-    * python.mk
-    * raku.mk
-    * rust.mk
-    * zild.mk
+  say: 'Check support missing:'
+  each name missing:
+    url =: read("$name.mk") =~ /https:\/\/\S+/
+    printf "* %-10s - %s\n": +"$name.mk" url
 
 parse-re =: qr("(?x)
   [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
@@ -29,8 +29,9 @@ defn show-versions():
   say:
   say: 'Checking current versions:'
 
-  files =: bash('ls *.mk').out:lines
+  files =: fs/glob('*.mk')
     .remove(\(_:read.re-find(/www\.github/)))
+    .remove(\(_.replace(/\.mk/).in?(missing)))
 
   files =:
     # reduce _ [] ['go.mk']:
@@ -40,7 +41,9 @@ defn show-versions():
           file:read =~ parse-re
         if ver:
           then:
-            say: "Checking $url"
+            phrase =:
+              format "* %-13s - %s": file url
+            say: phrase
             new =: bash(url:cmd).out:lines:highest
               .replace(/^(?:v|OTP-)/)
               .replace(/(?:\.ROLLING)$/)
@@ -53,14 +56,15 @@ defn show-versions():
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
 
 defn show-by-hand():
-  files =: bash('ls *.mk').out:lines
+  files =: fs/glob('*.mk')
     .filter(\(_:read.re-find(qr("https://www\.github\.com/.*")))):sort
-    .map(\([_:read.re-find(qr("https://www\.github\.com/.*"))
-            _:read.re-find(parse-re).1]))
+    .map(\([_
+            _:read.re-find(parse-re).1
+            _:read.re-find(qr("https://www\.github\.com/.*"))]))
 
   say: "\nCheck these by hand:"
   each file files:
-    say: format("%-60s - %s" file*)
+    say: format("* %-10s - %-11s - %s" file*)
 
 defn cmd(url): |
   git ls-remote \

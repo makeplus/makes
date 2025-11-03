@@ -1,4 +1,5 @@
-PYTHON-VERSION := 3.13.7
+PYTHON-VERSION ?= 3.14.0
+# https://www.github.com/python/cpython/tags
 
 ifndef PYTHON-LOADED
 PYTHON-LOADED := true

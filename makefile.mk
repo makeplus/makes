@@ -1,4 +1,8 @@
+ifneq (,$(wildcard makefile.mk))
+M := $(shell pwd)
+else
 M := $(or $(MAKES_REPO_DIR),$(HOME)/.makes/makes)
+endif
 ifeq (,$(wildcard $M))
 _ := $(shell git clone -q https://github.com/makeplus/makes $M)
 else

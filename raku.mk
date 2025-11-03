@@ -1,4 +1,4 @@
-RAKU-VERSION ?= 2025.08-01
+RAKU-VERSION ?= 2025.10-01
 # https://rakudo.org/dl/rakudo
 
 ifndef RAKU-LOADED

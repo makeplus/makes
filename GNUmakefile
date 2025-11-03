@@ -10,6 +10,9 @@ TARGETS := $(TARGETS:%=%-shell)
 
 default:
 
+clean:
+	$(RM) -r local
+
 version-check:
 	bin/check-versions
 
