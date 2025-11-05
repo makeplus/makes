@@ -15,7 +15,7 @@ PERL-TAR := $(PERL-DIR).tar.gz
 PERL-DOWN := https://github.com/skaji/relocatable-perl/releases/download
 PERL-DOWN := $(PERL-DOWN)/$(PERL-VERSION)/$(PERL-TAR)
 
-PERL-LOCAL := $(LOCAL-ROOT)/$(PERL-DIR)
+PERL-LOCAL := $(LOCAL-ROOT)/perl-$(PERL-VERSION)
 PERL-BIN := $(PERL-LOCAL)/bin
 override PATH := $(PERL-BIN):$(PATH)
 
