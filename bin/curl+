@@ -14,7 +14,7 @@ main() (
   elif [[ -d ~/.cache/makes ]]; then
     MAKES_CACHE_DIR=~/.cache/makes
   fi
-  [[ ${MAKES_CACHE_DIR:-} ]] || {
+  [[ ${MAKES_CACHE_DIR-} ]] || {
     curl -sL "$url"
     exit
   }
@@ -25,7 +25,10 @@ main() (
   cd "$MAKES_CACHE_DIR" || exit
 
   if ! [[ -f $file ]]; then
-    curl -sL "$url" > "$file-"
+    curl -sL "$url" > "$file-" || {
+      rm -f "$file-"
+      exit 1
+    }
     mv "$file-" "$file"
   fi
 
