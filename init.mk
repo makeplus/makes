@@ -86,3 +86,7 @@ endif
 OS-ARCH := $(OS-NAME)-$(ARCH-NAME)
 
 include $(MAKES-INCLUDE:%=$(MAKES)/%)
+
+ifndef MAKES-NO-DELETE
+.DELETE_ON_ERROR:
+endif
