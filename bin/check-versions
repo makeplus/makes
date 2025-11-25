@@ -25,11 +25,13 @@ parse-re =: qr("(?x)
   (https://(?:www\.)?github\.com/[-\w]+/[-\w]+)\n
   ")
 
+files =: fs/glob('*.mk'):sort
+
 defn show-versions():
   say:
   say: 'Checking current versions:'
 
-  files =: fs/glob('*.mk')
+  files =: files
     .remove(\(_:read.re-find(/www\.github/)))
     .remove(\(_.replace(/\.mk/).in?(missing)))
 
@@ -56,8 +58,8 @@ defn show-versions():
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
 
 defn show-by-hand():
-  files =: fs/glob('*.mk')
-    .filter(\(_:read.re-find(qr("https://www\.github\.com/.*")))):sort
+  files =: files
+    .filter(\(_:read.re-find(qr("https://www\.github\.com/.*"))))
     .map(\([_
             _:read.re-find(parse-re).1
             _:read.re-find(qr("https://www\.github\.com/.*"))]))
