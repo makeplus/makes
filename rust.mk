@@ -1,4 +1,4 @@
-RUST-VERSION ?= 1.91.1
+RUST-VERSION ?= 1.92.0
 # https://github.com/rust-lang/rust
 
 ifndef RUST-LOADED
