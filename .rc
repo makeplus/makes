@@ -1,0 +1,2 @@
+PATH=$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)/bin:$PATH
+export PATH
