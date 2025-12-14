@@ -5,7 +5,12 @@ SHELL-NAME ?= makes
 MAKES-SHELL ?= bash
 
 
+ifdef cmd
+shell: $(SHELL-DEPS)
+	@sh -c '$(cmd)'
+else
 shell: $(MAKES-SHELL)
+endif
 
 bash: $(SHELL-DEPS)
 ifdef MAKES_SHELL
