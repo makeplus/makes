@@ -7,6 +7,14 @@ ifndef AGENTS-LOADED
 AGENTS-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 
+MAKES-CLEAN += \
+  $(MAKEFILE-DIR)/CLAUDE.md \
+  $(MAKEFILE-DIR)/AGENTS.md \
+  $(MAKEFILE-DIR)/GEMINI.md \
+  $(MAKEFILE-DIR)/.cursorrules \
+  $(MAKEFILE-DIR)/.cursor/rules/agents.mdc \
+  $(MAKEFILE-DIR)/.cursor \
+
 # ============================================================================
 # Configuration Variables (can be overridden)
 # ============================================================================
@@ -103,12 +111,6 @@ $(AGENTS-GEMINI-OUT): $(AGENTS-GEMINI-SRC)
 # Clean Target
 # ============================================================================
 agents-clean:
-	@$(echo) "Removing generated agent files"
-	@rm -f $(MAKEFILE-DIR)/CLAUDE.md \
-	       $(MAKEFILE-DIR)/AGENTS.md \
-	       $(MAKEFILE-DIR)/GEMINI.md \
-	       $(MAKEFILE-DIR)/.cursorrules \
-	       $(MAKEFILE-DIR)/.cursor/rules/agents.mdc
-	@rm -rf $(MAKEFILE-DIR)/.cursor
+	$(RM) -r $(MAKES-CLEAN)
 
 endif

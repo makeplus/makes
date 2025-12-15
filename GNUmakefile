@@ -5,6 +5,7 @@ export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $(MAKES)/bpan.mk
 include $(MAKES)/clean.mk
+include $(MAKES)/agents.mk
 
 TARGETS := $(wildcard *.mk)
 TARGETS := $(TARGETS:%.mk=%)
@@ -26,8 +27,8 @@ TEST-DIRS := $(TEST-MAKEFILES:%/Makefile=%)
 TEST-NAMES := $(TEST-DIRS:test/%=%)
 CLEAN-TARGETS := $(TEST-NAMES:%=clean-%)
 
-MAKES-CLEAN := $(CLEAN-TARGETS)
-MAKES-REALCLEAN := ./local/
+MAKES-CLEAN += $(CLEAN-TARGETS)
+MAKES-REALCLEAN += ./local/
 
 v ?=
 
