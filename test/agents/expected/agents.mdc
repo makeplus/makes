@@ -1,0 +1,13 @@
+---
+description: "Test project rules"
+alwaysApply: true
+---
+
+# Test Project - Cursor Rules
+
+This uses template includes.
+
+## Style Rules
+
+- Use TypeScript
+- Prefer functional components

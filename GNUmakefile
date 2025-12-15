@@ -1,20 +1,47 @@
-SHELL := bash
+MAKES := .
+include $(MAKES)/init.mk
+
+export MAKES_LOCAL_DIR := $(ROOT)/local
+
+include $(MAKES)/bpan.mk
+include $(MAKES)/clean.mk
 
 TARGETS := $(wildcard *.mk)
 TARGETS := $(TARGETS:%.mk=%)
-TARGETS := $(filter-out \
-             clean docker git help init local shell \
-	     ,$(TARGETS))
+TARGETS := \
+  $(filter-out \
+    agents \
+    clean \
+    docker \
+    git \
+    help \
+    init \
+    local \
+    shell \
+   ,$(TARGETS))
 TARGETS := $(TARGETS:%=%-shell)
 
+TEST-MAKEFILES := $(wildcard test/*/Makefile)
+TEST-DIRS := $(TEST-MAKEFILES:%/Makefile=%)
+TEST-NAMES := $(TEST-DIRS:test/%=%)
+CLEAN-TARGETS := $(TEST-NAMES:%=clean-%)
 
-default:
+MAKES-CLEAN := $(CLEAN-TARGETS)
+MAKES-REALCLEAN := ./local/
 
-clean:
-	$(RM) -r local
+v ?=
+
+
+test: $(BPAN)
+	prove$(if $(v), -v,) test/*.t
+
+clean:: $(CLEAN-TARGETS)
+
+$(CLEAN-TARGETS):
+	@$(MAKE) -s -C test/$(@:clean-%=%) clean
 
 version-check:
-	bin/check-versions
+	util/check-versions
 
 shell:
 ifndef WITH
