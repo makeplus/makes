@@ -1,4 +1,4 @@
-YQ-VERSION ?= 4.49.2
+YQ-VERSION ?= 4.50.1
 
 ifndef YQ-LOADED
 YQ-LOADED := true
