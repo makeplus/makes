@@ -64,7 +64,7 @@ mkdir .ai-agents
 ### 3. Create Main Instructions
 
 ```bash
-cat > .ai-agents/agents.md <<'EOF'
+cat > .ai-agents/template.md <<'EOF'
 # Project Guidelines
 
 This is a TypeScript project using React and Next.js.
@@ -132,24 +132,24 @@ The `.ai-agents/` directory (committed to git) contains:
 
 ```
 .ai-agents/
-├── agents.md      # Main source (required)
-├── claude.md      # Optional: Claude-specific override
-├── copilot.md     # Optional: Copilot-specific override
-├── gemini.md      # Optional: Gemini-specific override
-├── cursor.md      # Optional: Cursor-specific override
-└── cursor.yaml    # Optional: YAML frontmatter for Cursor .mdc
+├── template.md          # Main source (required)
+├── claude-template.md   # Optional: Claude-specific override
+├── copilot-template.md  # Optional: Copilot-specific override
+├── gemini-template.md   # Optional: Gemini-specific override
+├── cursor-template.md   # Optional: Cursor-specific override
+└── cursor.yaml          # Optional: YAML frontmatter for Cursor .mdc
 ```
 
 ### Fallback Behavior
 
-If an agent-specific file exists, it's used; otherwise, `agents.md` is used:
+If an agent-specific file exists, it's used; otherwise, `template.md` is used:
 
 ```makefile
 # Pseudo-code
-CLAUDE.md = claude.md exists ? claude.md : agents.md
-AGENTS.md = copilot.md exists ? copilot.md : agents.md
-GEMINI.md = gemini.md exists ? gemini.md : agents.md
-.cursorrules = cursor.md exists ? cursor.md : agents.md
+CLAUDE.md = claude-template.md exists ? claude-template.md : template.md
+AGENTS.md = copilot-template.md exists ? copilot-template.md : template.md
+GEMINI.md = gemini-template.md exists ? gemini-template.md : template.md
+.cursorrules = cursor-template.md exists ? cursor-template.md : template.md
 ```
 
 ## Templating System
@@ -183,10 +183,10 @@ project/
 └── packages/
     └── api/
         └── .ai-agents/
-            └── agents.md     # Can use %%%common/style.md%%%
+            └── template.md     # Can use %%%common/style.md%%%
 ```
 
-**Resolution order for `packages/api/.ai-agents/agents.md`:**
+**Resolution order for `packages/api/.ai-agents/template.md`:**
 ```
 packages/api/.ai-agents/common/style.md   # 1. Local first
 packages/.ai-agents/common/style.md       # 2. Parent
@@ -204,7 +204,7 @@ globs: "*.ts,*.tsx"
 ---
 ```
 
-**File: `.ai-agents/cursor.md`**
+**File: `.ai-agents/cursor-template.md`**
 ```markdown
 %%%cursor.yaml%%%
 
@@ -272,7 +272,7 @@ make agents-clean
 
 ### Example 1: Simple Single-File Setup
 
-**File: `.ai-agents/agents.md`**
+**File: `.ai-agents/template.md`**
 ```markdown
 # My Project
 
@@ -295,14 +295,14 @@ Run `make agents` to generate all agent files.
 
 ### Example 2: Agent-Specific Customization
 
-**File: `.ai-agents/agents.md`** (default)
+**File: `.ai-agents/template.md`** (default)
 ```markdown
 # My Project
 
 General project guidelines...
 ```
 
-**File: `.ai-agents/claude.md`** (Claude-specific)
+**File: `.ai-agents/claude-template.md`** (Claude-specific)
 ```markdown
 # My Project - Claude Code Instructions
 
@@ -315,7 +315,7 @@ Claude gets the custom file; other agents get the default.
 
 ### Example 3: Modular with Includes
 
-**File: `.ai-agents/agents.md`**
+**File: `.ai-agents/template.md`**
 ```markdown
 # My Project
 
@@ -358,7 +358,7 @@ This is a TypeScript monorepo...
 - Aim for 80% code coverage
 ```
 
-**File: `packages/api/.ai-agents/agents.md`**
+**File: `packages/api/.ai-agents/template.md`**
 ```markdown
 # API Package
 
@@ -372,7 +372,7 @@ This package implements the REST API.
 - Document all endpoints
 ```
 
-**File: `packages/web/.ai-agents/agents.md`**
+**File: `packages/web/.ai-agents/template.md`**
 ```markdown
 # Web Package
 
@@ -399,7 +399,7 @@ globs: "*.ts,*.tsx,*.jsx"
 ---
 ```
 
-**File: `.ai-agents/cursor.md`**
+**File: `.ai-agents/cursor-template.md`**
 ```markdown
 %%%cursor.yaml%%%
 
@@ -424,7 +424,7 @@ Run `make agents-cursor` to generate `.cursor/rules/agents.mdc` with the frontma
 
 ### Generated Files Not Updating
 
-**Problem:** You changed `.ai-agents/agents.md` but `CLAUDE.md` didn't update.
+**Problem:** You changed `.ai-agents/template.md` but `CLAUDE.md` didn't update.
 
 **Solution:** Make tracks dependencies. Run `make agents-clean` then `make agents`, or just `make agents` again (Make will regenerate if source is newer).
 

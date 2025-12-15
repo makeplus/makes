@@ -28,7 +28,7 @@ AGENTS-CURSOR-MODE ?= modern
 # Derived Paths
 # ============================================================================
 AGENTS-DIR := $(MAKEFILE-DIR)/$(AGENTS-DIR-NAME)
-AGENTS-SOURCE := $(AGENTS-DIR)/agents.md
+AGENTS-SOURCE := $(AGENTS-DIR)/template.md
 
 # Output paths
 AGENTS-CLAUDE-OUT := $(MAKEFILE-DIR)/CLAUDE.md
@@ -43,20 +43,20 @@ else
 endif
 
 # ============================================================================
-# Source File Resolution (agent-specific override or fallback to agents.md)
+# Source File Resolution (agent-specific override or fallback to template.md)
 # ============================================================================
 AGENTS-CLAUDE-SRC := \
-  $(if $(wildcard $(AGENTS-DIR)/claude.md),\
-  $(AGENTS-DIR)/claude.md,$(AGENTS-SOURCE))
+  $(if $(wildcard $(AGENTS-DIR)/claude-template.md),\
+  $(AGENTS-DIR)/claude-template.md,$(AGENTS-SOURCE))
 AGENTS-CURSOR-SRC := \
-  $(if $(wildcard $(AGENTS-DIR)/cursor.md),\
-  $(AGENTS-DIR)/cursor.md,$(AGENTS-SOURCE))
+  $(if $(wildcard $(AGENTS-DIR)/cursor-template.md),\
+  $(AGENTS-DIR)/cursor-template.md,$(AGENTS-SOURCE))
 AGENTS-COPILOT-SRC := \
-  $(if $(wildcard $(AGENTS-DIR)/copilot.md),\
-  $(AGENTS-DIR)/copilot.md,$(AGENTS-SOURCE))
+  $(if $(wildcard $(AGENTS-DIR)/copilot-template.md),\
+  $(AGENTS-DIR)/copilot-template.md,$(AGENTS-SOURCE))
 AGENTS-GEMINI-SRC := \
-  $(if $(wildcard $(AGENTS-DIR)/gemini.md),\
-  $(AGENTS-DIR)/gemini.md,$(AGENTS-SOURCE))
+  $(if $(wildcard $(AGENTS-DIR)/gemini-template.md),\
+  $(AGENTS-DIR)/gemini-template.md,$(AGENTS-SOURCE))
 
 v ?=
 

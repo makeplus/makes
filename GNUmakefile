@@ -5,6 +5,7 @@ export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $(MAKES)/bpan.mk
 include $(MAKES)/clean.mk
+AGENTS-NAMES := claude
 include $(MAKES)/agents.mk
 
 TARGETS := $(wildcard *.mk)
