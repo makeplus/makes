@@ -3,7 +3,7 @@ HELP-LOADED := true
 
 ifndef HELP
 ifneq (,$(shell command -v perl))
-HELP := $(shell $(MAKES)/bin/make-help $(MAKEFILE))
+HELP := $(shell $(MAKES)/util/make-help $(MAKEFILE))
 endif
 endif
 

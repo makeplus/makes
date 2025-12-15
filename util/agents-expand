@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+# Expand %%%filename%%% includes in a file
+# Usage: agents-expand <source-file> <base-dir> [<root-dir>] > output
+#
+# Includes are resolved by searching:
+#   1. <base-dir>/<filename>
+#   2. Parent directories up to <root-dir> (default: git root or /)
+
+set -e
+src="$1"
+base="$2"
+root="${3:-$(git rev-parse --show-toplevel 2>/dev/null || echo /)}"
+
+# Find include file, searching up to root
+# Searches in .ai-agents/ directories as we go up the tree
+find_include() {
+  local name="$1"
+  local dir="$base"
+
+  # Extract the base dirname (should end in .ai-agents)
+  local agents_dir_name=$(basename "$dir")
+
+  while true; do
+    # Check in current directory
+    if [[ -f "$dir/$name" ]]; then
+      echo "$dir/$name"
+      return 0
+    fi
+
+    # Go up one level from the parent of .ai-agents
+    local parent=$(dirname "$(dirname "$dir")")
+
+    # Stop at root
+    [[ "$parent" == "$root" || "$parent" == "/" || "$parent" == "." ]] && break
+
+    # Look for .ai-agents in parent
+    dir="$parent/$agents_dir_name"
+    [[ ! -d "$dir" ]] && break
+  done
+  return 1
+}
+
+content=$(cat "$src")
+
+# Process all %%%filename%%% patterns
+while [[ "$content" =~ %%%([^%]+)%%% ]]; do
+  include_name="${BASH_REMATCH[1]}"
+  include_path=$(find_include "$include_name") || true
+
+  if [[ -n "$include_path" ]]; then
+    include_content=$(cat "$include_path")
+    content="${content//%%%${include_name}%%%/$include_content}"
+  else
+    echo "Warning: Include not found: $include_name" >&2
+    content="${content//%%%${include_name}%%%/}"
+  fi
+done
+
+echo "$content"

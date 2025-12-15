@@ -20,7 +20,7 @@ MAKES-DIR := $(abspath $(dir $(MAKES)))
 MAKEFILE := $(abspath $(firstword $(MAKEFILE_LIST)))
 MAKEFILE-DIR := $(abspath $(dir $(MAKEFILE)))
 
-export PATH := $(MAKES)/bin:$(PATH)
+export PATH := $(MAKES)/util:$(PATH)
 export LANG := en_US.UTF-8
 
 # For commands dealing with space characters
