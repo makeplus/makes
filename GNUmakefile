@@ -50,7 +50,7 @@ ifndef WITH
 	@echo "WITH=... not specified for 'make shell'"
 	@exit 1
 endif
-	$(MAKE) -f makefile.mk shell
+	$(MAKE) --no-pr -f makefile.mk shell
 
 $(TARGETS):
-	$(MAKE) -f makefile.mk shell WITH=$(@:%-shell=%)
+	$(MAKE) --no-pr -f makefile.mk shell WITH='$(if $(WITH),$(WITH) )$(@:%-shell=%)'
