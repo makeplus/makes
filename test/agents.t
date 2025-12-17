@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
-source test/bpan-init
-
-cd "$(dirname "${BASH_SOURCE[0]}")/agents"
+source test/bpan-init chdir
 
 clean() { make -s agents-clean 2>/dev/null || true; }
 

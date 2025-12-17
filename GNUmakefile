@@ -21,7 +21,7 @@ TARGETS := \
     local \
     shell \
    ,$(TARGETS))
-TARGETS := $(TARGETS:%=%-shell)
+SHELL-TARGETS := $(TARGETS:%=%-shell)
 
 TEST-MAKEFILES := $(wildcard test/*/Makefile)
 TEST-DIRS := $(TEST-MAKEFILES:%/Makefile=%)
@@ -30,6 +30,8 @@ CLEAN-TARGETS := $(TEST-NAMES:%=clean-%)
 
 MAKES-CLEAN += $(CLEAN-TARGETS)
 MAKES-REALCLEAN += ./local/
+
+export MAKEX := $(MAKE)
 
 v ?=
 
@@ -52,5 +54,13 @@ ifndef WITH
 endif
 	$(MAKE) --no-pr -f makefile.mk shell
 
-$(TARGETS):
+$(SHELL-TARGETS):
 	$(MAKE) --no-pr -f makefile.mk shell WITH='$(if $(WITH),$(WITH) )$(@:%-shell=%)'
+
+ifdef BPAN_TEST_RUNNING
+TEST-TARGETS := $(TARGETS:%=%-test)
+
+$(TEST-TARGETS):
+	@$(MAKE) --no-pr -f makefile.mk shell WITH='$(@:%-test=%)'
+endif
+
