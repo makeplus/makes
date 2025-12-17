@@ -5,9 +5,9 @@ SHELL-NAME ?= makes
 MAKES-SHELL ?= bash
 
 
-ifdef cmd
+ifdef CMD
 shell: $(SHELL-DEPS)
-	@sh -c '$(cmd)'
+	@sh -c '$(CMD)'
 else
 shell: $(MAKES-SHELL)
 endif
