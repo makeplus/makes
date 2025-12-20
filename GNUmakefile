@@ -39,6 +39,9 @@ v ?=
 test: $(BPAN)
 	prove$(if $(v), -v,) test/*.t
 
+rev:
+	git rev-parse HEAD
+
 clean:: $(CLEAN-TARGETS)
 
 $(CLEAN-TARGETS):
