@@ -36,3 +36,6 @@ endif
 	)
 
 endif
+
+shell-env: $(SHELL-DEPS)
+	@echo export PATH='$(PATH)'

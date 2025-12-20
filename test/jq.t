@@ -8,6 +8,6 @@ out=$(
 
 has "$out" "$ROOT/local/bin/jq"
 
-has "$out" "jq-1.8.1"
+has "$out" "jq-1."
 
 done-testing

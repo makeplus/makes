@@ -15,14 +15,14 @@ NAME=${NAME%.t}
 ROOT=$(cd "$(dirname "$FILE")"/.. && pwd -P)
 TEST=$ROOT/test
 
-if [[ $* == *chdir* ]]; then
-  cd "$TEST/$NAME"
-fi
-
 if [[ $* == *slow* ]]; then
   if [[ -z ${SLOW-} ]]; then
     pass "Use SLOW=1 to run slow tests"
     done-testing
     exit 0
   fi
+fi
+
+if [[ $* == *chdir* ]]; then
+  cd "$TEST/$NAME"
 fi
