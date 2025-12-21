@@ -67,6 +67,10 @@ else ifneq (,$(findstring linux,$(OS-TYPE)))
   OS-NAME := linux
   IS-LINUX := true
   SO := so
+else ifneq (,$(or $(findstring msys,$(OS-TYPE)),$(findstring cygwin,$(OS-TYPE))))
+  OS-NAME := windows
+  IS-WINDOWS := true
+  SO := dll
 else
   $(error Can't determine OS-TYPE)
 endif

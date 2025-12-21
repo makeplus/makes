@@ -38,8 +38,15 @@ OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-amd64
 OA-macos-arm64 := darwin-arm64
 OA-macos-int64 := darwin-amd64
+OA-windows-arm64 := windows-arm64
+OA-windows-int64 := windows-amd64
 
-GO-TAR := go$(GO-VERSION).$(OA-$(OS-ARCH)).tar.gz
+ifeq (windows,$(OS-NAME))
+GO-EXT := zip
+else
+GO-EXT := tar.gz
+endif
+GO-TAR := go$(GO-VERSION).$(OA-$(OS-ARCH)).$(GO-EXT)
 GO-DOWN := https://go.dev/dl/$(GO-TAR)
 
 GO-LOCAL := $(LOCAL-ROOT)/go-$(GO-VERSION)
@@ -84,7 +91,11 @@ endif
 
 # Install rules:
 $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
+ifeq (windows,$(OS-NAME))
+	$Q unzip -q -d $(LOCAL-ROOT) $<
+else
 	$Q tar -C $(LOCAL-ROOT) -xzf $<
+endif
 	$Q rm -fr $(GO-LOCAL)
 	$Q mv $(LOCAL-ROOT)/go $(GO-LOCAL)
 	$Q ln -fs $@ $@$(GO-VERSION)
