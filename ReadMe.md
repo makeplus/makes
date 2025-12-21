@@ -115,32 +115,15 @@ For instance, to try out `crystal.mk`, just run `make crystal-shell`.
 
 ## Makes Shells
 
-If you want to start a shell with any of the Makes tools installed from
-anywhere, you can define a shell function called `msh` like this:
+If you have the makes repo cloned locally, you can source the `.rc` file to get the `makesh` command:
 
 ```bash
-msh() (
-  with=() vars=()
-  for arg; do
-    if [[ $arg == *=* ]]; then
-      vars+=("$arg")
-    else
-      with+=("$arg")
-    fi
-  done
-  set -x
-  make -f <(curl -sL https://github.com/makeplus/makes/raw/main/makefile.mk) \
-    shell WITH="${with[*]}" "${vars[@]}"
-)
+$ source /path/to/makes/.rc
+$ makesh go ruby
+(makesh go ruby) $ 
 ```
 
-then you can run `msh` like this from anywhere, any time:
-
-```
-$ msh crystal go rust GO-VERSION=1.23.4
-```
-
-and start a subshell with crystal go and rust installed.
+This starts a subshell with go and ruby installed.
 
 
 ## Using Gists for Makefiles

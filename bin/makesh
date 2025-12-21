@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
+
+main() {
+    [[ $# -gt 0 ]] || die "Usage: makes-shell <tool1> [tool2] ..."
+
+    local includes=''
+    for tool in "$@"; do
+        includes+="include $ROOT/$tool.mk"$'\n'
+    done
+
+    make --no-print-directory -f <(
+        cat <<EOF
+MAKES-LOCAL-DIR := $ROOT/local
+include $ROOT/init.mk
+$includes
+SHELL-NAME := makesh $@
+include $ROOT/shell.mk
+EOF
+    ) shell
+}
+
+die() { printf '%s\n' "$@" >&2; exit 1; }
+
+main "$@"
