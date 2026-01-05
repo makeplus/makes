@@ -1,4 +1,4 @@
-LUAROCKS-VERSION ?= 3.12.2
+LUAROCKS-VERSION ?= 3.13.0
 # https://github.com/luarocks/luarocks
 
 ifndef LUAROCKS-LOADED

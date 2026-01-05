@@ -1,4 +1,4 @@
-JUST-VERSION ?= 1.45.0
+JUST-VERSION ?= 1.46.0
 # https://github.com/casey/just
 
 ifndef JUST-LOADED
