@@ -1,4 +1,4 @@
-GCC-VERSION ?= 14.2.0-2
+GCC-VERSION ?= 14.2.0-1
 # https://github.com/xpack-dev-tools/gcc-xpack
 
 ifndef GCC-LOADED
