@@ -40,7 +40,7 @@ else
 # Build from source
 FPM-SRC := fpm-$(FPM-VERSION).F90
 
-$(FPM): $(GFORTRAN) $(LOCAL-CACHE)/$(FPM-SRC)
+$(FPM): $(GCC) $(LOCAL-CACHE)/$(FPM-SRC)
 	@echo "* Building 'fpm' from source"
 	$(GFORTRAN) -o $@ $(LOCAL-CACHE)/$(FPM-SRC)
 	touch $@
