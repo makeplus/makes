@@ -9,8 +9,6 @@ ifndef GCC-LOADED
 include $(MAKES)/gcc.mk
 endif
 
-SHELL-DEPS += $(GFORTRAN)
-
 
 # FPM installation
 FPM := $(LOCAL-BIN)/fpm
@@ -40,9 +38,9 @@ else
 # Build from source
 FPM-SRC := fpm-$(FPM-VERSION).F90
 
-$(FPM): $(GCC) $(LOCAL-CACHE)/$(FPM-SRC)
+$(FPM): $(GFORTRAN) $(LOCAL-CACHE)/$(FPM-SRC)
 	@echo "* Building 'fpm' from source"
-	$(GFORTRAN) -o $@ $(LOCAL-CACHE)/$(FPM-SRC)
+	gfortran -o $@ $(LOCAL-CACHE)/$(FPM-SRC)
 	touch $@
 	@echo
 

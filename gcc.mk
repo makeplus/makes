@@ -26,7 +26,7 @@ GFORTRAN := $(GCC-BIN)/gfortran
 SHELL-DEPS += $(GCC)
 
 
-$(GCC): $(LOCAL-CACHE)/$(GCC-TAR)
+$(GCC) $(GPP) $(GFORTRAN): $(LOCAL-CACHE)/$(GCC-TAR)
 	mkdir -p $(GCC-LOCAL)
 	tar -C $(GCC-LOCAL) --strip-components=1 -xzf $<
 	touch $@
