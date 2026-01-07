@@ -12,15 +12,19 @@ endif
 SHELL-DEPS += $(GFORTRAN)
 
 
-# FPM (only available for Linux x64)
-ifeq ($(OS-ARCH),linux-int64)
-FPM-NAME := fpm-$(FPM-VERSION)-linux-x86_64-gcc-12
-FPM-DOWN := https://github.com/fortran-lang/fpm/releases/download
-FPM-DOWN := $(FPM-DOWN)/v$(FPM-VERSION)/$(FPM-NAME)
-
+# FPM installation
 FPM := $(LOCAL-BIN)/fpm
+FPM-DOWN := https://github.com/fortran-lang/fpm/releases/download/v$(FPM-VERSION)
+
+# Platforms with pre-built binaries
+FPM-OA-linux-int64 := linux-x86_64
+FPM-OA-macos-int64 := macos-x86_64
 
 SHELL-DEPS += $(FPM)
+
+ifdef FPM-OA-$(OS-ARCH)
+# Use pre-built binary
+FPM-NAME := fpm-$(FPM-VERSION)-$(FPM-OA-$(OS-ARCH))-gcc-12
 
 $(FPM): $(LOCAL-CACHE)/$(FPM-NAME)
 	cp $< $@
@@ -30,7 +34,21 @@ $(FPM): $(LOCAL-CACHE)/$(FPM-NAME)
 
 $(LOCAL-CACHE)/$(FPM-NAME):
 	@echo "* Installing 'fpm' locally"
-	curl+ $(FPM-DOWN) > $@
+	curl+ $(FPM-DOWN)/$(FPM-NAME) > $@
+
+else
+# Build from source
+FPM-SRC := fpm-$(FPM-VERSION).F90
+
+$(FPM): $(GFORTRAN) $(LOCAL-CACHE)/$(FPM-SRC)
+	@echo "* Building 'fpm' from source"
+	$(GFORTRAN) -o $@ $(LOCAL-CACHE)/$(FPM-SRC)
+	touch $@
+	@echo
+
+$(LOCAL-CACHE)/$(FPM-SRC):
+	curl+ $(FPM-DOWN)/$(FPM-SRC) > $@
+
 endif
 
 endif
