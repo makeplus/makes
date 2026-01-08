@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source test/bpan-init chdir slow
+source test/init chdir slow
 
 like \
   "$(source <(make --no-pr shell-env) && gh --version)" \

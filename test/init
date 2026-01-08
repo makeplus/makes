@@ -13,11 +13,15 @@ FILE=$0
 NAME=$(basename "$FILE")
 NAME=${NAME%.t}
 ROOT=$(cd "$(dirname "$FILE")"/.. && pwd -P)
+[[ -f $ROOT/License ]] ||
+  ROOT=$(cd "$(dirname "$FILE")"/../.. && pwd -P)
+[[ -f $ROOT/License ]] ||
+  die "Can't find ROOT"
 TEST=$ROOT/test
 
 if [[ $* == *slow* ]]; then
-  if [[ -z ${SLOW-} ]]; then
-    pass "Use SLOW=1 to run slow tests"
+  if [[ -z ${slow-} ]]; then
+    pass "Use slow=1 to run slow tests"
     done-testing
     exit 0
   fi

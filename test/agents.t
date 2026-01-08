@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source test/bpan-init chdir
+source test/init chdir
 
 clean() { make -s agents-clean 2>/dev/null || true; }
 

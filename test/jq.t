@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-source test/bpan-init slow
+source test/init slow
 
 out=$(
-  "$MAKEX" --no-pr jq-test CMD='which jq; jq --version'
+  make --no-pr jq-test CMD='which jq; jq --version'
 )
 
 has "$out" "$ROOT/local/bin/jq"

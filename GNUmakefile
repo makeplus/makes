@@ -31,13 +31,11 @@ CLEAN-TARGETS := $(TEST-NAMES:%=clean-%)
 MAKES-CLEAN += $(CLEAN-TARGETS)
 MAKES-REALCLEAN += ./local/
 
-export MAKEX := $(MAKE)
-
 v ?=
 
 
 test: $(BPAN)
-	prove$(if $(v), -v,) test/*.t
+	prove -r$(if $(v), -v,) test/*.t test/*/*.t
 
 rev:
 	git rev-parse HEAD
