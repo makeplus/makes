@@ -35,6 +35,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    # Setup MSYS2/MinGW on Windows to provide Unix-like tools
+    # Installs: GNU Make, bash, git, gcc toolchain, and coreutils
+    # When in tmate session, access MSYS2 environment with:
+    #   C:\msys64\usr\bin\bash.exe
+    # Or run make directly:
+    #   C:\msys64\usr\bin\make.exe
+
     - name: Setup MinGW (Windows)
       if: runner.os == 'Windows'
       uses: msys2/setup-msys2@v2
@@ -44,18 +51,6 @@ jobs:
           base-devel
           git
           mingw-w64-x86_64-toolchain
-
-    - name: Configure auto-exec into MinGW Bash (Windows)
-      if: runner.os == 'Windows'
-      shell: bash
-      run: |
-        cat > ~/.bash_profile << 'EOF'
-        # Auto-exec into MinGW bash if not already in it
-        if [ -z "$MSYSTEM" ]; then
-          export MSYSTEM=MINGW64
-          exec /c/msys64/usr/bin/bash --login
-        fi
-        EOF
 
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
