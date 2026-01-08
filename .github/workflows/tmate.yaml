@@ -1,0 +1,59 @@
+name: tmate Debug
+
+on:
+  workflow_dispatch:
+    inputs:
+      timeout_minutes:
+        description: Timeout in minutes for tmate session
+        required: false
+        default: '30'
+      os:
+        description: Operating system to debug
+        required: false
+        default: windows
+        type: choice
+        options:
+        - windows
+        - macos
+        - ubuntu
+
+jobs:
+  debug:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ${{
+          github.event.inputs.os == 'all' && fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]') ||
+          github.event.inputs.os == 'ubuntu' && fromJSON('["ubuntu-latest"]') ||
+          github.event.inputs.os == 'macos' && fromJSON('["macos-latest"]') ||
+          github.event.inputs.os == 'windows' && fromJSON('["windows-latest"]') ||
+          fromJSON('["ubuntu-latest", "macos-latest", "windows-latest"]')
+          }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Setup MSYS2/MinGW on Windows to provide Unix-like tools
+    # Installs: GNU Make, bash, git, gcc toolchain, and coreutils
+    # When in tmate session, access MSYS2 environment with:
+    #   C:\msys64\usr\bin\bash.exe
+    # Or run make directly:
+    #   C:\msys64\usr\bin\make.exe
+
+    - name: Setup MinGW (Windows)
+      if: runner.os == 'Windows'
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install:
+          base-devel
+          git
+          mingw-w64-x86_64-toolchain
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
+      timeout-minutes: ${{ github.event.inputs.timeout_minutes }}
+      with:
+        limit-access-to-actor: true
