@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+        - ubuntu-latest
+        - macos-latest
+        # - windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # Setup MSYS2/MinGW on Windows to provide Unix-like tools
+    # Installs: GNU Make, bash, git, gcc toolchain, and coreutils
+    - name: Setup MinGW (Windows)
+      if: runner.os == 'Windows'
+      uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install:
+          base-devel
+          git
+          mingw-w64-x86_64-toolchain
+
+    - name: Run tests
+      run: make test v=1 slow=1
