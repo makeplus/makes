@@ -10,10 +10,15 @@ OA-linux-arm64 := linux-aarch64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-x64
+OA-windows-int64 := windows-x64
 
-JAVA-TAR := jdk-$(JAVA-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
+ifeq ($(OS-NAME),windows)
+JAVA-ARCHIVE := jdk-$(JAVA-VERSION)_$(OA-$(OS-ARCH))_bin.zip
+else
+JAVA-ARCHIVE := jdk-$(JAVA-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
+endif
 JAVA-DOWN := https://download.oracle.com/java
-JAVA-DOWN := $(JAVA-DOWN)/$(JAVA-VERSION)/latest/$(JAVA-TAR)
+JAVA-DOWN := $(JAVA-DOWN)/$(JAVA-VERSION)/latest/$(JAVA-ARCHIVE)
 
 JAVA-LOCAL := $(LOCAL-ROOT)/jdk-$(JAVA-VERSION)
 JAVA-HOME := $(JAVA-LOCAL)
@@ -30,13 +35,21 @@ JAVA := $(JAVA-BIN)/java
 SHELL-DEPS += $(JAVA)
 
 
-$(JAVA): $(LOCAL-CACHE)/$(JAVA-TAR)
+ifeq ($(OS-NAME),windows)
+$(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
+	cd $(LOCAL-ROOT) && unzip -q $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
+	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
+	touch $@
+	@echo
+else
+$(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
 	touch $@
 	@echo
+endif
 
-$(LOCAL-CACHE)/$(JAVA-TAR):
+$(LOCAL-CACHE)/$(JAVA-ARCHIVE):
 	@echo "* Installing 'java' locally"
 	curl+ $(JAVA-DOWN) > $@
 

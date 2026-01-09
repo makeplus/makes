@@ -10,10 +10,15 @@ OA-linux-arm64 := linux-aarch64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-x64
+OA-windows-int64 := windows-x64
 
-GRAALVM-TAR := graalvm-jdk-$(GRAALVM-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
+ifeq ($(OS-NAME),windows)
+GRAALVM-ARCHIVE := graalvm-jdk-$(GRAALVM-VERSION)_$(OA-$(OS-ARCH))_bin.zip
+else
+GRAALVM-ARCHIVE := graalvm-jdk-$(GRAALVM-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
+endif
 GRAALVM-DOWN := https://download.oracle.com/graalvm
-GRAALVM-DOWN := $(GRAALVM-DOWN)/$(GRAALVM-VERSION)/latest/$(GRAALVM-TAR)
+GRAALVM-DOWN := $(GRAALVM-DOWN)/$(GRAALVM-VERSION)/latest/$(GRAALVM-ARCHIVE)
 
 GRAALVM-LOCAL := $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION)
 GRAALVM-HOME := $(GRAALVM-LOCAL)
@@ -32,13 +37,21 @@ JAVA := $(GRAALVM-BIN)/java
 SHELL-DEPS += $(GRAALVM)
 
 
-$(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-TAR)
+ifeq ($(OS-NAME),windows)
+$(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
+	$Q cd $(LOCAL-ROOT) && unzip -q $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
+	$Q mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
+	$Q touch $@
+	@$(ECHO)
+else
+$(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
 	$Q tar -C $(LOCAL-ROOT) -xzf $<
 	$Q mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
 	$Q touch $@
 	@$(ECHO)
+endif
 
-$(LOCAL-CACHE)/$(GRAALVM-TAR):
+$(LOCAL-CACHE)/$(GRAALVM-ARCHIVE):
 	@$(ECHO) "* Installing 'GraalVM' locally"
 	$Q curl+ $(GRAALVM-DOWN) > $@
 

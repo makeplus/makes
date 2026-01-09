@@ -32,10 +32,11 @@ MAKES-CLEAN += $(CLEAN-TARGETS)
 MAKES-REALCLEAN += ./local/
 
 v ?=
+t ?= test/*.t test/*/*.t
 
 
 test: $(BPAN)
-	prove -r$(if $(v), -v,) test/*.t test/*/*.t
+	prove -r$(if $(v), -v,) $t
 
 rev:
 	git rev-parse HEAD

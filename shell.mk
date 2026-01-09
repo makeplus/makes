@@ -37,5 +37,6 @@ endif
 
 endif
 
-shell-env: $(SHELL-DEPS)
+shell-env:
+	@$(MAKE) -s $(SHELL-DEPS) >/dev/null
 	@echo export PATH='$(PATH)'

@@ -6,7 +6,7 @@ on:
       timeout_minutes:
         description: Timeout in minutes for tmate session
         required: false
-        default: '30'
+        default: 30
       os:
         description: Operating system to debug
         required: false
@@ -34,13 +34,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
-    # Setup MSYS2/MinGW on Windows to provide Unix-like tools
-    # Installs: GNU Make, bash, git, gcc toolchain, and coreutils
-    # When in tmate session, access MSYS2 environment with:
-    #   C:\msys64\usr\bin\bash.exe
-    # Or run make directly:
-    #   C:\msys64\usr\bin\make.exe
 
     - name: Setup MinGW (Windows)
       if: runner.os == 'Windows'

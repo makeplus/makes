@@ -1,11 +1,12 @@
 ifneq (,$(wildcard makefile.mk))
 M := $(shell pwd)
+MAKES-DEV-MODE := true
 else
 M := $(or $(MAKES_REPO_DIR),$(HOME)/.makes/makes)
 endif
 ifeq (,$(wildcard $M))
 _ := $(shell git clone -q https://github.com/makeplus/makes $M)
-else
+else ifndef MAKES-DEV-MODE
 _ := $(shell git -C $M pull -q)
 endif
 

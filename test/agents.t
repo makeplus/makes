@@ -2,6 +2,13 @@
 
 source test/init chdir
 
+# Skip on Windows (line ending issues with diff)
+if [[ $OSTYPE == msys* || $OSTYPE == cygwin* ]]; then
+  pass "Skipping agents.t on Windows"
+  done-testing
+  exit 0
+fi
+
 clean() { make -s agents-clean 2>/dev/null || true; }
 
 # Ensure clean state
