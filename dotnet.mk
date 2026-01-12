@@ -10,9 +10,15 @@ OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := osx-arm64
 OA-macos-int64 := osx-x64
+OA-windows-arm64 := win-arm64
+OA-windows-int64 := win-x64
 
 DOTNET-NAME := dotnet-sdk
+ifeq ($(OS-NAME),windows)
+DOTNET-TAR := $(DOTNET-NAME)-$(DOTNET-VERSION)-$(OA-$(OS-ARCH)).zip
+else
 DOTNET-TAR := $(DOTNET-NAME)-$(DOTNET-VERSION)-$(OA-$(OS-ARCH)).tar.gz
+endif
 DOTNET-DOWN := https://builds.dotnet.microsoft.com/dotnet/Sdk
 DOTNET-DOWN := $(DOTNET-DOWN)/$(DOTNET-VERSION)/$(DOTNET-TAR)
 
@@ -29,12 +35,18 @@ $(DOTNET): $(DOTNET-ROOT)
 	touch $@
 	@echo
 
+ifeq ($(OS-NAME),windows)
+$(DOTNET-ROOT): $(LOCAL-CACHE)/$(DOTNET-TAR)
+	mkdir -p $@
+	cd $@ && unzip -q ../cache/$(DOTNET-TAR)
+else
 $(DOTNET-ROOT): $(LOCAL-CACHE)/$(DOTNET-TAR)
 	mkdir -p $@
 	tar -C $@ -xzf $<
+endif
 
 $(LOCAL-CACHE)/$(DOTNET-TAR):
-	@echo "* Installing 'GraalVM' locally"
+	@echo "* Installing 'dotnet' locally"
 	curl+ $(DOTNET-DOWN) > $@
 
 endif

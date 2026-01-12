@@ -15,6 +15,16 @@ PERL-TAR := $(PERL-DIR).tar.gz
 PERL-DOWN := https://github.com/skaji/relocatable-perl/releases/download
 PERL-DOWN := $(PERL-DOWN)/$(PERL-VERSION)/$(PERL-TAR)
 
+ifeq ($(OS-NAME),windows)
+# Use system Perl on Windows (GitHub Actions runners have Strawberry Perl)
+PERL := $(LOCAL-BIN)/perl
+
+.PHONY: $(PERL)
+$(PERL):
+	@which perl > /dev/null 2>&1 || (echo "ERROR: perl not found in PATH" && exit 1)
+	@mkdir -p $(LOCAL-BIN)
+	@touch $@
+else
 PERL-LOCAL := $(LOCAL-ROOT)/perl-$(PERL-VERSION)
 PERL-BIN := $(PERL-LOCAL)/bin
 override PATH := $(PERL-BIN):$(PATH)
@@ -23,12 +33,12 @@ PERL := $(LOCAL-BIN)/perl
 
 SHELL-DEPS += $(PERL)
 
-
 $(PERL): $(LOCAL-CACHE)/$(PERL-TAR)
 	tar -C $(LOCAL-CACHE) -xzf $<
 	mv $(LOCAL-CACHE)/$(PERL-DIR) $(PERL-LOCAL)
 	touch $@
 	@echo
+endif
 
 $(LOCAL-CACHE)/$(PERL-TAR):
 	@echo "* Installing 'perl' locally"

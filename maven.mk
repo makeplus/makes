@@ -30,10 +30,17 @@ MAVEN := $(MAVEN-BIN)/mvn
 SHELL-DEPS += $(MAVEN)
 
 
+ifeq ($(OS-NAME),windows)
+$(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
+	cd $(LOCAL-ROOT) && tar -xzf cache/$(MAVEN-TAR)
+	touch $@
+	@echo
+else
 $(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
 	tar -C $(LOCAL-ROOT) -xzf $<
 	touch $@
 	@echo
+endif
 
 $(LOCAL-CACHE)/$(MAVEN-TAR):
 	@echo "* Installing 'maven' locally"

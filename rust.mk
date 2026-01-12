@@ -19,8 +19,13 @@ export RUSTUP_HOME := $(LOCAL-ROOT)/rustup
 CARGO-BIN := $(CARGO_HOME)/bin
 override PATH := $(CARGO-BIN):$(PATH)
 
+ifeq ($(OS-NAME),windows)
+CARGO := $(CARGO-BIN)/rustup.exe
+RUSTUP := $(CARGO-BIN)/rustup.exe
+else
 CARGO := $(CARGO-BIN)/rustup
 RUSTUP := $(CARGO-BIN)/rustup
+endif
 
 SHELL-DEPS += $(CARGO)
 

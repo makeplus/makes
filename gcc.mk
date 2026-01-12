@@ -10,8 +10,15 @@ OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := darwin-arm64
 OA-macos-int64 := darwin-x64
+OA-windows-arm64 := win32-arm64
+OA-windows-int64 := win32-x64
 
-GCC-TAR := xpack-gcc-$(GCC-VERSION)-$(OA-$(OS-ARCH)).tar.gz
+ifeq ($(OS-NAME),windows)
+GCC-ARCHIVE := xpack-gcc-$(GCC-VERSION)-$(OA-$(OS-ARCH)).zip
+else
+GCC-ARCHIVE := xpack-gcc-$(GCC-VERSION)-$(OA-$(OS-ARCH)).tar.gz
+endif
+GCC-TAR := $(GCC-ARCHIVE)
 GCC-DOWN := https://github.com/xpack-dev-tools/gcc-xpack/releases/download
 GCC-DOWN := $(GCC-DOWN)/v$(GCC-VERSION)/$(GCC-TAR)
 
@@ -26,11 +33,19 @@ GFORTRAN := $(GCC-BIN)/gfortran
 SHELL-DEPS += $(GCC)
 
 
-$(GCC) $(GPP) $(GFORTRAN): $(LOCAL-CACHE)/$(GCC-TAR)
+ifeq ($(OS-NAME),windows)
+$(GCC) $(GPP) $(GFORTRAN): $(LOCAL-CACHE)/$(GCC-ARCHIVE)
+	cd $(LOCAL-ROOT) && unzip -q cache/$(GCC-ARCHIVE)
+	mv $(LOCAL-ROOT)/xpack-gcc-$(GCC-VERSION) $(GCC-LOCAL)
+	touch $(GCC) $(GPP) $(GFORTRAN)
+	@echo
+else
+$(GCC) $(GPP) $(GFORTRAN): $(LOCAL-CACHE)/$(GCC-ARCHIVE)
 	mkdir -p $(GCC-LOCAL)
 	tar -C $(GCC-LOCAL) --strip-components=1 -xzf $<
-	touch $@
+	touch $(GCC) $(GPP) $(GFORTRAN)
 	@echo
+endif
 
 $(LOCAL-CACHE)/$(GCC-TAR):
 	@echo "* Installing 'gcc' locally (via xPack GCC)"

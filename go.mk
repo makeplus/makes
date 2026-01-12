@@ -92,9 +92,9 @@ endif
 # Install rules:
 $(GO):: $(LOCAL-CACHE)/$(GO-TAR)
 ifeq (windows,$(OS-NAME))
-	$Q unzip -q -d $(LOCAL-ROOT) $<
+	$Q cd $(LOCAL-ROOT) && unzip -q cache/$(GO-TAR)
 else
-	$Q tar -C $(LOCAL-ROOT) -xzf $<
+	$Q cd $(LOCAL-ROOT) && tar -xzf cache/$(GO-TAR)
 endif
 	$Q rm -fr $(GO-LOCAL)
 	$Q mv $(LOCAL-ROOT)/go $(GO-LOCAL)

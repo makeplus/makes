@@ -39,15 +39,19 @@ SHELL-DEPS += $(GRAALVM)
 
 ifeq ($(OS-NAME),windows)
 $(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
-	$Q cd $(LOCAL-ROOT) && unzip -q $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
-	$Q mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
-	$Q touch $@
+	$Q if [[ ! -f $(GRAALVM) ]]; then \
+		cd $(LOCAL-ROOT) && unzip -q cache/$(GRAALVM-ARCHIVE) && \
+		mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL) && \
+		touch $(GRAALVM) $(JAVA); \
+	fi
 	@$(ECHO)
 else
 $(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
-	$Q tar -C $(LOCAL-ROOT) -xzf $<
-	$Q mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL)
-	$Q touch $@
+	$Q if [[ ! -f $(GRAALVM) ]]; then \
+		cd $(LOCAL-ROOT) && tar -xzf cache/$(GRAALVM-ARCHIVE) && \
+		mv $(LOCAL-ROOT)/graalvm-jdk-$(GRAALVM-VERSION).* $(GRAALVM-LOCAL) && \
+		touch $(GRAALVM) $(JAVA); \
+	fi
 	@$(ECHO)
 endif
 
