@@ -12,6 +12,11 @@ OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-x64
 OA-windows-int64 := windows-x64
 
+# GraalVM no longer supports macOS Intel
+ifeq ($(OS-NAME)-$(ARCH-NAME),macos-int64)
+$(error GraalVM no longer supports macOS Intel (x64))
+endif
+
 ifeq ($(OS-NAME),windows)
 GRAALVM-ARCHIVE := graalvm-jdk-$(GRAALVM-VERSION)_$(OA-$(OS-ARCH))_bin.zip
 else
