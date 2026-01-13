@@ -6,8 +6,11 @@ defn main():
   show-versions:
 
 missing =::
+- bison
 - cabal
 - cursor
+- flex
+- gcc
 - graalvm
 - java
 - lein

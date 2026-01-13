@@ -1,4 +1,4 @@
-ELIXIR-VERSION ?= 1.19.4
+ELIXIR-VERSION ?= 1.19.5
 ELIXIR-OTP-VERSION ?= 27
 # https://github.com/elixir-lang/elixir
 
