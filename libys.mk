@@ -17,6 +17,8 @@ LIBYS-DOWN := $(LIBYS-DOWN)/releases/download/$(LIBYS-VERSION)/$(LIBYS-TAR)
 
 LIBYS := $(LOCAL-LIB)/libys.$(SO).$(LIBYS-VERSION)
 
+export LD_LIBRARY_PATH := $(LOCAL-LIB):$(LD_LIBRARY_PATH)
+
 SHELL-DEPS += $(LIBYS)
 
 
