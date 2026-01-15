@@ -38,12 +38,14 @@ SHELL-DEPS += $(JAVA)
 ifeq ($(OS-NAME),windows)
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
 	cd $(LOCAL-ROOT) && unzip -q cache/$(JAVA-ARCHIVE)
+	$(RM) -r $(JAVA-LOCAL)
 	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
 	touch $@
 	@echo
 else
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
 	cd $(LOCAL-ROOT) && tar -xzf cache/$(JAVA-ARCHIVE)
+	$(RM) -r $(JAVA-LOCAL)
 	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
 	touch $@
 	@echo
