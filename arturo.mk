@@ -1,4 +1,4 @@
-ARTURO-VERSION ?= 0.9.83
+ARTURO-VERSION ?= 0.10.0
 
 # XXX Needs these. Need to auto-install:
 # sudo apt install libwebkit2gtk-4.1-dev

@@ -1,4 +1,4 @@
-RUBY-VERSION ?= 3.4.8
+RUBY-VERSION ?= 4.0.1
 # https://github.com/jdx/ruby
 
 ifndef RUBY-LOADED
