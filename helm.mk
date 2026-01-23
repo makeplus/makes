@@ -1,4 +1,4 @@
-HELM-VERSION ?= 4.0.5
+HELM-VERSION ?= 4.1.0
 # https://github.com/helm/helm
 
 ifndef HELM-LOADED
