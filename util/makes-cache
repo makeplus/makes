@@ -30,6 +30,7 @@ main() (
   if [[ -e $cache_path ]]; then
     rm -rf "$target"
     cp -a "$cache_path" "$target"
+    touch "$target"
     echo "Restored from cache: $cache_path" >&2
     exit 0
   fi
@@ -40,6 +41,7 @@ main() (
   # If target exists, cache it
   if [[ -e $target ]]; then
     cp -a "$target" "$cache_path"
+    touch "$target"
     echo "Cached: $cache_path" >&2
   fi
 )
