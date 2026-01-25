@@ -5,25 +5,25 @@ set -euo pipefail
 die() { echo "$@" >&2; exit 1; }
 
 main() {
-    [[ $# -eq 1 && $1 == https://* ]] ||
-        die "curl+ takes one arg which must be a url"
+  [[ $# -eq 1 && $1 == https://* ]] ||
+    die "curl+ takes one arg which must be a url"
 
-    local url=$1
-    local name=${url#https://}
-    name=${name//\//__}
+  local url=$1
+  local name=${url#https://}
+  name=${name//\//__}
 
-    local target
-    target=$(mktemp)
-    trap "rm -f '$target'" EXIT
+  local target
+  target=$(mktemp)
+  trap "rm -f '$target'" EXIT
 
-    local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
+  local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
 
-    MAKES_CACHE_NAME="$name" \
-    MAKES_CACHE_DEPS=_ \
-    "$makes_cache" "$target" -- \
-        curl -sL -o "$target" "$url"
+  MAKES_CACHE_NAME="$name" \
+  MAKES_CACHE_DEPS=_ \
+  "$makes_cache" "$target" \
+    curl -sL -o "$target" "$url"
 
-    cat "$target"
+  cat "$target"
 }
 
 main "$@"
