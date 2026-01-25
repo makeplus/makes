@@ -28,6 +28,7 @@ main() (
 
   # Cache hit - restore and exit
   if [[ -e $cache_path ]]; then
+    rm -rf "$target"
     cp -a "$cache_path" "$target"
     echo "Restored from cache: $cache_path" >&2
     exit 0
