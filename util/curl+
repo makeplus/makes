@@ -2,39 +2,28 @@
 
 set -euo pipefail
 
-main() (
-  [[ $# -eq 1 && $1 == https://* ]] ||
-    die "curl+ takes one arg which must be a url"
+die() { echo "$@" >&2; exit 1; }
 
-  url=$1
+main() {
+    [[ $# -eq 1 && $1 == https://* ]] ||
+        die "curl+ takes one arg which must be a url"
 
-  if [[ ${MAKES_CACHE_DIR-} ]]; then
-    [[ -d $MAKES_CACHE_DIR ]] ||
-      die "MAKES_CACHE_DIR=$MAKES_CACHE_DIR is not a directory"
-  elif [[ -d ~/.cache/makes ]]; then
-    MAKES_CACHE_DIR=~/.cache/makes
-  fi
-  [[ ${MAKES_CACHE_DIR-} ]] || {
-    curl -sL "$url"
-    exit
-  }
+    local url=$1
+    local name=${url#https://}
+    name=${name//\//__}
 
-  file=${url#https://}
-  file=${file//\//__}
+    local target
+    target=$(mktemp)
+    trap "rm -f '$target'" EXIT
 
-  cd "$MAKES_CACHE_DIR" || exit
+    local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
 
-  if ! [[ -f $file ]]; then
-    curl -sL "$url" > "$file-" || {
-      rm -f "$file-"
-      exit 1
-    }
-    mv "$file-" "$file"
-  fi
+    MAKES_CACHE_NAME="$name" \
+    MAKES_CACHE_DEPS=_ \
+    "$makes_cache" "$target" -- \
+        curl -sL -o "$target" "$url"
 
-  cat "$file"
-)
-
-die() { printf '%s\n' "$@" >&2; exit 1; }
+    cat "$target"
+}
 
 main "$@"

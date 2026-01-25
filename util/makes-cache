@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+die() { echo "$@" >&2; exit 1; }
+
+sha1() {
+    if command -v sha1sum &>/dev/null; then
+        sha1sum | cut -f1 -d' '
+    else
+        shasum -a 1 | cut -f1 -d' '
+    fi
+}
+
+main() {
+    local target=$1
+    shift
+    [[ $1 == -- ]] && shift
+
+    local cache_dir
+    if [[ ${MAKES_CACHE_DIR-} ]]; then
+        [[ -d $MAKES_CACHE_DIR ]] ||
+            die "MAKES_CACHE_DIR=$MAKES_CACHE_DIR is not a directory"
+        cache_dir=$MAKES_CACHE_DIR
+    elif [[ -d ~/.cache/makes ]]; then
+        cache_dir=~/.cache/makes
+    fi
+
+    # No caching if no cache dir available
+    [[ ${cache_dir-} ]] || {
+        exec "$@"
+    }
+
+    local cache_path
+    if [[ ${MAKES_CACHE_DEPS:?} == _ ]]; then
+        cache_path="$cache_dir/${MAKES_CACHE_NAME:?}"
+    else
+        local hash
+        hash=$(sha1 <<<"$MAKES_CACHE_DEPS")
+        cache_path="$cache_dir/${MAKES_CACHE_NAME:?}-$hash"
+    fi
+
+    # Cache hit - restore and exit
+    if [[ -e $cache_path ]]; then
+        cp -a "$cache_path" "$target"
+        echo "Restored from cache: $cache_path" >&2
+        exit 0
+    fi
+
+    # Cache miss - run command
+    "$@"
+
+    # If target exists, cache it
+    if [[ -e $target ]]; then
+        cp -a "$target" "$cache_path"
+        echo "Cached: $cache_path" >&2
+    fi
+}
+
+main "$@"
