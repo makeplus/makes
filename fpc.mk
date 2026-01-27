@@ -1,4 +1,4 @@
-FPC-VERSION ?= 3.2.2
+FPC-VERSION ?= 3.3.1
 # https://github.com/fpc/FPCSource
 
 ifndef FPC-LOADED
