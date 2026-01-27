@@ -3,7 +3,7 @@
 source test/init slow
 
 out=$(
-  make --no-pr fpc-test CMD='fpc -v; which fpc'
+  make --no-pr fpc-test CMD='fpc -h; which fpc'
 )
 
 has "$out" "Free Pascal Compiler" "fpc version works"

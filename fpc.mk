@@ -1,4 +1,4 @@
-FPC-VERSION ?= 3.3.1
+FPC-VERSION ?= 3.2.2
 # https://github.com/fpc/FPCSource
 
 ifndef FPC-LOADED
@@ -52,7 +52,7 @@ ifeq ($(OS-NAME),windows)
 else
 	$Q cd $(LOCAL-CACHE) && tar -xf $(FPC-ARCHIVE)
 	$Q cd $(LOCAL-CACHE)/fpc-$(FPC-VERSION).$(FPC-ARCH) && \
-	  printf "$(FPC-LOCAL)\nn\nn\nn\nn\n" | sh install.sh > /dev/null 2>&1
+	  printf "$(FPC-LOCAL)\nn\nn\nn\nn\n" | bash install.sh > /dev/null 2>&1
 	$Q rm -rf $(LOCAL-CACHE)/fpc-$(FPC-VERSION).$(FPC-ARCH)
 endif
 	$Q touch $@
