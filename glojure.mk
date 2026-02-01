@@ -13,7 +13,7 @@ GLOJURE-GET-URL ?= github.com/glojurelang/glojure/cmd/glj
 GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-VERSION)
 
 GLOJURE-REPO ?= https://github.com/glojurelang/glojure
-GLOJURE-DIR := $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
+GLOJURE-DIR ?= $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
 export GLOJURE_DIR := $(GLOJURE-DIR)
 
 override GLOJURE-REPO := $(if $(findstring https://,$(GLOJURE-REPO)) \
@@ -26,6 +26,7 @@ SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 $(GLJ): $(GO)
 	$Q go install $(GLOJURE-GET-URL) $O
+	$Q touch $@
 
 $(GLOJURE-DIR):
 	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
