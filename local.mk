@@ -38,3 +38,6 @@ $(shell mkdir -p \
 )
 
 override PATH := $(LOCAL-BIN):$(PATH)
+
+local-chmod:
+	chmod -R +w $(LOCAL-ROOT)

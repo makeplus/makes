@@ -62,9 +62,6 @@ endif
 SHELL-DEPS += $(GO)
 
 
-clean::
-	chmod -R +w $(LOCAL-ROOT)
-
 # Go command rules:
 ifdef GO-CMDS-RULES
 

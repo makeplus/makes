@@ -41,7 +41,7 @@ test: $(BPAN)
 rev:
 	git rev-parse HEAD
 
-clean:: $(CLEAN-TARGETS)
+clean:: local-chmod $(CLEAN-TARGETS)
 
 $(CLEAN-TARGETS):
 	@$(MAKE) -s -C test/$(@:clean-%=%) clean
