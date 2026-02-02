@@ -25,7 +25,7 @@ SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
 $(GLJ): $(GO)
-	$Q go install $(GLOJURE-GET-URL) $O
+	$Q GOBIN=$(LOCAL-BIN) go install $(GLOJURE-GET-URL) $O
 	$Q touch $@
 
 $(GLOJURE-DIR):
