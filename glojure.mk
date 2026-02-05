@@ -30,6 +30,6 @@ $(GLJ): $(GO)
 
 $(GLOJURE-DIR):
 	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
-	$Q git -C $@ reset$(if $Q, -q) --hard $(GLOJURE-COMMIT)
+	$Q git -C $@ checkout$(if $Q, -q) $(GLOJURE-COMMIT)
 
 endif
