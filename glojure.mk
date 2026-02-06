@@ -10,7 +10,7 @@ override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
 GLOJURE-COMMIT ?= $(GLOJURE-VERSION)
 
 GLOJURE-GET-URL ?= github.com/glojurelang/glojure/cmd/glj
-GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-VERSION)
+GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-COMMIT)
 
 GLOJURE-REPO ?= https://github.com/glojurelang/glojure
 GLOJURE-DIR ?= $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
@@ -24,8 +24,8 @@ GLJ := $(LOCAL-BIN)/glj
 SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
-$(GLJ): $(GO)
-	$Q GOBIN=$(LOCAL-BIN) go install $(GLOJURE-GET-URL) $O
+$(GLJ): $(GO) $(GLOJURE-DIR)
+	$Q cd $(GLOJURE-DIR)/cmd/glj && GOBIN=$(LOCAL-BIN) go install . $O
 	$Q touch $@
 
 $(GLOJURE-DIR):
