@@ -25,19 +25,13 @@ SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
 $(GLJ): $(GO) $(GLOJURE-DIR)
-ifdef GLOJURE-DEBUG
-	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
-	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
-endif
+	MAKES_RULE='$@' GLOJURE_GET_URL='$(GLOJURE-GET-URL)' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' GLOJURE_VERSION='$(GLOJURE-VERSION)' GLOJURE_COMMIT='$(GLOJURE-COMMIT)' GLOJURE_DEBUG='$(GLOJURE-DEBUG)' env | sort >> /tmp/glojure.txt
+	(echo; set -x; git -C $(GLOJURE-DIR) remote -v) >> /tmp/glojure.txt
 	$Q cd $(GLOJURE-DIR)/cmd/glj && GOBIN=$(LOCAL-BIN) go install . $O
 	$Q touch $@
 
 $(GLOJURE-DIR):
 	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
 	$Q git -C $@ checkout$(if $Q, -q) $(GLOJURE-COMMIT)
-ifdef GLOJURE-DEBUG
-	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
-	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
-endif
 
 endif
