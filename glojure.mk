@@ -10,7 +10,7 @@ override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
 GLOJURE-COMMIT ?= $(GLOJURE-VERSION)
 
 GLOJURE-GET-URL ?= github.com/glojurelang/glojure/cmd/glj
-GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-COMMIT)
+override GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-COMMIT)
 
 GLOJURE-REPO ?= https://github.com/glojurelang/glojure
 GLOJURE-DIR ?= $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
@@ -25,11 +25,19 @@ SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
 $(GLJ): $(GO) $(GLOJURE-DIR)
+ifdef GLOJURE-DEBUG
+	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
+	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
+endif
 	$Q cd $(GLOJURE-DIR)/cmd/glj && GOBIN=$(LOCAL-BIN) go install . $O
 	$Q touch $@
 
 $(GLOJURE-DIR):
 	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
 	$Q git -C $@ checkout$(if $Q, -q) $(GLOJURE-COMMIT)
+ifdef GLOJURE-DEBUG
+	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
+	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
+endif
 
 endif
