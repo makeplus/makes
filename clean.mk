@@ -1,9 +1,9 @@
 ifndef CLEAN-LOADED
 CLEAN-LOADED := true
 
-MAKES-CLEAN :=
-MAKES-REALCLEAN :=
-MAKES-DISTCLEAN :=
+MAKES-CLEAN ?=
+MAKES-REALCLEAN ?=
+MAKES-DISTCLEAN ?=
 
 ifeq (,$(patsubst %/.cache/makes,,$(lastword $(MAKES))))
   _path := $(abspath $(dir $(MAKES)))

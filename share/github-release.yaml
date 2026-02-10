@@ -1,0 +1,45 @@
+# GitHub Release Configuration
+# Defines all platforms to build for github-release target
+# Override GLOAT-PLATFORMS with these values
+
+platforms:
+# Linux - most common server and desktop platforms
+- linux/amd64
+- linux/arm64
+- linux/386
+- linux/arm
+
+# macOS - Intel and Apple Silicon
+- darwin/amd64
+- darwin/arm64
+
+# Windows - desktop platforms
+- windows/amd64
+- windows/arm64
+- windows/386
+
+# FreeBSD - server platform
+- freebsd/amd64
+- freebsd/arm64
+- freebsd/386
+
+# OpenBSD - server platform
+- openbsd/amd64
+- openbsd/arm64
+
+# NetBSD - server platform
+- netbsd/amd64
+- netbsd/arm64
+
+# WebAssembly - for browsers and WASI runtimes
+- js/wasm
+- wasip1/wasm
+
+# Additional architectures (less common)
+# Uncomment if needed:
+# - linux/ppc64le    # IBM POWER
+# - linux/s390x      # IBM Z mainframe
+# - linux/mips64le   # MIPS 64-bit
+# - linux/riscv64    # RISC-V 64-bit
+# - dragonfly/amd64  # DragonFly BSD
+# - solaris/amd64    # Solaris/Illumos
