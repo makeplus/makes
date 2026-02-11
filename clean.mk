@@ -27,7 +27,7 @@ realclean:: clean
 
 distclean:: realclean
 ifdef MAKES-DISTCLEAN
-	if [[ '$(MAKES-DISTCLEAN)' ]]; then \
+	@if [[ '$(MAKES-DISTCLEAN)' ]]; then \
 	  set -x; \
 	  $(RM) -r $(MAKES-DISTCLEAN) &>/dev/null || \
 	  { \
