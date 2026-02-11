@@ -88,7 +88,7 @@ $(eval _arch := $(word 2,$(subst /, ,$(1))))
 $(eval _ext := $(if $(filter windows,$(_os)),.exe,))
 $(eval _target := $(GLOAT-DIST)/$(GLOAT-BIN-NAME)-$(_os)-$(_arch)$(_ext))
 
-$(_target): $(GLOAT-DIR)
+$(_target): | $(GLOAT-DIR)
 	$$Q mkdir -p $(GLOAT-DIST)
 	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@ -p $(1)
 	$$(if $$Q,,@echo "Built $$@")
