@@ -81,15 +81,6 @@ $(GLOAT-CONFIG):
 ifdef FILE
 GLOAT-BIN-NAME := $(or $(GLOAT-NAME),$(basename $(notdir $(FILE))))
 
-# Generate all platform rules
-$(foreach platform,$(GLOAT-PLATFORMS),$(eval $(call gloat-platform-rule,$(platform))))
-
-gloat-bin: $(GLOAT-DIST-FILES)
-
-endif
-
-endif
-
 # Template to generate a rule for one platform
 define gloat-platform-rule
 $(eval _os := $(word 1,$(subst /, ,$(1))))
@@ -104,3 +95,12 @@ $(_target): $(GLOAT-DIR)
 
 GLOAT-DIST-FILES += $(_target)
 endef
+
+# Generate all platform rules
+$(foreach platform,$(GLOAT-PLATFORMS),$(eval $(call gloat-platform-rule,$(platform))))
+
+gloat-bin: $(GLOAT-DIST-FILES)
+
+endif
+
+endif
