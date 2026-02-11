@@ -33,7 +33,7 @@ ifdef MAKES-DISTCLEAN
 	  { \
 	    chmod -R +w $(MAKES-DISTCLEAN); \
 	    $(RM) -r $(MAKES-DISTCLEAN); \
-	  }
+	  }; \
 	fi
 endif
 
