@@ -13,7 +13,7 @@ GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
 
 GLOAT-GITHUB-TOKEN-FILE ?= $(HOME)/.github-api-token
 GLOAT-CONFIG ?= .makes/gloat.config
-GLOAT-CONFIG-SRC := $(MAKES-DIR)/share/gloat.config
+GLOAT-CONFIG-SRC := $(MAKES)/share/gloat.config
 
 GH-CMD = $(GH)
 ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
