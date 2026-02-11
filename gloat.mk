@@ -14,6 +14,7 @@ GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
 GLOAT-GITHUB-TOKEN-FILE ?= $(HOME)/.github-api-token
 GLOAT-CONFIG ?= .makes/gloat.config
 GLOAT-CONFIG-SRC := $(MAKES)/share/gloat.config
+GLOAT-GO ?= go
 
 GH-CMD = $(GH)
 ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
@@ -69,6 +70,12 @@ gloat-github-release: $(GLOAT-DIR) $(GH)
 	$(GH-CMD) release create v$(VERSION) --title "v$(VERSION)" --generate-notes $(GLOAT-DIST)/*
 
 gloat-config: $(GLOAT-CONFIG)
+
+gloat-go: $(GLOAT-GO)
+
+$(GLOAT-GO):
+	@$(if $(FILE),,$(error FILE is required for gloat-go))
+	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@/
 
 $(GLOAT-DIR):
 	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
