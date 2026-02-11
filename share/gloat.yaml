@@ -2,6 +2,7 @@
 # Defines all platforms to build for github-release target
 # Override GLOAT-PLATFORMS with these values
 
+# Glojure supported platforms (based on pkg/gen/gljimports)
 platforms:
 # Linux - most common server and desktop platforms
 - linux/amd64
@@ -16,6 +17,7 @@ platforms:
 # Windows - desktop platforms
 - windows/amd64
 - windows/arm64
+- windows/arm
 - windows/386
 
 # FreeBSD - server platform
@@ -31,15 +33,17 @@ platforms:
 - netbsd/amd64
 - netbsd/arm64
 
+# DragonFly BSD
+- dragonfly/amd64
+
+# Linux - additional architectures
+- linux/ppc64le    # IBM POWER
+- linux/s390x      # IBM Z mainframe
+- linux/riscv64    # RISC-V 64-bit
+
 # WebAssembly - for browsers and WASI runtimes
 - js/wasm
 - wasip1/wasm
 
-# Additional architectures (less common)
-# Uncomment if needed:
-# - linux/ppc64le    # IBM POWER
-# - linux/s390x      # IBM Z mainframe
-# - linux/mips64le   # MIPS 64-bit
-# - linux/riscv64    # RISC-V 64-bit
-# - dragonfly/amd64  # DragonFly BSD
-# - solaris/amd64    # Solaris/Illumos
+# Less common architectures
+- linux/mips64le   # MIPS 64-bit

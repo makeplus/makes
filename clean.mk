@@ -26,9 +26,15 @@ realclean:: clean
 	fi
 
 distclean:: realclean
-	@if [[ '$(MAKES-DISTCLEAN)' ]]; then \
+ifdef MAKES-DISTCLEAN
+	if [[ '$(MAKES-DISTCLEAN)' ]]; then \
 	  set -x; \
-	  $(RM) -r $(MAKES-DISTCLEAN); \
+	  $(RM) -r $(MAKES-DISTCLEAN) &>/dev/null || \
+	  { \
+	    chmod -R +w $(MAKES-DISTCLEAN); \
+	    $(RM) -r $(MAKES-DISTCLEAN); \
+	  }
 	fi
+endif
 
 endif

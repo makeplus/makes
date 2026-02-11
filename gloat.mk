@@ -49,6 +49,9 @@ GLOAT-PLATFORMS += $(GLOAT-EXTRA-PLATFORMS)
 
 GLOAT-DIST ?= dist
 
+GLOAT-CONFIG := .makes/gloat.yaml
+GLOAT-CONFIG-SRC := $(MAKES-DIR)/share/gloat.yaml
+
 SHELL-DEPS += $(GLOAT-DIR)
 
 # Auto-detect FILE if there's exactly one .ys or .clj file
@@ -73,12 +76,27 @@ gloat-github-release: $(GLOAT-DIR) $(GH) $(YQ)
 	$(MAKE) gloat-github-release-dist FILE=$(FILE)
 	$(GH-CMD) release create v$(VERSION) --title "v$(VERSION)" --generate-notes $(GLOAT-DIST)/*
 
+gloat-config: $(GLOAT-CONFIG)
+
 $(GLOAT-DIR):
 	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
 	$Q git -C $@ checkout$(if $Q, -q) $(GLOAT-VERSION)
 
+$(GLOAT-CONFIG):
+	mkdir -p $(dir $(GLOAT-CONFIG))
+	cp $(GLOAT-CONFIG-SRC) $@
+
 ifdef FILE
 GLOAT-BIN-NAME := $(or $(GLOAT-NAME),$(basename $(notdir $(FILE))))
+
+# Generate all platform rules
+$(foreach platform,$(GLOAT-PLATFORMS),$(eval $(call gloat-platform-rule,$(platform))))
+
+gloat-bin: $(GLOAT-DIST-FILES)
+
+endif
+
+endif
 
 # Template to generate a rule for one platform
 define gloat-platform-rule
@@ -94,12 +112,3 @@ $(_target): $(GLOAT-DIR)
 
 GLOAT-DIST-FILES += $(_target)
 endef
-
-# Generate all platform rules
-$(foreach platform,$(GLOAT-PLATFORMS),$(eval $(call gloat-platform-rule,$(platform))))
-
-gloat-bin: $(GLOAT-DIST-FILES)
-
-endif
-
-endif
