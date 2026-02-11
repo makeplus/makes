@@ -6,14 +6,14 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 include $(MAKES)/gh.mk
-include $(MAKES)/yq.mk
 
 GLOAT-COMMIT ?= gloat
 GLOAT-REPO ?= https://github.com/ingydotnet/gloat
 GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
 
 GLOAT-GITHUB-TOKEN-FILE ?= $(HOME)/.github-api-token
-GLOAT-CONFIG-DEFAULT := .makes/gloat.yaml
+GLOAT-CONFIG ?= .makes/gloat.config
+GLOAT-CONFIG-SRC := $(MAKES-DIR)/share/gloat.config
 
 GH-CMD = $(GH)
 ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
@@ -21,13 +21,8 @@ export GITHUB_TOKEN_FILE := $(GLOAT-GITHUB-TOKEN-FILE)
 override GH-CMD := GITHUB_TOKEN=$$(< $$GITHUB_TOKEN_FILE) $(GH)
 endif
 
-# Optional config file to override GLOAT-PLATFORMS
-ifneq (,$(wildcard $(GLOAT-CONFIG-DEFAULT)))
-GLOAT-CONFIG ?= $(GLOAT-CONFIG-DEFAULT)
-endif
-
 ifneq (,$(wildcard $(GLOAT-CONFIG)))
-override GLOAT-PLATFORMS := $(shell $(YQ) '.platforms[]' $(GLOAT-CONFIG) | tr '\n' ' ')
+override GLOAT-PLATFORMS := $(shell git config -f $(GLOAT-CONFIG) --get-all gloat.platforms.name)
 endif
 
 override GLOAT-REPO := $(if $(findstring https://,$(GLOAT-REPO)) \
@@ -49,9 +44,6 @@ GLOAT-PLATFORMS += $(GLOAT-EXTRA-PLATFORMS)
 
 GLOAT-DIST ?= dist
 
-GLOAT-CONFIG := .makes/gloat.yaml
-GLOAT-CONFIG-SRC := $(MAKES-DIR)/share/gloat.yaml
-
 SHELL-DEPS += $(GLOAT-DIR)
 
 # Auto-detect FILE if there's exactly one .ys or .clj file
@@ -68,7 +60,7 @@ gloat-github-release-dist:
 	@$(if $(FILE),,$(error FILE is required for gloat-github-release-dist))
 	$(MAKE) gloat-bin FILE=$(FILE)
 
-gloat-github-release: $(GLOAT-DIR) $(GH) $(YQ)
+gloat-github-release: $(GLOAT-DIR) $(GH)
 	@$(if $(FILE),,$(error FILE is required for gloat-github-release))
 	@$(if $(VERSION),,$(error VERSION is required for gloat-github-release))
 	@echo "Verifying GitHub repository and authentication..."
