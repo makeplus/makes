@@ -8,7 +8,7 @@ $(eval $(call include-local))
 include $(MAKES)/gh.mk
 
 GLOAT-COMMIT ?= gloat
-GLOAT-REPO ?= https://github.com/ingydotnet/gloat
+GLOAT-REPO ?= https://github.com/gloathub/gloat
 GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
 
 GLOAT-GITHUB-TOKEN-FILE ?= $(HOME)/.github-api-token
