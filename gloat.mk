@@ -6,6 +6,7 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 include $(MAKES)/gh.mk
+include $(MAKES)/go.mk
 
 GLOAT-COMMIT ?= gloat
 GLOAT-REPO ?= https://github.com/gloathub/gloat
@@ -75,9 +76,10 @@ gloat-config: $(GLOAT-CONFIG)
 
 gloat-go: $(GLOAT-GO)
 
-$(GLOAT-GO):
+$(GLOAT-GO): $(GLOAT-DIR) $(GO)
 	@$(if $(FILE),,$(error FILE is required for gloat-go))
 	$Q $(GLOAT-BIN)/gloat $(FILE) -o $@/
+	$Q go -C $@ mod tidy
 
 $(GLOAT-DIR):
 	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
