@@ -45,6 +45,8 @@ GLOAT-PLATFORMS += $(GLOAT-EXTRA-PLATFORMS)
 
 GLOAT-DIST ?= dist
 
+MAKES-REALCLEAN += $(GLOAT-DIST)
+
 SHELL-DEPS += $(GLOAT-DIR)
 
 # Auto-detect FILE if there's exactly one .ys or .clj file
@@ -75,7 +77,7 @@ gloat-go: $(GLOAT-GO)
 
 $(GLOAT-GO):
 	@$(if $(FILE),,$(error FILE is required for gloat-go))
-	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@/
+	$Q $(GLOAT-BIN)/gloat $(FILE) -o $@/
 
 $(GLOAT-DIR):
 	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
