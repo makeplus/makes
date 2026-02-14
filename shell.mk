@@ -8,6 +8,10 @@ MAKES-SHELL ?= bash
 ifdef CMD
 shell: $(SHELL-DEPS)
 	@sh -c '$(CMD)'
+else ifdef cmd
+shell:
+	@$(MAKE) -s $(SHELL-DEPS) &>/dev/null
+	@sh -c '$(cmd)'
 else
 shell: $(MAKES-SHELL)
 endif
@@ -35,8 +39,8 @@ endif
 	  zsh; \
 	)
 
-endif
-
 shell-env:
 	@$(MAKE) -s $(SHELL-DEPS) >/dev/null
 	@echo export PATH='$(PATH)'
+
+endif
