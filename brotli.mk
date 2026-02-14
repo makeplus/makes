@@ -1,4 +1,4 @@
-BROTLI-VERSION ?= 1.1.0
+BROTLI-VERSION ?= 1.2.0
 # https://github.com/google/brotli
 
 ifndef BROTLI-LOADED
