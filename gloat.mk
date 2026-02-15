@@ -27,13 +27,6 @@ GLOAT-GO-MODULE ?= $(shell \
       -e 's|\.git$$||' -e 's|:|/|' \
 )/$(GLOAT-GO)
 
-# Portable sed in-place (GNU vs BSD)
-ifdef IS-MACOS
-_SED_I = sed -i ''
-else
-_SED_I = sed -i
-endif
-
 GH-CMD = $(GH)
 ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
 export GITHUB_TOKEN_FILE := $(GLOAT-GITHUB-TOKEN-FILE)
@@ -81,7 +74,21 @@ gloat-github-release-dist:
 	@$(if $(FILE),,$(error FILE is required for gloat-github-release-dist))
 	$(MAKE) gloat-bin FILE=$(FILE)
 
-gloat-github-release: $(GLOAT-DIR) $(GH)
+gloat-github-release:
+	@$(if $(VERSION),,$(error VERSION is required for gloat-github-release))
+	perl -pi -e 's|^VERSION := .*|VERSION := $(VERSION)|' Makefile
+	perl -pi -e "s|^VERSION =: '.*'|VERSION =: '$(VERSION)'|" $(FILE)
+	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),rm -rf $(GLOAT-GO))
+	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),$(MAKE) gloat-go)
+	git add -A
+	git commit -m 'Version v$(VERSION)'
+	git tag v$(VERSION)
+	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),git tag $(GLOAT-GO)/v$(VERSION))
+	git push
+	git push --tags
+	$(MAKE) do-gloat-github-release
+
+do-gloat-github-release: $(GLOAT-DIR) $(GH)
 	@$(if $(FILE),,$(error FILE is required for gloat-github-release))
 	@$(if $(VERSION),,$(error VERSION is required for gloat-github-release))
 	@echo "Verifying GitHub repository and authentication..."
@@ -96,19 +103,19 @@ gloat-go: $(GLOAT-GO)
 $(GLOAT-GO): $(GLOAT-DIR) $(GO)
 	@$(if $(FILE),,$(error FILE is required for gloat-go))
 	$Q $(GLOAT-BIN)/gloat $(FILE) -o $@/
-	$Q $(_SED_I) \
+	$Q perl -pi -e \
 	    's|module $(GLOAT-GO-OLD-MODULE)|module $(GLOAT-GO-MODULE)|' \
 	    $@/go.mod
-	$Q $(_SED_I) \
+	$Q perl -pi -e \
 	    's|$(GLOAT-GO-OLD-MODULE)/|$(GLOAT-GO-MODULE)/|g' \
 	    $@/main.go
 	$Q mkdir -p $@/cmd/$(GLOAT-BIN-NAME)
 	$Q mv $@/main.go $@/cmd/$(GLOAT-BIN-NAME)/main.go
-	$Q $(_SED_I) \
+	$Q perl -pi -e \
 	    's|BINARY := .*|BINARY := $(GLOAT-BIN-NAME)|' \
 	    $@/Makefile
-	$Q $(_SED_I) \
-	    's|go build -o $$(BINARY) \.|go build -o $$(BINARY) ./cmd/$(GLOAT-BIN-NAME)|' \
+	$Q perl -pi -e \
+	    's|go build -o \$$\(BINARY\) \.|go build -o \$$(BINARY) ./cmd/$(GLOAT-BIN-NAME)|' \
 	    $@/Makefile
 	$Q go -C $@ mod tidy
 
