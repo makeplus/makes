@@ -8,8 +8,10 @@ defn main():
 missing =::
 - bison
 - cabal
+- clj-kondo
 - cursor
 - flex
+- fpc
 - gcc
 - graalvm
 - java
