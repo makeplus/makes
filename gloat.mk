@@ -17,6 +17,23 @@ GLOAT-CONFIG ?= .makes/gloat.config
 GLOAT-CONFIG-SRC := $(MAKES)/share/gloat.config
 GLOAT-GO ?= go
 
+# Default module path that gloat generates
+GLOAT-GO-OLD-MODULE ?= github.com/gloathub/go
+
+# Auto-detect correct module path from git remote
+GLOAT-GO-MODULE ?= $(shell \
+  git remote get-url origin 2>/dev/null | \
+  sed -e 's|^git@||' -e 's|^https*://||' \
+      -e 's|\.git$$||' -e 's|:|/|' \
+)/$(GLOAT-GO)
+
+# Portable sed in-place (GNU vs BSD)
+ifdef IS-MACOS
+_SED_I = sed -i ''
+else
+_SED_I = sed -i
+endif
+
 GH-CMD = $(GH)
 ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
 export GITHUB_TOKEN_FILE := $(GLOAT-GITHUB-TOKEN-FILE)
@@ -79,7 +96,25 @@ gloat-go: $(GLOAT-GO)
 $(GLOAT-GO): $(GLOAT-DIR) $(GO)
 	@$(if $(FILE),,$(error FILE is required for gloat-go))
 	$Q $(GLOAT-BIN)/gloat $(FILE) -o $@/
+	$Q $(_SED_I) \
+	    's|module $(GLOAT-GO-OLD-MODULE)|module $(GLOAT-GO-MODULE)|' \
+	    $@/go.mod
+	$Q $(_SED_I) \
+	    's|$(GLOAT-GO-OLD-MODULE)/|$(GLOAT-GO-MODULE)/|g' \
+	    $@/main.go
+	$Q mkdir -p $@/cmd/$(GLOAT-BIN-NAME)
+	$Q mv $@/main.go $@/cmd/$(GLOAT-BIN-NAME)/main.go
+	$Q $(_SED_I) \
+	    's|BINARY := .*|BINARY := $(GLOAT-BIN-NAME)|' \
+	    $@/Makefile
+	$Q $(_SED_I) \
+	    's|go build -o $$(BINARY) \.|go build -o $$(BINARY) ./cmd/$(GLOAT-BIN-NAME)|' \
+	    $@/Makefile
 	$Q go -C $@ mod tidy
+
+gloat-go-tag:
+	@$(if $(VERSION),,$(error VERSION is required for gloat-go-tag))
+	git tag $(GLOAT-GO)/v$(VERSION)
 
 $(GLOAT-DIR):
 	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
