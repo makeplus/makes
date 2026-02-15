@@ -75,15 +75,16 @@ gloat-github-release-dist:
 	$(MAKE) gloat-bin FILE=$(FILE)
 
 gloat-github-release:
-	@$(if $(VERSION),,$(error VERSION is required for gloat-github-release))
+	@$(if $(filter command line,$(origin VERSION)),,$(error VERSION is required on the command line))
+	@$(if $(FILE),,$(error FILE is required for gloat-github-release))
 	perl -pi -e 's|^VERSION := .*|VERSION := $(VERSION)|' Makefile
 	perl -pi -e "s|^VERSION =: '.*'|VERSION =: '$(VERSION)'|" $(FILE)
 	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),rm -rf $(GLOAT-GO))
 	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),$(MAKE) gloat-go)
 	git add -A
-	git commit -m 'Version v$(VERSION)'
-	git tag v$(VERSION)
-	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),git tag $(GLOAT-GO)/v$(VERSION))
+	git diff --cached --quiet || git commit -m 'Version v$(VERSION)'
+	git tag v$(VERSION) 2>/dev/null || true
+	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),git tag $(GLOAT-GO)/v$(VERSION) 2>/dev/null || true)
 	git push
 	git push --tags
 	$(MAKE) do-gloat-github-release
@@ -143,7 +144,7 @@ $(eval _target := $(GLOAT-DIST)/$(GLOAT-BIN-NAME)-$(_os)-$(_arch)$(_ext))
 
 $(_target): | $(GLOAT-DIR)
 	$$Q mkdir -p $(GLOAT-DIST)
-	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@ -p $(1)
+	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@ --platform=$(1)
 	$$(if $$Q,,@echo "Built $$@")
 
 GLOAT-DIST-FILES += $(_target)
