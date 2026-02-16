@@ -62,11 +62,8 @@ $(LOCAL-CACHE)/$(GLOJURE-TAR):
 
 endif
 
-
-# Repo clone always needed (for rewrite scripts)
-# Shallow clone for speed
 $(GLOJURE-DIR):
-	$Q git clone --depth 1 -b $(GLOJURE-COMMIT)$(if $Q, -q) \
+	$Q git clone -b $(GLOJURE-COMMIT)$(if $Q, -q) \
 	  $(GLOJURE-REPO) $@
 
 endif
