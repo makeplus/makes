@@ -68,5 +68,6 @@ $(GLOJURE-DIR):
 	  -b $(GLOJURE-COMMIT) \
 	  --config advice.detachedHead=false \
 	  $(GLOJURE-REPO) $@
+	@$(ECHO)
 
 endif
