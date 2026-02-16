@@ -63,7 +63,9 @@ $(LOCAL-CACHE)/$(GLOJURE-TAR):
 endif
 
 $(GLOJURE-DIR):
-	$Q git clone -b $(GLOJURE-COMMIT)$(if $Q, -q) \
+	$Q git clone$(if $Q, -q) \
+	  -b $(GLOJURE-COMMIT) \
+	  --config advice.detachedHead=false \
 	  $(GLOJURE-REPO) $@
 
 endif
