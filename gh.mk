@@ -26,6 +26,14 @@ override PATH := $(GH-BIN):$(PATH)
 
 GH := $(GH-BIN)/gh
 
+GH-TOKEN-FILE ?= $(HOME)/.github-api-token
+
+GH-CMD = $(GH)
+ifneq (,$(wildcard $(GH-TOKEN-FILE)))
+export GITHUB_TOKEN_FILE := $(GH-TOKEN-FILE)
+override GH-CMD := GITHUB_TOKEN=$$(< $$GITHUB_TOKEN_FILE) $(GH)
+endif
+
 SHELL-DEPS += $(GH)
 
 

@@ -12,7 +12,6 @@ GLOAT-COMMIT ?= gloat
 GLOAT-REPO ?= https://github.com/gloathub/gloat
 GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
 
-GLOAT-GITHUB-TOKEN-FILE ?= $(HOME)/.github-api-token
 GLOAT-CONFIG ?= .makes/gloat.config
 GLOAT-CONFIG-SRC := $(MAKES)/share/gloat.config
 GLOAT-GO ?= go
@@ -26,12 +25,6 @@ GLOAT-GO-MODULE ?= $(shell \
   sed -e 's|^git@||' -e 's|^https*://||' \
       -e 's|\.git$$||' -e 's|:|/|' \
 )/$(GLOAT-GO)
-
-GH-CMD = $(GH)
-ifneq (,$(wildcard $(GLOAT-GITHUB-TOKEN-FILE)))
-export GITHUB_TOKEN_FILE := $(GLOAT-GITHUB-TOKEN-FILE)
-override GH-CMD := GITHUB_TOKEN=$$(< $$GITHUB_TOKEN_FILE) $(GH)
-endif
 
 ifneq (,$(wildcard $(GLOAT-CONFIG)))
 override GLOAT-PLATFORMS := $(shell git config -f $(GLOAT-CONFIG) --get-all gloat.platforms.name)
