@@ -9,9 +9,6 @@ override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
   ,v$(GLOJURE-VERSION),$(GLOJURE-VERSION))
 GLOJURE-COMMIT ?= $(GLOJURE-VERSION)
 
-GLOJURE-GET-URL ?= github.com/glojurelang/glojure/cmd/glj
-override GLOJURE-GET-URL := $(GLOJURE-GET-URL)@$(GLOJURE-COMMIT)
-
 GLOJURE-REPO ?= https://github.com/glojurelang/glojure
 GLOJURE-DIR ?= $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
 export GLOJURE_DIR := $(GLOJURE-DIR)
@@ -21,23 +18,55 @@ override GLOJURE-REPO := $(if $(findstring https://,$(GLOJURE-REPO)) \
 
 GLJ := $(LOCAL-BIN)/glj
 
+# Auto-detect: dev branch → build from source
+ifndef GLOJURE-FROM-SOURCE
+ifneq ($(GLOJURE-COMMIT),$(GLOJURE-VERSION))
+GLOJURE-FROM-SOURCE := true
+endif
+endif
+
 SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
 
+ifdef GLOJURE-FROM-SOURCE
+#--- Build from source ---
+
 $(GLJ): $(GO) $(GLOJURE-DIR)
-ifdef GLOJURE-DEBUG
-	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
-	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
-endif
-	$Q cd $(GLOJURE-DIR)/cmd/glj && GOBIN=$(LOCAL-BIN) go install . $O
+	$Q cd $(GLOJURE-DIR)/cmd/glj && \
+	  GOBIN=$(LOCAL-BIN) go install . $O
 	$Q touch $@
 
-$(GLOJURE-DIR):
-	$Q git clone$(if $Q, -q) $(GLOJURE-REPO) $@
-	$Q git -C $@ checkout$(if $Q, -q) $(GLOJURE-COMMIT)
-ifdef GLOJURE-DEBUG
-	MAKES_RULE='$@' GLOJURE_REPO='$(GLOJURE-REPO)' GLOJURE_DIR='$(GLOJURE-DIR)' env | sort >> /tmp/glojure.txt
-	git -C $(GLOJURE-DIR) remote -v >> /tmp/glojure.txt
+else
+#--- Download pre-built binary ---
+
+OA-linux-arm64 := linux_arm64
+OA-linux-int64 := linux_amd64
+OA-macos-arm64 := darwin_arm64
+OA-macos-int64 := darwin_amd64
+
+GLOJURE-STRIP-V := $(patsubst v%,%,$(GLOJURE-VERSION))
+GLOJURE-TAR := glj-$(GLOJURE-STRIP-V)-$(OA-$(OS-ARCH)).tar.gz
+GLOJURE-DOWN := \
+  $(GLOJURE-REPO)/releases/download/$(GLOJURE-VERSION)/$(GLOJURE-TAR)
+
+$(GLJ): $(LOCAL-CACHE)/$(GLOJURE-TAR)
+	$Q tar -C $(LOCAL-CACHE) -xzf $<
+	$Q [[ -e $(LOCAL-CACHE)/glj ]]
+	$Q mv $(LOCAL-CACHE)/glj $(LOCAL-BIN)/
+	$Q touch $@
+	@$(ECHO)
+
+$(LOCAL-CACHE)/$(GLOJURE-TAR):
+	@$(ECHO) "* Installing 'glj' locally"
+	$Q curl+ $(GLOJURE-DOWN) > $@
+
 endif
+
+
+# Repo clone always needed (for rewrite scripts)
+# Shallow clone for speed
+$(GLOJURE-DIR):
+	$Q git clone --depth 1 -b $(GLOJURE-COMMIT)$(if $Q, -q) \
+	  $(GLOJURE-REPO) $@
 
 endif
