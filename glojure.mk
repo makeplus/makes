@@ -63,6 +63,7 @@ $(LOCAL-CACHE)/$(GLOJURE-TAR):
 endif
 
 $(GLOJURE-DIR):
+	@$(ECHO) "* Cloning 'glojure' repo locally ($(GLOJURE-COMMIT))"
 	$Q git clone$(if $Q, -q) \
 	  -b $(GLOJURE-COMMIT) \
 	  --config advice.detachedHead=false \

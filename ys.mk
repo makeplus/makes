@@ -28,7 +28,7 @@ $(YS): $(LOCAL-CACHE)/$(YS-TAR)
 	@echo
 
 $(LOCAL-CACHE)/$(YS-TAR):
-	@echo "* Installing 'ys' locally"
+	@$(ECHO) "* Installing 'ys' locally"
 	curl+ $(YS-DOWN) > $@
 
 endif

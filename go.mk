@@ -102,7 +102,7 @@ endif
 	@$(ECHO)
 
 $(LOCAL-CACHE)/$(GO-TAR):
-	@$(ECHO) "Installing 'go' locally"
+	@$(ECHO) "* Installing 'go' locally"
 	$Q curl+ $(GO-DOWN) > $@
 
 endif
