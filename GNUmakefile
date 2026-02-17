@@ -49,6 +49,12 @@ $(CLEAN-TARGETS):
 version-check:
 	util/check-versions
 
+remote ?= origin
+git-push:
+	$(eval HTTPS-URL := $(shell git remote get-url $(remote)))
+	$(eval SSH-URL := $(subst https://github.com/,git@github.com:,$(HTTPS-URL)))
+	git push $(SSH-URL) $(shell git rev-parse --abbrev-ref HEAD)
+
 shell:
 ifndef WITH
 	@echo "WITH=... not specified for 'make shell'"
