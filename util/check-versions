@@ -13,9 +13,11 @@ missing =::
 - flex
 - fpc
 - gcc
+- gnat
 - graalvm
 - java
 - lein
+- pandoc
 - raku
 
 defn show-missing():

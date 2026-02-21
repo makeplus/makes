@@ -1,4 +1,4 @@
-FPM-VERSION ?= 0.12.0
+FPM-VERSION ?= 0.13.0
 # https://github.com/fortran-lang/fpm
 
 ifndef FORTRAN-LOADED
