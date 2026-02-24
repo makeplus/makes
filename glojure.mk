@@ -27,7 +27,7 @@ endif
 
 SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
 
-
+GLOJURE-FROM-SOURCE ?= $(GLOJURE_FROM_SOURCE)
 ifdef GLOJURE-FROM-SOURCE
 #--- Build from source ---
 
