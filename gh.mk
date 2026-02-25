@@ -18,6 +18,7 @@ GH-EXT := zip
 endif
 
 GH-ARCHIVE := gh_$(GH-VERSION)_$(OA-$(OS-ARCH)).$(GH-EXT)
+GH-DIR := $(GH-ARCHIVE:.$(GH-EXT)=)
 GH-DOWN := https://github.com/cli/cli/releases/download/v$(GH-VERSION)/$(GH-ARCHIVE)
 
 GH-LOCAL := $(LOCAL-ROOT)/gh-$(GH-VERSION)
@@ -46,7 +47,7 @@ $(GH): $(LOCAL-CACHE)/$(GH-ARCHIVE)
 else
 $(GH): $(LOCAL-CACHE)/$(GH-ARCHIVE)
 	$Q cd $(LOCAL-CACHE) && unzip -q $< -d gh-$(GH-VERSION)-tmp
-	$Q mv $(LOCAL-CACHE)/gh-$(GH-VERSION)-tmp/gh_$(GH-VERSION)_$(OA-$(OS-ARCH)) $(GH-LOCAL)
+	$Q mv $(LOCAL-CACHE)/gh-$(GH-VERSION)-tmp/$(GH-DIR) $(GH-LOCAL)
 	$Q rm -rf $(LOCAL-CACHE)/gh-$(GH-VERSION)-tmp
 	$Q touch $@
 	@$(ECHO)
