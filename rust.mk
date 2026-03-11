@@ -20,10 +20,10 @@ CARGO-BIN := $(CARGO_HOME)/bin
 override PATH := $(CARGO-BIN):$(PATH)
 
 ifeq ($(OS-NAME),windows)
-CARGO := $(CARGO-BIN)/rustup.exe
+CARGO := $(CARGO-BIN)/cargo.exe
 RUSTUP := $(CARGO-BIN)/rustup.exe
 else
-CARGO := $(CARGO-BIN)/rustup
+CARGO := $(CARGO-BIN)/cargo
 RUSTUP := $(CARGO-BIN)/rustup
 endif
 
