@@ -1,4 +1,4 @@
-BUF-VERSION ?= 1.65.0
+BUF-VERSION ?= 1.66.1
 
 ifndef BUF-LOADED
 BUF-LOADED := true

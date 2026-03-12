@@ -1,4 +1,4 @@
-ASDF-VERSION ?= 0.18.0
+ASDF-VERSION ?= 0.18.1
 # https://github.com/asdf-vm/asdf
 
 ifndef ASDF-LOADED
