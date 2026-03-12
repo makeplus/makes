@@ -5,6 +5,8 @@ export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $(MAKES)/bpan.mk
 include $(MAKES)/clean.mk
+CLAUDE-MODE := full
+include $(MAKES)/claude.mk
 AGENTS-NAMES := claude
 include $(MAKES)/agents.mk
 
@@ -14,6 +16,7 @@ TARGETS := \
   $(filter-out \
     agents \
     clean \
+    claude \
     docker \
     git \
     help \
@@ -48,6 +51,9 @@ $(CLEAN-TARGETS):
 
 version-check:
 	util/check-versions
+
+version-update: $(CLAUDE-READY)
+	$(CLAUDE-RUN) "$$(< .claude/skills/version-update/SKILL.md)"
 
 remote ?= origin
 git-push:
