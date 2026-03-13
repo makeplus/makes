@@ -54,7 +54,7 @@ endif
 
 $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	@if [[ -z $$ANTHROPIC_API_KEY ]] && \
-	    ! $< auth status &>/dev/null \
+	    ! $< auth status &>/dev/null; \
 	then \
 	  echo 'Claude Code is not authenticated.'; \
 	  echo 'Please set: ANTHROPIC_API_KEY'; \
