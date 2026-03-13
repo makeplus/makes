@@ -1,0 +1,46 @@
+name: Version Update
+
+on:
+  schedule:
+  - cron: 0 6 * * *
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  version-update:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Cache local dependencies
+      uses: actions/cache@v4
+      with:
+        path: local/
+        key: ${{ runner.os }}-makes-local-${{ hashFiles('*.mk') }}
+        restore-keys: ${{ runner.os }}-makes-local-
+
+    - name: Configure git
+      run: |
+        git config user.name 'github-actions[bot]'
+        git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+    - name: Record current commit
+      id: before
+      run: echo 'sha=$(git rev-parse HEAD)' >> $GITHUB_OUTPUT
+
+    - name: Update versions
+      env:
+        ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      run: make version-update
+
+    - name: Push if changed
+      run: |
+        if [[ $(git rev-parse HEAD) != '${{ steps.before.outputs.sha }}' ]]; then
+          git push
+        else
+          echo 'All versions already up to date'
+        fi

@@ -7,7 +7,11 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 include $(MAKES)/jq.mk
 
+ifdef GITHUB_ACTIONS
+CLAUDE-MODE ?= full
+else
 CLAUDE-MODE ?= readonly
+endif
 
 CLAUDE-SYSTEM := $(shell which claude 2>/dev/null)
 
@@ -49,9 +53,12 @@ $(CLAUDE):
 endif
 
 $(CLAUDE-READY): $(CLAUDE) $(JQ)
-	@if ! $(CLAUDE) auth status &>/dev/null; then \
-	  echo "Claude Code is not authenticated."; \
-	  echo "Please run: claude auth login"; \
+	@if [[ -z $$ANTHROPIC_API_KEY ]] && \
+	    ! $< auth status &>/dev/null \
+	then \
+	  echo 'Claude Code is not authenticated.'; \
+	  echo 'Please set: ANTHROPIC_API_KEY'; \
+	  echo 'or run: claude auth login'; \
 	  exit 1; \
 	fi
 	$Q touch $@
