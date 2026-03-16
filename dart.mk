@@ -17,7 +17,7 @@ DART-DOWN := $(DART-DOWN)/$(DART-VERSION)/sdk/$(DART-ZIP)
 
 DART-LOCAL := $(LOCAL-ROOT)/dart-$(DART-VERSION)
 DART-BIN := $(DART-LOCAL)/bin
-override PATH := $(DART-BIN):$(PATH)
+override export PATH := $(DART-BIN):$(PATH)
 
 DART := $(DART-BIN)/dart
 

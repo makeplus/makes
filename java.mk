@@ -28,7 +28,7 @@ endif
 export JAVA_HOME := $(JAVA-HOME)
 
 JAVA-BIN := $(JAVA-HOME)/bin
-override PATH := $(JAVA-BIN):$(PATH)
+override export PATH := $(JAVA-BIN):$(PATH)
 
 JAVA := $(JAVA-BIN)/java
 

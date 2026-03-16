@@ -17,7 +17,7 @@ ZIG-DOWN := https://ziglang.org/download/$(ZIG-VERSION)/$(ZIG-TAR)
 
 ZIG-LOCAL := $(LOCAL-ROOT)/$(ZIG-DIR)
 ZIG-BIN := $(ZIG-LOCAL)
-override PATH := $(ZIG-BIN):$(PATH)
+override export PATH := $(ZIG-BIN):$(PATH)
 
 ZIG := $(ZIG-BIN)/zig
 

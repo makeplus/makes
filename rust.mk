@@ -17,7 +17,7 @@ export CARGO_HOME := $(LOCAL-ROOT)/cargo
 export RUSTUP_HOME := $(LOCAL-ROOT)/rustup
 
 CARGO-BIN := $(CARGO_HOME)/bin
-override PATH := $(CARGO-BIN):$(PATH)
+override export PATH := $(CARGO-BIN):$(PATH)
 
 ifeq ($(OS-NAME),windows)
 CARGO := $(CARGO-BIN)/cargo.exe

@@ -17,7 +17,7 @@ FLEX-DOWN := $(FLEX-DOWN)/v$(FLEX-VERSION)/$(FLEX-TAR)
 
 FLEX-LOCAL := $(LOCAL-ROOT)/flex-$(FLEX-VERSION)
 FLEX-BIN := $(FLEX-LOCAL)/bin
-override PATH := $(FLEX-BIN):$(PATH)
+override export PATH := $(FLEX-BIN):$(PATH)
 
 FLEX := $(FLEX-BIN)/flex
 

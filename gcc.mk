@@ -24,7 +24,7 @@ GCC-DOWN := $(GCC-DOWN)/v$(GCC-VERSION)/$(GCC-TAR)
 
 GCC-LOCAL := $(LOCAL-ROOT)/gcc-$(GCC-VERSION)
 GCC-BIN := $(GCC-LOCAL)/bin
-override PATH := $(GCC-BIN):$(PATH)
+override export PATH := $(GCC-BIN):$(PATH)
 
 GCC := $(GCC-BIN)/gcc
 GPP := $(GCC-BIN)/g++

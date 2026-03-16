@@ -16,7 +16,7 @@ GHC-DOWN := https://downloads.haskell.org/ghc/$(GHC-VERSION)/$(GHC-TAR)
 
 GHC-LOCAL := $(LOCAL-ROOT)/ghc-$(GHC-VERSION)
 GHC-BIN := $(GHC-LOCAL)/bin
-override PATH := $(GHC-BIN):$(PATH)
+override export PATH := $(GHC-BIN):$(PATH)
 
 GHC := $(GHC-BIN)/ghc
 

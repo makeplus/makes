@@ -27,7 +27,7 @@ $(PERL):
 else
 PERL-LOCAL := $(LOCAL-ROOT)/perl-$(PERL-VERSION)
 PERL-BIN := $(PERL-LOCAL)/bin
-override PATH := $(PERL-BIN):$(PATH)
+override export PATH := $(PERL-BIN):$(PATH)
 
 PERL := $(LOCAL-BIN)/perl
 

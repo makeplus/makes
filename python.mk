@@ -26,18 +26,18 @@ endif
 PYTHON-VENV-SETUP ?= true
 
 export UV_PYTHON_INSTALL_DIR := $(LOCAL-ROOT)
-override PATH := $(PYTHON-BIN):$(PATH)
+override export PATH := $(PYTHON-BIN):$(PATH)
 
 PYTHON-CACHE := __pycache__
 PYTHON-VENV ?= $(LOCAL-ROOT)/python-venv
 ifeq ($(OS-NAME),windows)
 VENV := source $(PYTHON-VENV)/Scripts/activate
 export VIRTUAL_ENV := $(PYTHON-VENV)
-override PATH := $(PYTHON-VENV)/Scripts:$(PATH)
+override export PATH := $(PYTHON-VENV)/Scripts:$(PATH)
 else
 VENV := source $(PYTHON-VENV)/bin/activate
 export VIRTUAL_ENV := $(PYTHON-VENV)
-override PATH := $(PYTHON-VENV)/bin:$(PATH)
+override export PATH := $(PYTHON-VENV)/bin:$(PATH)
 endif
 
 SHELL-DEPS += $(PYTHON) $(PYTHON-VENV)

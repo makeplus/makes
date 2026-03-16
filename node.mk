@@ -28,7 +28,7 @@ else
 NODE-BIN := $(NODE-LOCAL)/bin
 NODE := $(NODE-BIN)/node
 endif
-override PATH := $(NODE-BIN):$(PATH)
+override export PATH := $(NODE-BIN):$(PATH)
 
 SHELL-DEPS += $(NODE)
 

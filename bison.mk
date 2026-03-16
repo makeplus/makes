@@ -17,7 +17,7 @@ BISON-DOWN := $(BISON-DOWN)/v$(BISON-VERSION)/$(BISON-TAR)
 
 BISON-LOCAL := $(LOCAL-ROOT)/bison-$(BISON-VERSION)
 BISON-BIN := $(BISON-LOCAL)/bin
-override PATH := $(BISON-BIN):$(PATH)
+override export PATH := $(BISON-BIN):$(PATH)
 
 BISON := $(BISON-BIN)/bison
 

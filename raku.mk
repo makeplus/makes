@@ -21,7 +21,7 @@ RAKU-SITE := $(RAKU-LOCAL)/share/perl6/site
 RAKU-SITE-BIN := $(RAKU-SITE)/bin
 RAKU-SITE-LIB := $(RAKU-SITE)/lib
 RAKU-BIN := $(RAKU-LOCAL)/bin
-override PATH := $(RAKU-BIN):$(RAKU-SITE-BIN):$(PATH)
+override export PATH := $(RAKU-BIN):$(RAKU-SITE-BIN):$(PATH)
 
 RAKU := $(RAKU-BIN)/raku
 

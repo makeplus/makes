@@ -34,7 +34,7 @@ override GLOAT-REPO := $(if $(findstring https://,$(GLOAT-REPO)) \
   ,$(GLOAT-REPO),https://github.com/$(GLOAT-REPO))
 
 GLOAT-BIN := $(GLOAT-DIR)/bin
-override PATH := $(GLOAT-BIN):$(PATH)
+override export PATH := $(GLOAT-BIN):$(PATH)
 
 GLOAT-PLATFORMS ?= \
   linux/amd64 \

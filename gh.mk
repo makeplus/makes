@@ -23,7 +23,7 @@ GH-DOWN := https://github.com/cli/cli/releases/download/v$(GH-VERSION)/$(GH-ARCH
 
 GH-LOCAL := $(LOCAL-ROOT)/gh-$(GH-VERSION)
 GH-BIN := $(GH-LOCAL)/bin
-override PATH := $(GH-BIN):$(PATH)
+override export PATH := $(GH-BIN):$(PATH)
 
 GH := $(GH-BIN)/gh
 

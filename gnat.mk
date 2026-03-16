@@ -18,7 +18,7 @@ GNAT-DOWN := $(GNAT-DOWN)/gnat-$(GNAT-VERSION)/$(GNAT-TAR)
 
 GNAT-LOCAL := $(LOCAL-ROOT)/$(GNAT-DIR)
 GNAT-BIN := $(GNAT-LOCAL)/bin
-override PATH := $(GNAT-BIN):$(PATH)
+override export PATH := $(GNAT-BIN):$(PATH)
 
 GNATMAKE := $(GNAT-BIN)/gnatmake
 

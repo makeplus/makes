@@ -8,7 +8,7 @@ $(eval $(call include-local))
 
 export BPAN_ROOT := $(LOCAL-ROOT)/bpan
 BPAN-BIN := $(BPAN_ROOT)/bin
-override PATH := $(BPAN-BIN):$(PATH)
+override export PATH := $(BPAN-BIN):$(PATH)
 
 BPAN := $(BPAN-BIN)/bpan
 
