@@ -89,6 +89,39 @@ endif
 
 OS-ARCH := $(OS-NAME)-$(ARCH-NAME)
 
+ifdef MAKES_TEE
+MAKES-TEE ?= $(MAKES_TEE)
+endif
+ifdef MAKES_SCRIPT
+MAKES-SCRIPT ?= $(MAKES_SCRIPT)
+endif
+
+ifdef MAKES-TEE
+MAKES-LOG-MODE := tee
+MAKES-LOG-VAL := $(MAKES-TEE)
+else ifdef MAKES-SCRIPT
+MAKES-LOG-MODE := script
+MAKES-LOG-VAL := $(MAKES-SCRIPT)
+endif
+
+ifdef MAKES-LOG-MODE
+ifeq (1,$(MAKES-LOG-VAL))
+MAKES-LOG-FILE := ./make-out.txt
+else
+MAKES-LOG-FILE := $(MAKES-LOG-VAL)
+endif
+MAKES-LOG-OVERRIDES := $(filter-out \
+  MAKES-TEE=% MAKES_TEE=% MAKES-SCRIPT=% MAKES_SCRIPT=%,\
+  $(MAKEOVERRIDES))
+$(MAKECMDGOALS): _makes-log
+	@:
+_makes-log:
+	@exec $(MAKES)/util/make-log \
+	  $(MAKES-LOG-MODE) $(MAKES-LOG-FILE) $(MAKE) $(MAKEFILE) \
+	  $(MAKES-LOG-OVERRIDES) -- $(MAKECMDGOALS)
+.PHONY: _makes-log $(MAKECMDGOALS)
+endif
+
 include $(MAKES-INCLUDE:%=$(MAKES)/%)
 
 ifndef MAKES-NO-DELETE
