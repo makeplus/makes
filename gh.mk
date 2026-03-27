@@ -1,4 +1,4 @@
-GH-VERSION ?= 2.88.1
+GH-VERSION ?= 2.89.0
 # https://github.com/cli/cli
 
 ifndef GH-LOADED
