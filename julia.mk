@@ -24,7 +24,8 @@ JULIA-DOWN := \
 
 JULIA-LOCAL := $(LOCAL-ROOT)/$(JULIA-DIR)
 JULIA-BIN := $(JULIA-LOCAL)/bin
-override export PATH := $(JULIA-BIN):$(PATH)
+override PATH := $(JULIA-BIN):$(PATH)
+export PATH
 
 JULIA := $(JULIA-BIN)/julia
 

@@ -18,7 +18,8 @@ NIM-DOWN := $(NIM-DOWN)/$(NIM-TAR)
 
 NIM-LOCAL := $(LOCAL-ROOT)/$(NIM-DIR)
 NIM-BIN := $(NIM-LOCAL)/bin
-override export PATH := $(NIM-BIN):$(PATH)
+override PATH := $(NIM-BIN):$(PATH)
+export PATH
 
 NIM := $(NIM-BIN)/nim
 

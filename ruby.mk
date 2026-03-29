@@ -17,7 +17,8 @@ RUBY-DOWN := https://github.com/jdx/ruby/releases/download/$(RUBY-VERSION)/$(RUB
 
 RUBY-LOCAL := $(LOCAL-ROOT)/ruby-$(RUBY-VERSION)
 RUBY-BIN := $(RUBY-LOCAL)/bin
-override export PATH := $(RUBY-BIN):$(PATH)
+override PATH := $(RUBY-BIN):$(PATH)
+export PATH
 
 RUBY := $(LOCAL-BIN)/ruby
 

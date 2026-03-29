@@ -26,7 +26,8 @@ R-DOWN := $(R-DOWN)/v$(R-VERSION)/$(R-ARCHIVE)
 
 ifdef IS-LINUX
 R-BIN := $(R-LOCAL)/bin
-override export PATH := $(R-BIN):$(PATH)
+override PATH := $(R-BIN):$(PATH)
+export PATH
 else
 R-FRAMEWORK := $(R-LOCAL)/Library/Frameworks/R.framework
 R-BIN := $(LOCAL-BIN)

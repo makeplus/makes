@@ -57,7 +57,8 @@ export GOROOT := $(GO-LOCAL)
 export GOPATH := $(LOCAL-ROOT)/go
 export GOMODCACHE := $(GOPATH)/pkg/mod
 export GOCACHE := $(LOCAL-ROOT)/cache/go-build
-override export PATH := $(GOPATH)/bin:$(GO-LOCAL-BIN):$(PATH)
+override PATH := $(GOPATH)/bin:$(GO-LOCAL-BIN):$(PATH)
+export PATH
 GO := $(GO-LOCAL-BIN)/go
 endif
 

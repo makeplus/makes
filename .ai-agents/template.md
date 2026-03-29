@@ -181,9 +181,11 @@ Tool binaries are installed as Make targets (e.g., `$(GO)`, `$(CARGO)`). The pat
 
 ### PATH Management
 
-Always use `override PATH :=` when modifying PATH to ensure it takes precedence:
+Always use `override PATH :=` followed by `export PATH` on a separate line.
+Do NOT combine them as `override export PATH :=` — that is broken on GNU Make 3.81 (macOS).
 ```make
 override PATH := $(TOOL-BIN):$(PATH)
+export PATH
 ```
 
 ## File Naming Conventions

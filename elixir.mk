@@ -14,7 +14,8 @@ ELIXIR-DOWN := https://builds.hex.pm/builds/elixir/$(ELIXIR-ZIP)
 
 ELIXIR-LOCAL := $(LOCAL-ROOT)/$(ELIXIR-DIR)
 ELIXIR-BIN := $(ELIXIR-LOCAL)/bin
-override export PATH := $(ELIXIR-BIN):$(PATH)
+override PATH := $(ELIXIR-BIN):$(PATH)
+export PATH
 
 ELIXIR := $(ELIXIR-BIN)/elixir
 MIX := $(ELIXIR-BIN)/mix

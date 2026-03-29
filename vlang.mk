@@ -17,7 +17,8 @@ VLANG-DOWN := $(VLANG-DOWN)/$(VLANG-VERSION)/$(VLANG-ZIP)
 
 VLANG-LOCAL := $(LOCAL-ROOT)/vlang-$(VLANG-VERSION)
 VLANG-BIN := $(VLANG-LOCAL)
-override export PATH := $(VLANG-BIN):$(PATH)
+override PATH := $(VLANG-BIN):$(PATH)
+export PATH
 
 VLANG := $(VLANG-BIN)/v
 

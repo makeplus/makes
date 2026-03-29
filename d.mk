@@ -18,7 +18,8 @@ LDC-DOWN := $(LDC-DOWN)/v$(LDC-VERSION)/$(LDC-TAR)
 
 LDC-LOCAL := $(LOCAL-ROOT)/$(LDC-DIR)
 LDC-BIN := $(LDC-LOCAL)/bin
-override export PATH := $(LDC-BIN):$(PATH)
+override PATH := $(LDC-BIN):$(PATH)
+export PATH
 
 LDC := $(LDC-BIN)/ldc2
 

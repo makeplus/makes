@@ -37,7 +37,8 @@ $(shell mkdir -p \
   $(LOCAL-HOME) \
 )
 
-override export PATH := $(LOCAL-BIN):$(PATH)
+override PATH := $(LOCAL-BIN):$(PATH)
+export PATH
 
 local-chmod:
 	chmod -R +w $(LOCAL-ROOT)

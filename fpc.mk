@@ -32,7 +32,8 @@ endif
 
 FPC-LOCAL := $(LOCAL-ROOT)/fpc-$(FPC-VERSION)
 FPC-BIN := $(FPC-LOCAL)/bin
-override export PATH := $(FPC-BIN):$(PATH)
+override PATH := $(FPC-BIN):$(PATH)
+export PATH
 
 ifeq ($(OS-NAME),windows)
 FPC := $(FPC-BIN)/fpc.exe

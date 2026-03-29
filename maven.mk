@@ -22,7 +22,8 @@ MAVEN-TAR := $(MAVEN-DIR)-bin.tar.gz
 MAVEN-DIR := $(LOCAL-ROOT)/$(MAVEN-DIR)
 MAVEN-DOWN := $(MAVEN-DOWN)/$(MAVEN-TAR)
 MAVEN-BIN := $(MAVEN-DIR)/bin
-override export PATH := $(MAVEN-BIN):$(PATH)
+override PATH := $(MAVEN-BIN):$(PATH)
+export PATH
 
 MAVEN-REPOSITORY := $(LOCAL-HOME)/.m2/repository
 MAVEN := $(MAVEN-BIN)/mvn

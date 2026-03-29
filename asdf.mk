@@ -15,7 +15,8 @@ ASDF-TAR := asdf-v$(ASDF-VERSION)-$(OA-$(OS-ARCH)).tar.gz
 ASDF-DOWN := https://github.com/asdf-vm/asdf/releases/download/v$(ASDF-VERSION)/$(ASDF-TAR)
 ASDF-LOCAL := $(LOCAL-ROOT)/asdf-v$(ASDF-VERSION)
 ASDF := $(ASDF-LOCAL)/asdf
-override export PATH := $(ASDF-LOCAL):$(PATH)
+override PATH := $(ASDF-LOCAL):$(PATH)
+export PATH
 export ASDF_DATA_DIR := $(LOCAL-ROOT)/asdf
 
 SHELL-DEPS += $(ASDF)
