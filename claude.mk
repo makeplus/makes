@@ -16,6 +16,8 @@ else
 CLAUDE-MODE ?= readonly
 endif
 
+CLAUDE-MODEL ?=
+
 CLAUDE-SYSTEM := $(shell which claude 2>/dev/null)
 
 ifdef CLAUDE-SYSTEM
@@ -25,19 +27,20 @@ CLAUDE := $(HOME)/.local/bin/claude
 endif
 
 ifeq ($(CLAUDE-MODE),bypass)
-CLAUDE-ALLOWED-TOOLS := --dangerously-skip-permissions
+CLAUDE-PERMISSIONS ?= --dangerously-skip-permissions
 else ifeq ($(CLAUDE-MODE),full)
-CLAUDE-ALLOWED-TOOLS := --allowedTools Read,Grep,Glob,Edit,Write,Bash
+CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob,Edit,Write,Bash
 else ifeq ($(CLAUDE-MODE),edit)
-CLAUDE-ALLOWED-TOOLS := --allowedTools Read,Grep,Glob,Edit,Write
+CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob,Edit,Write
 else
-CLAUDE-ALLOWED-TOOLS := --allowedTools Read,Grep,Glob
+CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob
 endif
 
 CLAUDE-QUIET ?=
 CLAUDE-DEBUG ?=
 CLAUDE-RUN = sh -c \
-  '$(CLAUDE) $(CLAUDE-ALLOWED-TOOLS) \
+  '$(CLAUDE) $(CLAUDE-PERMISSIONS) \
+   $(if $(CLAUDE-MODEL),--model $(CLAUDE-MODEL),) \
    $(if $(CLAUDE-QUIET),,--verbose --output-format stream-json) \
    $(if $(CLAUDE-DEBUG),--debug-file /dev/stderr,) \
    -p "$$1" \
@@ -83,7 +86,7 @@ claude-nono-start: $(CLAUDE-READY) $(if $(NONO-LOADED),$(NONO)) $(if $(wildcard 
 ifndef NONO-LOADED
 	$(error nono.mk must be included to use $@)
 endif
-	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- claude $(CLAUDE-OPTS)
+	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-PERMISSIONS), $(CLAUDE-PERMISSIONS))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS))
 
 ifdef NONO-LOADED
 
