@@ -1,4 +1,4 @@
-NODE-VERSION ?= 25.8.2
+NODE-VERSION ?= 25.9.0
 # https://github.com/nodejs/node
 
 ifndef NODE-LOADED
