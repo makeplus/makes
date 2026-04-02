@@ -5,7 +5,10 @@ ifndef CLAUDE-LOADED
 CLAUDE-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
+
+include $(MAKES)/git.mk
 include $(MAKES)/jq.mk
+include $(MAKES)/ys.mk
 
 ifdef GITHUB_ACTIONS
 CLAUDE-MODE ?= full
@@ -51,8 +54,8 @@ endif
 CLAUDE-OPTS ?=
 
 CLAUDE-NONO-PROFILE-NAME ?= claude-code
-CLAUDE-LOCAL-NONO-PROFILE-YAML := $(MAKEFILE-DIR)/.nono/claude-code.yaml
-CLAUDE-LOCAL-NONO-PROFILE-JSON := $(MAKEFILE-DIR)/.nono/claude-code.json
+CLAUDE-LOCAL-NONO-PROFILE-YAML := $(GIT-REPO-DIR)/.nono/claude-code.yaml
+CLAUDE-LOCAL-NONO-PROFILE-JSON := $(GIT-REPO-DIR)/.nono/claude-code.json
 
 CLAUDE-NONO-PROFILE = \
   $(if $(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-JSON)),$(CLAUDE-LOCAL-NONO-PROFILE-JSON),$(CLAUDE-NONO-PROFILE-NAME))
@@ -108,13 +111,13 @@ CLAUDE-NONO-PROFILE-TEMPLATE := $(MAKES)/share/claude-local-nono-profile.yaml
 claude-local-nono-profile: $(YS)
 ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
 	@echo "Local profile already exists: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
-	@cat $(CLAUDE-LOCAL-NONO-PROFILE-YAML)
-else
+	@exit 1
+endif
 	@mkdir -p $(dir $(CLAUDE-LOCAL-NONO-PROFILE-YAML))
 	cp $(CLAUDE-NONO-PROFILE-TEMPLATE) $(CLAUDE-LOCAL-NONO-PROFILE-YAML)
 	ys -J $(CLAUDE-LOCAL-NONO-PROFILE-YAML) > $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
+	@echo
 	@echo "Created local profile: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
-endif
 
 ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
 claude-local-nono-profile-update: $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
