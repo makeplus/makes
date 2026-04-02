@@ -45,6 +45,19 @@ CLAUDE-READY := $(LOCAL-CACHE)/claude-ready
 
 SHELL-DEPS += $(CLAUDE)
 
+ifdef MAKES_CLAUDE_OPTS
+CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
+endif
+CLAUDE-OPTS ?=
+
+CLAUDE-NONO-PROFILE-NAME ?= claude-code
+CLAUDE-LOCAL-NONO-PROFILE-YAML := $(MAKEFILE-DIR)/.nono/claude-code.yaml
+CLAUDE-LOCAL-NONO-PROFILE-JSON := $(MAKEFILE-DIR)/.nono/claude-code.json
+
+CLAUDE-NONO-PROFILE = \
+  $(if $(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-JSON)),$(CLAUDE-LOCAL-NONO-PROFILE-JSON),$(CLAUDE-NONO-PROFILE-NAME))
+
+
 ifndef CLAUDE-SYSTEM
 $(CLAUDE):
 	@$(ECHO) "Installing 'claude' locally"
@@ -62,5 +75,57 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	  exit 1; \
 	fi
 	$Q touch $@
+
+claude-nono-start: $(CLAUDE-READY) $(if $(NONO-LOADED),$(NONO)) $(if $(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)),$(CLAUDE-LOCAL-NONO-PROFILE-JSON))
+ifndef NONO-LOADED
+	$(error nono.mk must be included to use $@)
+endif
+	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- claude $(CLAUDE-OPTS)
+
+ifdef NONO-LOADED
+
+CLAUDE-NONO-SHOW-DEPS := $(NONO)
+ifdef YS-LOADED
+CLAUDE-NONO-SHOW-DEPS += $(YS)
+CLAUDE-NONO-YAML-CMD := $(YS) -Y
+endif
+CLAUDE-NONO-YAML-CMD ?= cat
+
+claude-nono-profile: $(CLAUDE-NONO-SHOW-DEPS)
+	@nono policy show --json $(CLAUDE-NONO-PROFILE) | $(CLAUDE-NONO-YAML-CMD)
+
+claude-nono-profile-json: $(NONO)
+	@nono policy show --json $(CLAUDE-NONO-PROFILE)
+
+claude-nono-profile-yaml: $(CLAUDE-NONO-SHOW-DEPS)
+ifndef YS-LOADED
+	$(error claude-nono-profile-yaml requires ys.mk included before nono.mk)
+endif
+	@nono policy show --json $(CLAUDE-NONO-PROFILE) | $(CLAUDE-NONO-YAML-CMD)
+
+CLAUDE-NONO-PROFILE-TEMPLATE := $(MAKES)/share/claude-local-nono-profile.yaml
+
+claude-local-nono-profile: $(YS)
+ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
+	@echo "Local profile already exists: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
+	@cat $(CLAUDE-LOCAL-NONO-PROFILE-YAML)
+else
+	@mkdir -p $(dir $(CLAUDE-LOCAL-NONO-PROFILE-YAML))
+	cp $(CLAUDE-NONO-PROFILE-TEMPLATE) $(CLAUDE-LOCAL-NONO-PROFILE-YAML)
+	ys -J $(CLAUDE-LOCAL-NONO-PROFILE-YAML) > $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
+	@echo "Created local profile: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
+endif
+
+ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
+claude-local-nono-profile-update: $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
+
+$(CLAUDE-LOCAL-NONO-PROFILE-JSON): $(CLAUDE-LOCAL-NONO-PROFILE-YAML) $(YS)
+	  ys -J $< > $@
+endif
+
+claude-local-nono-profile-example:
+	@cat $(CLAUDE-NONO-PROFILE-TEMPLATE)
+
+endif # NONO-LOADED
 
 endif
