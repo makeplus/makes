@@ -60,11 +60,10 @@ CLAUDE-OPTS ?=
 CLAUDE-NONO-R-FILES +=
 CLAUDE-NONO-RW-FILES +=
 CLAUDE-NONO-R-DIRS += \
-  /proc/ \
-  ~/.config/gh/ \
-
+  /proc \
+  ~/.config/gh
 CLAUDE-NONO-RW-DIRS += \
-  /tmp/claude-$(shell id -u)/ \
+  /tmp/claude-$(shell id -u)
 
 CLAUDE-NONO-PROFILE = $(shell \
   $(MAKES)/util/generate-claude-nono-profile \
