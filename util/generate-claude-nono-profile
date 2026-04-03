@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+profile_file=$1
+r_files=$2
+rw_files=$3
+r_dirs=$4
+rw_dirs=$5
+
+to_json_array() (
+  if [[ -n $1 ]]; then
+    echo "$1" | tr ' ' '\n' | jq -R . | jq -s .
+  else
+    echo '[]'
+  fi
+)
+
+filesystem=$(jq -n \
+  --argjson read "$(to_json_array "$r_dirs")" \
+  --argjson allow "$(to_json_array "$rw_dirs")" \
+  --argjson read_file "$(to_json_array "$r_files")" \
+  --argjson allow_file "$(to_json_array "$rw_files")" \
+  '{read: $read, allow: $allow, read_file: $read_file, allow_file: $allow_file}
+   | del(.[] | select(length == 0))')
+policy='{}'
+network='{}'
+
+cat <<... > "$profile_file"
+{"meta":
+ {"name":"claude-code-local",
+  "version":"1.0.0",
+  "description":"Local Claude Code nono profile overrides"},
+ "filesystem":$filesystem,
+ "policy":$policy,
+ "network":$network,
+ "extends":"claude-code"
+}
+...
+
+echo "$profile_file"

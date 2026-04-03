@@ -1,12 +1,12 @@
-MAKES := .
-include $(MAKES)/init.mk
+M := .
+include $M/init.mk
 
 export MAKES_LOCAL_DIR := $(ROOT)/local
 
-include $(MAKES)/agents.mk
-include $(MAKES)/bpan.mk
-include $(MAKES)/claude.mk
-include $(MAKES)/clean.mk
+include $M/agents.mk
+include $M/bpan.mk
+include $M/claude.mk
+include $M/clean.mk
 
 AGENTS-NAMES := claude
 CLAUDE-MODE := full
@@ -38,6 +38,8 @@ MAKES-REALCLEAN += ./local/
 v ?=
 t ?= test/*.t test/*/*.t
 
+
+claude: claude-nono
 
 test: $(BPAN)
 	prove -r$(if $(v), -v,) $t

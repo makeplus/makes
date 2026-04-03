@@ -6,7 +6,7 @@ CLAUDE-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
-include $(MAKES)/git.mk
+include $(MAKES)/nono.mk
 include $(MAKES)/jq.mk
 include $(MAKES)/ys.mk
 
@@ -24,22 +24,22 @@ ifdef CLAUDE-SYSTEM
 CLAUDE := $(CLAUDE-SYSTEM)
 else
 CLAUDE := $(HOME)/.local/bin/claude
+override PATH := $(HOME)/.local/bin:$(PATH)
+export PATH
 endif
 
-ifeq ($(CLAUDE-MODE),bypass)
-CLAUDE-PERMISSIONS ?= --dangerously-skip-permissions
-else ifeq ($(CLAUDE-MODE),full)
-CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob,Edit,Write,Bash
+ifeq ($(CLAUDE-MODE),full)
+CLAUDE-ALLOWED-TOOLS ?= --allowedTools Read,Grep,Glob,Edit,Write,Bash
 else ifeq ($(CLAUDE-MODE),edit)
-CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob,Edit,Write
+CLAUDE-ALLOWED-TOOLS ?= --allowedTools Read,Grep,Glob,Edit,Write
 else
-CLAUDE-PERMISSIONS ?= --allowedTools Read,Grep,Glob
+CLAUDE-ALLOWED-TOOLS ?= --allowedTools Read,Grep,Glob
 endif
 
 CLAUDE-QUIET ?=
 CLAUDE-DEBUG ?=
 CLAUDE-RUN = sh -c \
-  '$(CLAUDE) $(CLAUDE-PERMISSIONS) \
+  '$(CLAUDE) $(CLAUDE-ALLOWED-TOOLS) \
    $(if $(CLAUDE-MODEL),--model $(CLAUDE-MODEL),) \
    $(if $(CLAUDE-QUIET),,--verbose --output-format stream-json) \
    $(if $(CLAUDE-DEBUG),--debug-file /dev/stderr,) \
@@ -56,13 +56,18 @@ CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
 endif
 CLAUDE-OPTS ?=
 
-CLAUDE-NONO-PROFILE-NAME ?= claude-code
-CLAUDE-LOCAL-NONO-PROFILE-YAML := $(GIT-REPO-DIR)/.nono/claude-code.yaml
-CLAUDE-LOCAL-NONO-PROFILE-JSON := $(GIT-REPO-DIR)/.nono/claude-code.json
+CLAUDE-NONO-RW-DIRS += /tmp/claude-$(shell id -u)
 
-CLAUDE-NONO-PROFILE = \
-  $(if $(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-JSON)),$(CLAUDE-LOCAL-NONO-PROFILE-JSON),$(CLAUDE-NONO-PROFILE-NAME))
+CLAUDE-NONO-PROFILE = $(shell \
+  $(MAKES)/util/generate-claude-nono-profile \
+    "$(LOCAL-TMP)/claude-nono-profile" \
+    "$(CLAUDE-NONO-R-FILES)" \
+    "$(CLAUDE-NONO-RW-FILES)" \
+    "$(CLAUDE-NONO-R-DIRS)" \
+    "$(CLAUDE-NONO-RW-DIRS)" \
+)
 
+export CLAUDE_CODE_DISABLE_TERMINAL_TITLE := 1
 
 ifndef CLAUDE-SYSTEM
 $(CLAUDE):
@@ -82,56 +87,11 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	fi
 	$Q touch $@
 
-claude-nono-start: $(CLAUDE-READY) $(if $(NONO-LOADED),$(NONO)) $(if $(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)),$(CLAUDE-LOCAL-NONO-PROFILE-JSON))
-ifndef NONO-LOADED
-	$(error nono.mk must be included to use $@)
-endif
-	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-PERMISSIONS), $(CLAUDE-PERMISSIONS))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS))
+claude-nono: $(CLAUDE-READY) $(NONO)
+	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- \
+	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
-ifdef NONO-LOADED
-
-CLAUDE-NONO-SHOW-DEPS := $(NONO)
-ifdef YS-LOADED
-CLAUDE-NONO-SHOW-DEPS += $(YS)
-CLAUDE-NONO-YAML-CMD := $(YS) -Y
-endif
-CLAUDE-NONO-YAML-CMD ?= cat
-
-claude-nono-profile: $(CLAUDE-NONO-SHOW-DEPS)
-	@nono policy show --json $(CLAUDE-NONO-PROFILE) | $(CLAUDE-NONO-YAML-CMD)
-
-claude-nono-profile-json: $(NONO)
-	@nono policy show --json $(CLAUDE-NONO-PROFILE)
-
-claude-nono-profile-yaml: $(CLAUDE-NONO-SHOW-DEPS)
-ifndef YS-LOADED
-	$(error claude-nono-profile-yaml requires ys.mk included before nono.mk)
-endif
-	@nono policy show --json $(CLAUDE-NONO-PROFILE) | $(CLAUDE-NONO-YAML-CMD)
-
-CLAUDE-NONO-PROFILE-TEMPLATE := $(MAKES)/share/claude-local-nono-profile.yaml
-
-claude-local-nono-profile: $(YS)
-ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
-	@echo "Local profile already exists: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
-	@exit 1
-endif
-	@mkdir -p $(dir $(CLAUDE-LOCAL-NONO-PROFILE-YAML))
-	cp $(CLAUDE-NONO-PROFILE-TEMPLATE) $(CLAUDE-LOCAL-NONO-PROFILE-YAML)
-	ys -J $(CLAUDE-LOCAL-NONO-PROFILE-YAML) > $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
-	@echo
-	@echo "Created local profile: $(CLAUDE-LOCAL-NONO-PROFILE-YAML)"
-
-ifneq (,$(wildcard $(CLAUDE-LOCAL-NONO-PROFILE-YAML)))
-claude-local-nono-profile-update: $(CLAUDE-LOCAL-NONO-PROFILE-JSON)
-
-$(CLAUDE-LOCAL-NONO-PROFILE-JSON): $(CLAUDE-LOCAL-NONO-PROFILE-YAML) $(YS)
-	  ys -J $< > $@
-endif
-
-claude-local-nono-profile-example:
-	@cat $(CLAUDE-NONO-PROFILE-TEMPLATE)
-
-endif # NONO-LOADED
+claude-nono-profile: $(NONO) $(YS)
+	@nono policy show --json $(CLAUDE-NONO-PROFILE) | ys -Y -
 
 endif

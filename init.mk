@@ -12,6 +12,9 @@ endif
 endif
 
 ROOT ?= $(shell pwd -P)
+TOP ?= $(shell \
+  git rev-parse --show-toplevel 2>/dev/null || \
+  pwd -P)
 
 # Note: abspath here removes the trailing / added by dir
 MAKES := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
