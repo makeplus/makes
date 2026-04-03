@@ -7,6 +7,7 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 include $(MAKES)/nono.mk
+include $(MAKES)/gh.mk
 include $(MAKES)/jq.mk
 include $(MAKES)/ys.mk
 
@@ -58,8 +59,12 @@ CLAUDE-OPTS ?=
 
 CLAUDE-NONO-R-FILES +=
 CLAUDE-NONO-RW-FILES +=
-CLAUDE-NONO-R-DIRS += /proc
-CLAUDE-NONO-RW-DIRS += /tmp/claude-$(shell id -u)
+CLAUDE-NONO-R-DIRS += \
+  /proc/ \
+  ~/.config/gh/ \
+
+CLAUDE-NONO-RW-DIRS += \
+  /tmp/claude-$(shell id -u)/ \
 
 CLAUDE-NONO-PROFILE = $(shell \
   $(MAKES)/util/generate-claude-nono-profile \
@@ -90,7 +95,7 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	fi
 	$Q touch $@
 
-claude-nono: $(CLAUDE-READY) $(NONO)
+claude-nono: $(CLAUDE-READY) $(NONO) $(GH)
 	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
