@@ -8,7 +8,7 @@ rw_dirs=$5
 
 to_json_array() (
   if [[ -n $1 ]]; then
-    echo "$1" | tr ' ' '\n' | jq -R . | jq -s .
+    echo "$1" | tr ' ' '\n' | jq -R 'select(length > 0)' | jq -s .
   else
     echo '[]'
   fi
