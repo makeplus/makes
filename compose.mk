@@ -1,6 +1,6 @@
 # https://github.com/docker/compose/releases
 
-COMPOSE-VERSION ?= 5.1.1
+COMPOSE-VERSION ?= 5.1.2
 
 ifndef COMPOSE-LOADED
 COMPOSE-LOADED := true
