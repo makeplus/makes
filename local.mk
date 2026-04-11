@@ -39,6 +39,7 @@ $(shell mkdir -p \
 
 override PATH := $(LOCAL-BIN):$(PATH)
 export PATH
+export TMPDIR := $(LOCAL-TMP)
 
 local-chmod:
 	chmod -R +w $(LOCAL-ROOT)
