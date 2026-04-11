@@ -64,6 +64,7 @@ CLAUDE-NONO-R-DIRS += /proc
 # CLAUDE-NONO-R-DIRS += /tmp/.X11-unix
 CLAUDE-NONO-RW-FILES +=
 CLAUDE-NONO-RW-DIRS += /tmp/claude-$(shell id -u)
+CLAUDE-NONO-RW-DIRS += ~/.cache/makes
 
 CLAUDE-NONO-PROFILE = $(shell \
   $(MAKES)/util/generate-claude-nono-profile \
