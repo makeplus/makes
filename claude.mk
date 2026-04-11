@@ -57,14 +57,13 @@ CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
 endif
 CLAUDE-OPTS ?=
 
-CLAUDE-NONO-R-FILES += \
-  /etc/gitconfig
+# CLAUDE-NONO-R-FILES += $(XAUTHORITY)
+CLAUDE-NONO-R-FILES += /etc/gitconfig
+CLAUDE-NONO-R-DIRS += ~/.config/gh
+CLAUDE-NONO-R-DIRS += /proc
+# CLAUDE-NONO-R-DIRS += /tmp/.X11-unix
 CLAUDE-NONO-RW-FILES +=
-CLAUDE-NONO-R-DIRS += \
-  /proc \
-  ~/.config/gh
-CLAUDE-NONO-RW-DIRS += \
-  /tmp/claude-$(shell id -u)
+CLAUDE-NONO-RW-DIRS += /tmp/claude-$(shell id -u)
 
 CLAUDE-NONO-PROFILE = $(shell \
   $(MAKES)/util/generate-claude-nono-profile \
@@ -95,6 +94,11 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	fi
 	$Q touch $@
 
+# Claude Code's paste-image flow writes the clipboard image to
+# $CLAUDE_CODE_TMPDIR (default /tmp) and then reads it back. Nono's
+# default profile allows writes to /tmp but blocks reads, so redirect
+# to the already-RW /tmp/claude-<uid> dir from claude.mk.
+claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
 claude-nono: $(CLAUDE-READY) $(NONO) $(GH)
 	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
