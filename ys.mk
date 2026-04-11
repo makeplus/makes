@@ -1,6 +1,7 @@
 YS-VERSION ?= 0.2.8
 
 ifndef YS-LOADED
+ifndef YAMLSCRIPT-LOADED
 YS-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
@@ -31,4 +32,5 @@ $(LOCAL-CACHE)/$(YS-TAR):
 	@$(ECHO) "* Installing 'ys' locally"
 	curl+ $(YS-DOWN) > $@
 
+endif
 endif
