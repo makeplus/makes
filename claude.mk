@@ -57,6 +57,8 @@ CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
 endif
 CLAUDE-OPTS ?=
 
+CLAUDE-NONO-OPTS += --allow-cwd
+
 # CLAUDE-NONO-R-FILES += $(XAUTHORITY)
 CLAUDE-NONO-R-FILES += /etc/gitconfig
 CLAUDE-NONO-R-DIRS += ~/.config/gh
@@ -101,7 +103,7 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
 claude-nono: $(CLAUDE-READY) $(NONO) $(GH)
-	nono run --profile $(CLAUDE-NONO-PROFILE) --allow-cwd -- \
+	nono run --profile $(CLAUDE-NONO-PROFILE) $(CLAUDE-NONO-OPTS) -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
 claude-nono-profile: $(NONO) $(YS)
