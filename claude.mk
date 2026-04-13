@@ -58,13 +58,17 @@ CLAUDE-OPTS ?=
 
 CLAUDE-NONO-OPTS += --profile claude-code
 CLAUDE-NONO-OPTS += --allow-cwd
+CLAUDE-NONO-OPTS += --allow /tmp/claude-$(shell id -u)
+CLAUDE-NONO-OPTS += --allow ~/.cache/makes
 CLAUDE-NONO-OPTS += --read-file /etc/gitconfig
 CLAUDE-NONO-OPTS += --read ~/.config/gh
 CLAUDE-NONO-OPTS += --read /proc
-CLAUDE-NONO-OPTS += --allow /tmp/claude-$(shell id -u)
-CLAUDE-NONO-OPTS += --allow ~/.cache/makes
+CLAUDE-NONO-OPTS += --read /usr/bin
+CLAUDE-NONO-OPTS += --read /usr/libexec
+CLAUDE-NONO-OPTS += --read /usr/include
 
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE := 1
+
 
 ifndef CLAUDE-SYSTEM
 $(CLAUDE):
