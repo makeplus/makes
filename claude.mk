@@ -97,12 +97,23 @@ $(CLAUDE-READY): $(CLAUDE) $(JQ)
 	fi
 	$Q touch $@
 
+# Symlink ./CLAUDE.md from ~/.claude/<project-path>/CLAUDE.md if it exists.
+CLAUDE-MD-SOURCE := $(HOME)/.claude$(ROOT)/CLAUDE.md
+CLAUDE-MD-LINK := $(ROOT)/CLAUDE.md
+
+claude-md-link:
+ifneq (,$(wildcard $(CLAUDE-MD-SOURCE)))
+	@if [[ ! -e $(CLAUDE-MD-LINK) ]]; then \
+	  ln -s $(CLAUDE-MD-SOURCE) $(CLAUDE-MD-LINK); \
+	fi
+endif
+
 # Claude Code's paste-image flow writes the clipboard image to
 # $CLAUDE_CODE_TMPDIR (default /tmp) and then reads it back. Nono's
 # default profile allows writes to /tmp but blocks reads, so redirect
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
-claude-nono: $(CLAUDE-READY) $(NONO) $(GH)
+claude-nono: claude-md-link $(CLAUDE-READY) $(NONO) $(GH)
 	nono run --profile $(CLAUDE-NONO-PROFILE) $(CLAUDE-NONO-OPTS) -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
