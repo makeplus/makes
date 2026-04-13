@@ -105,6 +105,10 @@ endif
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
 claude-nono: _claude-md-link $(CLAUDE-READY) $(NONO) $(GH)
+ifeq (,$(wildcard $(HOME)/.claude.lock))
+	touch $(HOME)/.claude.lock
+	(sleep 2 && rm -f $(HOME)/.claude.lock) &
+endif
 	nono run $(CLAUDE-NONO-OPTS) -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
