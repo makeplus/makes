@@ -9,7 +9,6 @@ $(eval $(call include-local))
 include $(MAKES)/nono.mk
 include $(MAKES)/gh.mk
 include $(MAKES)/jq.mk
-include $(MAKES)/ys.mk
 
 ifdef GITHUB_ACTIONS
 CLAUDE-MODE ?= full
@@ -57,25 +56,13 @@ CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
 endif
 CLAUDE-OPTS ?=
 
+CLAUDE-NONO-OPTS += --profile claude-code
 CLAUDE-NONO-OPTS += --allow-cwd
-
-# CLAUDE-NONO-R-FILES += $(XAUTHORITY)
-CLAUDE-NONO-R-FILES += /etc/gitconfig
-CLAUDE-NONO-R-DIRS += ~/.config/gh
-CLAUDE-NONO-R-DIRS += /proc
-# CLAUDE-NONO-R-DIRS += /tmp/.X11-unix
-CLAUDE-NONO-RW-FILES +=
-CLAUDE-NONO-RW-DIRS += /tmp/claude-$(shell id -u)
-CLAUDE-NONO-RW-DIRS += ~/.cache/makes
-
-CLAUDE-NONO-PROFILE = $(shell \
-  $(MAKES)/util/generate-claude-nono-profile \
-    "$(LOCAL-TMP)/claude-nono-profile" \
-    "$(CLAUDE-NONO-R-FILES)" \
-    "$(CLAUDE-NONO-RW-FILES)" \
-    "$(CLAUDE-NONO-R-DIRS)" \
-    "$(CLAUDE-NONO-RW-DIRS)" \
-)
+CLAUDE-NONO-OPTS += --read-file /etc/gitconfig
+CLAUDE-NONO-OPTS += --read ~/.config/gh
+CLAUDE-NONO-OPTS += --read /proc
+CLAUDE-NONO-OPTS += --allow /tmp/claude-$(shell id -u)
+CLAUDE-NONO-OPTS += --allow ~/.cache/makes
 
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE := 1
 
@@ -86,7 +73,7 @@ $(CLAUDE):
 	$Q touch $@
 endif
 
-$(CLAUDE-READY): $(CLAUDE) $(JQ)
+$(CLAUDE-READY): $(CLAUDE)
 	@if [[ -z $$ANTHROPIC_API_KEY ]] && \
 	    ! $< auth status &>/dev/null; \
 	then \
@@ -114,10 +101,10 @@ endif
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
 claude-nono: claude-md-link $(CLAUDE-READY) $(NONO) $(GH)
-	nono run --profile $(CLAUDE-NONO-PROFILE) $(CLAUDE-NONO-OPTS) -- \
+	nono run $(CLAUDE-NONO-OPTS) -- \
 	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
 
-claude-nono-profile: $(NONO) $(YS)
-	@nono policy show --json $(CLAUDE-NONO-PROFILE) | ys -Y -
+claude-nono-profile: $(NONO)
+	@echo $(CLAUDE-NONO-OPTS)
 
 endif
