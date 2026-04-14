@@ -73,6 +73,8 @@ CLAUDE-NONO-DEPS ?= \
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE := 1
 
 
+.SECONDEXPANSION:
+
 ifndef CLAUDE-SYSTEM
 $(CLAUDE):
 	@$(ECHO) "Installing 'claude' locally"
@@ -107,7 +109,7 @@ endif
 # default profile allows writes to /tmp but blocks reads, so redirect
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
-claude-nono: _claude-md-link $(CLAUDE-READY) $(NONO) $(CLAUDE-NONO-DEPS)
+claude-nono: _claude-md-link $(CLAUDE-READY) $(NONO) $$(CLAUDE-NONO-DEPS)
 ifeq (,$(wildcard $(HOME)/.claude.lock))
 	touch $(HOME)/.claude.lock
 	(sleep 2 && rm -f $(HOME)/.claude.lock) &
