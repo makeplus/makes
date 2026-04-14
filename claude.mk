@@ -67,6 +67,9 @@ CLAUDE-NONO-OPTS += --read /usr/bin
 CLAUDE-NONO-OPTS += --read /usr/libexec
 CLAUDE-NONO-OPTS += --read /usr/include
 
+CLAUDE-NONO-DEPS ?= \
+  $(GH) \
+
 export CLAUDE_CODE_DISABLE_TERMINAL_TITLE := 1
 
 
@@ -104,7 +107,7 @@ endif
 # default profile allows writes to /tmp but blocks reads, so redirect
 # to the already-RW /tmp/claude-<uid> dir from claude.mk.
 claude-nono: export CLAUDE_CODE_TMPDIR := /tmp/claude-$(shell id -u)
-claude-nono: _claude-md-link $(CLAUDE-READY) $(NONO) $(GH)
+claude-nono: _claude-md-link $(CLAUDE-READY) $(NONO) $(CLAUDE-NONO-DEPS)
 ifeq (,$(wildcard $(HOME)/.claude.lock))
 	touch $(HOME)/.claude.lock
 	(sleep 2 && rm -f $(HOME)/.claude.lock) &
