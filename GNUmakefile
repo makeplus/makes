@@ -3,12 +3,10 @@ include $M/init.mk
 
 export MAKES_LOCAL_DIR := $(ROOT)/local
 
-include $M/agents.mk
 include $M/bpan.mk
 include $M/claude.mk
 include $M/clean.mk
 
-AGENTS-NAMES := claude
 CLAUDE-MODE := full
 
 TARGETS := $(wildcard *.mk)
