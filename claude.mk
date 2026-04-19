@@ -56,16 +56,18 @@ CLAUDE-OPTS ?= $(MAKES_CLAUDE_OPTS)
 endif
 CLAUDE-OPTS ?=
 
-CLAUDE-NONO-OPTS += --profile claude-code
-CLAUDE-NONO-OPTS += --allow-cwd
-CLAUDE-NONO-OPTS += --allow /tmp/claude-$(shell id -u)
-CLAUDE-NONO-OPTS += --allow ~/.cache/makes
-CLAUDE-NONO-OPTS += --read-file /etc/gitconfig
-CLAUDE-NONO-OPTS += --read ~/.config/gh
-CLAUDE-NONO-OPTS += --read /proc
-CLAUDE-NONO-OPTS += --read /usr/bin
-CLAUDE-NONO-OPTS += --read /usr/libexec
-CLAUDE-NONO-OPTS += --read /usr/include
+CLAUDE-NONO-OPTS += \
+  --profile claude-code \
+  --allow-cwd \
+  --allow /tmp/claude-$(shell id -u) \
+  --allow ~/.cache/makes \
+  --read-file /etc/gitconfig \
+  --read ~/.config/gh \
+  --read /proc \
+  --read /usr/bin \
+  --read /usr/local/bin \
+  --read /usr/libexec \
+  --read /usr/include \
 
 CLAUDE-NONO-DEPS ?= \
   $(GH) \
@@ -115,7 +117,8 @@ ifeq (,$(wildcard $(HOME)/.claude.lock))
 	(sleep 2 && rm -f $(HOME)/.claude.lock) &
 endif
 	nono run $(CLAUDE-NONO-OPTS) -- \
-	  claude$(if $(CLAUDE-MODEL), --model $(CLAUDE-MODEL))$(if $(CLAUDE-OPTS), $(CLAUDE-OPTS), --dangerously-skip-permissions)
+	  claude --dangerously-skip-permissions \
+	  $(if $(CLAUDE-OPTS), $(CLAUDE-OPTS)) \
 
 claude-nono-profile: $(NONO)
 	@echo $(CLAUDE-NONO-OPTS)
