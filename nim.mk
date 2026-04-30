@@ -1,4 +1,4 @@
-NIM-VERSION ?= 2.2.8
+NIM-VERSION ?= 2.2.10
 # https://github.com/nim-lang/Nim
 
 ifndef NIM-LOADED
