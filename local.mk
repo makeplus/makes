@@ -6,8 +6,11 @@ ifdef MAKES_LOCAL_DIR
   LOCAL-ROOT := $(MAKES_LOCAL_DIR)
 else ifdef MAKES-LOCAL-DIR
   LOCAL-ROOT := $(MAKES-LOCAL-DIR)
+else ifdef MAKES_REPO_DIR
+  $(error MAKES_REPO_DIR is set but MAKES_LOCAL_DIR is not. \
+    Please set MAKES_LOCAL_DIR to specify where tools should be installed.)
 else
-  LOCAL-ROOT := $(dir $(MAKES))/.local
+  LOCAL-ROOT := $(dir $(MAKES))/local
 endif
 LOCAL-ROOT := $(abspath $(LOCAL-ROOT))
 

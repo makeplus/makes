@@ -1,7 +1,7 @@
-# Using the "Makes" Makefile framework - https://github.com/makeplus/makes
-
-M := $(or $(MAKES_REPO_DIR),.cache/makes)
-$(shell [ -d $M ] || git clone -q https://github.com/makeplus/makes $M)
+# Using the "Makes" Makefile framework
+R := https://github.com/makeplus/makes
+M := .cache/makes
+$(shell [ -d '$M' ] || git clone -q $R '$M')
 
 ### Required
 include $M/init.mk

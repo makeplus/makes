@@ -16,21 +16,17 @@ It works on Linux or MacOS (Intel and ARM) without worrying about specifics.
 Here's an example Makefile for a Clojure project:
 
 ```make
-# Set a directory to put the 'makes' repository:
+R := https://github.com/makeplus/makes
 M := .cache/makes
-# Auto install the 'makes' repo on first 'make' command:
-$(shell [ -d $M ] || git clone -q https://github.com/makeplus/makes $M)
+$(shell [ -d '$M' ] || git clone -q $R '$M')
 
-# Include `init.mk` first:
 include $M/init.mk
-
-# Include any other deps you need. All installed/cached locally.
 include $M/java.mk
 include $M/clojure.mk
 include $M/lein.mk
 
-# Define your rules. The $(LEIN) dependency comes from lein.mk and triggers a
-# local install of lein which will be in your PATH here.
+# The $(LEIN) dependency comes from lein.mk and triggers a local install
+# of lein which will be in your PATH here.
 test repl: $(LEIN)
 	lein $@
 ```
@@ -63,6 +59,27 @@ Every dependency language or tool has its own `<name>.mk` file in `makes`
 repository that does as much of the work as possible for you.
 
 
+## Commit Pinning
+
+For production use, you can pin Makes to a specific commit.
+This ensures your build is reproducible and that you don't have to trust the
+Makes maintainers:
+
+```make
+R := https://github.com/makeplus/makes
+M := .cache/makes
+P := 4e48a743c3652b88adc4a257398d895a801e6d11
+$(shell [ -d '$M' ] || (git clone -q $R '$M' && git -C '$M' checkout -q $P))
+ifneq ($(shell git -C $M rev-parse HEAD),$P)
+$(error Makes commit mismatch: expected $P)
+endif
+include $M/init.mk
+```
+
+The pinning check lives in your Makefile, not in Makes code, so it can't be
+bypassed by a compromised commit.
+
+
 ## Auto-installation
 
 Auto-installation of the `makes` repo itself is optional.
@@ -78,8 +95,7 @@ places:
 
 If you want to make changes to the `makes` repo itself in combination with
 various Makefiles you are working with, you can keep `makes` in a location you
-desire by setting `MAKES_REPO_DIR` and setting the first line of your Makefiles
-to something like this:
+desire by setting `MAKES_REPO_DIR`:
 
 ```make
 M := $(or $(MAKES_REPO_DIR),.cache/makes)
@@ -132,9 +148,10 @@ If you often want to use a language like Rust on various machines but you don't
 want to install it first you can make a file like:
 
 ```
+R := https://github.com/makeplus/makes
 M := /tmp/makes
 export MAKES_LOCAL_DIR := /tmp/local
-$(shell [ -d $M ] || git clone -q https://github.com/makeplus/makes $M)
+$(shell [ -d '$M' ] || git clone -q $R '$M')
 include $M/init.mk
 include $M/go.mk
 include $M/shell.mk
