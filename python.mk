@@ -51,8 +51,8 @@ $(PYTHON): $(UV)
 
 $(PYTHON-VENV): $(PYTHON)
 	@echo '+++ Installing a Python virtualenv in $@'
-	$(PYTHON) -m venv $@
-	$(if $(wildcard requirements.txt),pip install -r requirements.txt,true)
+	uv venv --python $(PYTHON-NAME) $@
+	$(if $(wildcard requirements.txt),uv pip install -r requirements.txt,true)
 	$(PYTHON-VENV-SETUP)
 	@echo
 
