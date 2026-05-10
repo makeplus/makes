@@ -1,4 +1,5 @@
-GNAT-VERSION ?= 15.2.0-1
+GNAT-VERSION ?= 16.0.1-20260502
+GNAT-TAG ?= gnat-16.0.1-snapshot
 # https://github.com/alire-project/GNAT-FSF-builds
 
 ifndef GNAT-LOADED
@@ -14,7 +15,7 @@ OA-macos-int64 := x86_64-darwin
 GNAT-DIR := gnat-$(OA-$(OS-ARCH))-$(GNAT-VERSION)
 GNAT-TAR := $(GNAT-DIR).tar.gz
 GNAT-DOWN := https://github.com/alire-project/GNAT-FSF-builds/releases/download
-GNAT-DOWN := $(GNAT-DOWN)/gnat-$(GNAT-VERSION)/$(GNAT-TAR)
+GNAT-DOWN := $(GNAT-DOWN)/$(GNAT-TAG)/$(GNAT-TAR)
 
 GNAT-LOCAL := $(LOCAL-ROOT)/$(GNAT-DIR)
 GNAT-BIN := $(GNAT-LOCAL)/bin
