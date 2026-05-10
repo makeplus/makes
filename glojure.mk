@@ -10,7 +10,7 @@ override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
 GLOJURE-COMMIT ?= $(GLOJURE-VERSION)
 
 GLOJURE-REPO ?= https://github.com/glojurelang/glojure
-GLOJURE-DIR ?= $(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION)
+GLOJURE-DIR ?= $(or $(GLOJURE_DIR),$(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION))
 export GLOJURE_DIR := $(GLOJURE-DIR)
 
 override GLOJURE-REPO := $(if $(findstring https://,$(GLOJURE-REPO)) \
