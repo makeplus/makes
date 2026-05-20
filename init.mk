@@ -9,6 +9,7 @@ ifeq (,$(shell which bash))
   $(error Makes requires a 'bash' in your PATH)
 endif
   SHELL := bash
+  .SHELLFLAGS := -e -o pipefail -c
 endif
 
 ROOT ?= $(shell pwd -P)
