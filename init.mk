@@ -4,13 +4,11 @@ endif
 INIT-LOADED := true
 
 # Using bash to run commands gives us a stable foundation to build upon.
-ifeq (/bin/sh,$(SHELL))
 ifeq (,$(shell which bash))
   $(error Makes requires a 'bash' in your PATH)
 endif
-  SHELL := bash
-  .SHELLFLAGS := -e -o pipefail -c
-endif
+SHELL := bash
+.SHELLFLAGS := -e -o pipefail -c
 
 ROOT ?= $(shell pwd -P)
 TOP ?= $(shell \
