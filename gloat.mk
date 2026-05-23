@@ -1,154 +1,33 @@
-GLOAT-VERSION ?= main
+GLOAT-VERSION ?= 0.1.42
+# https://github.com/gloathub/gloat
 
 ifndef GLOAT-LOADED
 GLOAT-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
-include $(MAKES)/gh.mk
-include $(MAKES)/go.mk
-
-GLOAT-COMMIT ?= gloat
 GLOAT-REPO ?= https://github.com/gloathub/gloat
 GLOAT-DIR ?= $(LOCAL-CACHE)/gloat-$(GLOAT-VERSION)
-
-GLOAT-CONFIG ?= .makes/gloat.config
-GLOAT-CONFIG-SRC := $(MAKES)/share/gloat.config
-GLOAT-GO ?= go
-
-# Default module path that gloat generates
-GLOAT-GO-OLD-MODULE ?= github.com/gloathub/go
-
-# Auto-detect correct module path from git remote
-GLOAT-GO-MODULE ?= $(shell \
-  git remote get-url origin 2>/dev/null | \
-  sed -e 's|^git@||' -e 's|^https*://||' \
-      -e 's|\.git$$||' -e 's|:|/|' \
-)/$(GLOAT-GO)
-
-ifneq (,$(wildcard $(GLOAT-CONFIG)))
-override GLOAT-PLATFORMS := $(shell git config -f $(GLOAT-CONFIG) --get-all gloat.platforms.name)
-endif
-
-override GLOAT-REPO := $(if $(findstring https://,$(GLOAT-REPO)) \
-  ,$(GLOAT-REPO),https://github.com/$(GLOAT-REPO))
-
 GLOAT-BIN := $(GLOAT-DIR)/bin
+
 override PATH := $(GLOAT-BIN):$(PATH)
 export PATH
 
-GLOAT-PLATFORMS ?= \
-  linux/amd64 \
-  linux/arm64 \
-  darwin/amd64 \
-  darwin/arm64 \
-  windows/amd64 \
+GLOAT := $(GLOAT-BIN)/gloat
 
-GLOAT-EXTRA-PLATFORMS ?=
+SHELL-DEPS += $(GLOAT)
 
-GLOAT-PLATFORMS += $(GLOAT-EXTRA-PLATFORMS)
 
-GLOAT-DIST ?= dist
-
-MAKES-REALCLEAN += $(GLOAT-DIST)
-
-SHELL-DEPS += $(GLOAT-DIR)
-
-# Auto-detect FILE if there's exactly one .ys or .clj file
-ifndef FILE
-_GLOAT_YS_FILES := $(wildcard *.ys)
-_GLOAT_CLJ_FILES := $(wildcard *.clj)
-_GLOAT_SOURCE_FILES := $(_GLOAT_YS_FILES) $(_GLOAT_CLJ_FILES)
-ifeq ($(words $(_GLOAT_SOURCE_FILES)),1)
-FILE := $(_GLOAT_SOURCE_FILES)
-endif
-endif
-
-gloat-github-release-dist:
-	@$(if $(FILE),,$(error FILE is required for gloat-github-release-dist))
-	$(MAKE) gloat-bin FILE=$(FILE)
-
-gloat-github-release:
-	@$(if $(filter command line,$(origin VERSION)),,$(error VERSION is required on the command line))
-	@$(if $(FILE),,$(error FILE is required for gloat-github-release))
-	perl -pi -e 's|^VERSION := .*|VERSION := $(VERSION)|' Makefile
-	perl -pi -e "s|^VERSION =: '.*'|VERSION =: '$(VERSION)'|" $(FILE)
-	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),rm -rf $(GLOAT-GO))
-	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),$(MAKE) gloat-go)
-	git add -A
-	git diff --cached --quiet || git commit -m 'Version v$(VERSION)'
-	git tag v$(VERSION) 2>/dev/null || true
-	$(if $(GLOAT-RELEASE-WITH-GO-DIRECTORY),git tag $(GLOAT-GO)/v$(VERSION) 2>/dev/null || true)
-	git push
-	git push --tags
-	$(MAKE) do-gloat-github-release
-
-do-gloat-github-release: $(GLOAT-DIR) $(GH)
-	@$(if $(FILE),,$(error FILE is required for gloat-github-release))
-	@$(if $(VERSION),,$(error VERSION is required for gloat-github-release))
-	@echo "Verifying GitHub repository and authentication..."
-	@$(GH-CMD) repo view >/dev/null || { echo "Error: Not in a GitHub repository or gh not authenticated. Run 'gh auth login' first."; exit 1; }
-	$(MAKE) gloat-github-release-dist FILE=$(FILE)
-	$(GH-CMD) release create v$(VERSION) --title "v$(VERSION)" --generate-notes $(GLOAT-DIST)/*
-
-gloat-config: $(GLOAT-CONFIG)
-
-gloat-go: $(GLOAT-GO)
-
-$(GLOAT-GO): $(GLOAT-DIR) $(GO)
-	@$(if $(FILE),,$(error FILE is required for gloat-go))
-	$Q $(GLOAT-BIN)/gloat $(FILE) -o $@/
-	$Q perl -pi -e \
-	    's|module $(GLOAT-GO-OLD-MODULE)|module $(GLOAT-GO-MODULE)|' \
-	    $@/go.mod
-	$Q perl -pi -e \
-	    's|$(GLOAT-GO-OLD-MODULE)/|$(GLOAT-GO-MODULE)/|g' \
-	    $@/main.go
-	$Q mkdir -p $@/cmd/$(GLOAT-BIN-NAME)
-	$Q mv $@/main.go $@/cmd/$(GLOAT-BIN-NAME)/main.go
-	$Q perl -pi -e \
-	    's|BINARY := .*|BINARY := $(GLOAT-BIN-NAME)|' \
-	    $@/Makefile
-	$Q perl -pi -e \
-	    's|go build -o \$$\(BINARY\) \.|go build -o \$$(BINARY) ./cmd/$(GLOAT-BIN-NAME)|' \
-	    $@/Makefile
-	$Q go -C $@ mod tidy
-
-gloat-go-tag:
-	@$(if $(VERSION),,$(error VERSION is required for gloat-go-tag))
-	git tag $(GLOAT-GO)/v$(VERSION)
+$(GLOAT): $(GLOAT-DIR)
+	$Q gloat --version
+	$Q touch $@
+	@$(ECHO)
 
 $(GLOAT-DIR):
-	$Q git clone$(if $Q, -q) $(GLOAT-REPO) $@
-	$Q git -C $@ checkout$(if $Q, -q) $(GLOAT-VERSION)
-
-$(GLOAT-CONFIG):
-	mkdir -p $(dir $(GLOAT-CONFIG))
-	cp $(GLOAT-CONFIG-SRC) $@
-
-ifdef FILE
-GLOAT-BIN-NAME := $(or $(GLOAT-NAME),$(basename $(notdir $(FILE))))
-
-# Template to generate a rule for one platform
-define gloat-platform-rule
-$(eval _os := $(word 1,$(subst /, ,$(1))))
-$(eval _arch := $(word 2,$(subst /, ,$(1))))
-$(eval _ext := $(if $(filter windows,$(_os)),.exe,))
-$(eval _target := $(GLOAT-DIST)/$(GLOAT-BIN-NAME)-$(_os)-$(_arch)$(_ext))
-
-$(_target): | $(GLOAT-DIR)
-	$$Q mkdir -p $(GLOAT-DIST)
-	$$Q $(GLOAT-BIN)/gloat $(FILE) -o $$@ --platform=$(1)
-	$$(if $$Q,,@echo "Built $$@")
-
-GLOAT-DIST-FILES += $(_target)
-endef
-
-# Generate all platform rules
-$(foreach platform,$(GLOAT-PLATFORMS),$(eval $(call gloat-platform-rule,$(platform))))
-
-gloat-bin: $(GLOAT-DIST-FILES)
-
-endif
+	@$(ECHO) "* Cloning 'gloat' locally (v$(GLOAT-VERSION))"
+	$Q git clone$(if $Q, -q) --depth=1 --branch v$(GLOAT-VERSION) \
+	  --config advice.detachedHead=false \
+	  $(GLOAT-REPO) $@
+	@$(ECHO)
 
 endif
