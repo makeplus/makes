@@ -1,4 +1,4 @@
-LET-GO-VERSION ?= 1.7.4
+LET-GO-VERSION ?= 2.0.2
 
 ifndef LET-GO-LOADED
 LET-GO-LOADED := true
