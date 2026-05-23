@@ -1,55 +1,27 @@
-GLOJURE-VERSION ?= 0.6.4
+GLOJURE-VERSION ?= 0.6.5-rc28
+# https://github.com/gloathub/glojure
 
 ifndef GLOJURE-LOADED
 GLOJURE-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
-include $(MAKES)/go.mk
-
-override GLOJURE-VERSION := $(if $(findstring 0.,$(GLOJURE-VERSION)) \
-  ,v$(GLOJURE-VERSION),$(GLOJURE-VERSION))
-GLOJURE-COMMIT ?= $(GLOJURE-VERSION)
-
-GLOJURE-REPO ?= https://github.com/glojurelang/glojure
-GLOJURE-DIR ?= $(or $(GLOJURE_DIR),$(LOCAL-CACHE)/glojure-$(GLOJURE-VERSION))
-export GLOJURE_DIR := $(GLOJURE-DIR)
-
-override GLOJURE-REPO := $(if $(findstring https://,$(GLOJURE-REPO)) \
-  ,$(GLOJURE-REPO),https://github.com/$(GLOJURE-REPO))
-
-GLJ := $(LOCAL-BIN)/glj
-
-# Auto-detect: dev branch → build from source
-ifndef GLOJURE-FROM-SOURCE
-ifneq ($(GLOJURE-COMMIT),$(GLOJURE-VERSION))
-GLOJURE-FROM-SOURCE := true
-endif
-endif
-
-SHELL-DEPS += $(GLJ) $(GLOJURE-DIR)
-
-ifndef GLOJURE-FROM-SOURCE
-GLOJURE-FROM-SOURCE := $(GLOJURE_FROM_SOURCE)
-endif
-ifdef GLOJURE-FROM-SOURCE
-#--- Build from source ---
-
-$(GLJ): $(GO) $(GLOJURE-DIR)
-	$Q cd $(GLOJURE-DIR)/cmd/glj && \
-	  GOBIN=$(LOCAL-BIN) go install . $O
-	$Q touch $@
-
-else
-#--- Download pre-built binary ---
+$(eval $(call include-local))
 
 OA-linux-arm64 := linux_arm64
 OA-linux-int64 := linux_amd64
 OA-macos-arm64 := darwin_arm64
-OA-macos-int64 := darwin_amd64
 
-GLOJURE-STRIP-V := $(patsubst v%,%,$(GLOJURE-VERSION))
-GLOJURE-TAR := glj-$(GLOJURE-STRIP-V)-$(OA-$(OS-ARCH)).tar.gz
-GLOJURE-DOWN := \
-  $(GLOJURE-REPO)/releases/download/$(GLOJURE-VERSION)/$(GLOJURE-TAR)
+ifeq (,$(OA-$(OS-ARCH)))
+$(error 'glojure' has no prebuilt binary for $(OS-ARCH); see https://github.com/gloathub/glojure)
+endif
+
+GLOJURE-TAR := glj-$(GLOJURE-VERSION)-$(OA-$(OS-ARCH)).tar.gz
+GLOJURE-DOWN := https://github.com/gloathub/glojure
+GLOJURE-DOWN := $(GLOJURE-DOWN)/releases/download/v$(GLOJURE-VERSION)/$(GLOJURE-TAR)
+
+GLJ := $(LOCAL-BIN)/glj
+
+SHELL-DEPS += $(GLJ)
+
 
 $(GLJ): $(LOCAL-CACHE)/$(GLOJURE-TAR)
 	$Q tar -C $(LOCAL-CACHE) -xzf $<
@@ -61,15 +33,5 @@ $(GLJ): $(LOCAL-CACHE)/$(GLOJURE-TAR)
 $(LOCAL-CACHE)/$(GLOJURE-TAR):
 	@$(ECHO) "* Installing 'glj' locally"
 	$Q curl+ $(GLOJURE-DOWN) > $@
-
-endif
-
-$(GLOJURE-DIR):
-	@$(ECHO) "* Cloning 'glojure' repo locally ($(GLOJURE-COMMIT))"
-	$Q git clone$(if $Q, -q) \
-	  -b $(GLOJURE-COMMIT) \
-	  --config advice.detachedHead=false \
-	  $(GLOJURE-REPO) $@
-	@$(ECHO)
 
 endif
