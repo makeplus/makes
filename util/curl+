@@ -14,6 +14,7 @@ main() {
 
   local target
   target=$(mktemp)
+  # shellcheck disable=SC2064  # expand $target now: it's local to main()
   trap "rm -f '$target'" EXIT
 
   local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
@@ -21,7 +22,7 @@ main() {
   MAKES_CACHE_NAME="$name" \
   MAKES_CACHE_DEPS=_ \
   "$makes_cache" "$target" \
-    curl -sL -o "$target" "$url"
+    curl -fsSL -o "$target" "$url"
 
   cat "$target"
 }
