@@ -18,15 +18,20 @@ GLOJURE-TAR := glj-$(GLOJURE-VERSION)-$(OA-$(OS-ARCH)).tar.gz
 GLOJURE-DOWN := https://github.com/gloathub/glojure
 GLOJURE-DOWN := $(GLOJURE-DOWN)/releases/download/v$(GLOJURE-VERSION)/$(GLOJURE-TAR)
 
-GLJ := $(LOCAL-BIN)/glj
+GLOJURE-LOCAL := $(LOCAL-ROOT)/glojure-$(GLOJURE-VERSION)
+GLJ := $(GLOJURE-LOCAL)/bin/glj
 
 SHELL-DEPS += $(GLJ)
 
+override PATH := $(GLOJURE-LOCAL)/bin:$(PATH)
+export PATH
+
 
 $(GLJ): $(LOCAL-CACHE)/$(GLOJURE-TAR)
+	$Q mkdir -p $(GLOJURE-LOCAL)/bin
 	$Q tar -C $(LOCAL-CACHE) -xzf $<
 	$Q [[ -e $(LOCAL-CACHE)/glj ]]
-	$Q mv $(LOCAL-CACHE)/glj $(LOCAL-BIN)/
+	$Q mv $(LOCAL-CACHE)/glj $(GLOJURE-LOCAL)/bin/
 	$Q touch $@
 	@$(ECHO)
 

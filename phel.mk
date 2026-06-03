@@ -10,12 +10,17 @@ PHEL-PHAR := phel.phar
 PHEL-DOWN := https://github.com/phel-lang/phel-lang
 PHEL-DOWN := $(PHEL-DOWN)/releases/download/v$(PHEL-VERSION)/$(PHEL-PHAR)
 
-PHEL := $(LOCAL-BIN)/phel
+PHEL-LOCAL := $(LOCAL-ROOT)/phel-$(PHEL-VERSION)
+PHEL := $(PHEL-LOCAL)/bin/phel
 
 SHELL-DEPS += $(PHEL)
 
+override PATH := $(PHEL-LOCAL)/bin:$(PATH)
+export PATH
+
 
 $(PHEL): $(LOCAL-CACHE)/phel-$(PHEL-VERSION).phar $(PHP)
+	$Q mkdir -p $(PHEL-LOCAL)/bin
 	$Q cp $< $@
 	$Q chmod +x $@
 	@$(ECHO)

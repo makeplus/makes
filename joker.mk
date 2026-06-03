@@ -15,15 +15,20 @@ JOKER-ZIP := joker-$(OA-$(OS-ARCH)).zip
 JOKER-DOWN := https://github.com/candid82/joker
 JOKER-DOWN := $(JOKER-DOWN)/releases/download/v$(JOKER-VERSION)/$(JOKER-ZIP)
 
-JOKER := $(LOCAL-BIN)/joker
+JOKER-LOCAL := $(LOCAL-ROOT)/joker-$(JOKER-VERSION)
+JOKER := $(JOKER-LOCAL)/bin/joker
 
 SHELL-DEPS += $(JOKER)
 
+override PATH := $(JOKER-LOCAL)/bin:$(PATH)
+export PATH
+
 
 $(JOKER): $(LOCAL-CACHE)/$(JOKER-ZIP)
+	$Q mkdir -p $(JOKER-LOCAL)/bin
 	$Q unzip -q -d $(LOCAL-CACHE) $<
 	$Q [[ -e $(LOCAL-CACHE)/joker ]]
-	$Q mv $(LOCAL-CACHE)/joker $(LOCAL-BIN)/
+	$Q mv $(LOCAL-CACHE)/joker $(JOKER-LOCAL)/bin/
 	$Q touch $@
 	@$(ECHO)
 

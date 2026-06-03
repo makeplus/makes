@@ -15,15 +15,20 @@ LET-GO-TAR := $(LET-GO-DIR).tar.gz
 LET-GO-DOWN := https://github.com/nooga/let-go
 LET-GO-DOWN := $(LET-GO-DOWN)/releases/download/v$(LET-GO-VERSION)/$(LET-GO-TAR)
 
-LG := $(LOCAL-BIN)/lg
+LET-GO-LOCAL := $(LOCAL-ROOT)/let-go-$(LET-GO-VERSION)
+LG := $(LET-GO-LOCAL)/bin/lg
 
 SHELL-DEPS += $(LG)
 
+override PATH := $(LET-GO-LOCAL)/bin:$(PATH)
+export PATH
+
 
 $(LG): $(LOCAL-CACHE)/$(LET-GO-TAR)
+	$Q mkdir -p $(LET-GO-LOCAL)/bin
 	$Q tar -C $(LOCAL-CACHE) -xf $<
 	$Q [[ -e $(LOCAL-CACHE)/lg ]]
-	$Q mv $(LOCAL-CACHE)/lg $(LOCAL-BIN)/
+	$Q mv $(LOCAL-CACHE)/lg $(LET-GO-LOCAL)/bin/
 	$Q touch $@
 	@$(ECHO)
 

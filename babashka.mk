@@ -28,19 +28,24 @@ else
 BB-EXE := bb
 endif
 
-BB := $(LOCAL-BIN)/bb
+BABASHKA-LOCAL := $(LOCAL-ROOT)/babashka-$(BABASHKA-VERSION)
+BB := $(BABASHKA-LOCAL)/bin/$(BB-EXE)
 
 SHELL-DEPS += $(BB)
 
+override PATH := $(BABASHKA-LOCAL)/bin:$(PATH)
+export PATH
+
 
 $(BB): $(LOCAL-CACHE)/$(BABASHKA-TAR)
+	$Q mkdir -p $(BABASHKA-LOCAL)/bin
 ifeq (windows,$(OS-NAME))
 	$Q unzip -q -d $(LOCAL-CACHE) $<
 else
 	$Q tar -C $(LOCAL-CACHE) -xf $<
 endif
 	$Q [[ -e $(LOCAL-CACHE)/$(BB-EXE) ]]
-	$Q mv $(LOCAL-CACHE)/$(BB-EXE) $(LOCAL-BIN)/
+	$Q mv $(LOCAL-CACHE)/$(BB-EXE) $(BABASHKA-LOCAL)/bin/
 	$Q touch $@
 	@$(ECHO)
 

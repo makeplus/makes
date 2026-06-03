@@ -14,14 +14,18 @@ endif
 CLOJURE-DOWN := https://github.com/clojure/brew-install/releases/download
 CLOJURE-DOWN := $(CLOJURE-DOWN)/$(CLOJURE-VERSION)/posix-install.sh
 
-CLOJURE := $(LOCAL-BIN)/clojure
+CLOJURE-LOCAL := $(LOCAL-ROOT)/clojure-$(CLOJURE-VERSION)
+CLOJURE := $(CLOJURE-LOCAL)/bin/clojure
 
 SHELL-DEPS += $(CLOJURE)
+
+override PATH := $(CLOJURE-LOCAL)/bin:$(PATH)
+export PATH
 
 
 $(CLOJURE): $(CLOJURE-DEPS) $(JAVA)
 	@$(ECHO) "* Installing 'clojure' locally"
-	$Q bash <(curl+ $(CLOJURE-DOWN)) -p $(LOCAL-PREFIX) $O
+	$Q bash <(curl+ $(CLOJURE-DOWN)) -p $(CLOJURE-LOCAL) $O
 	$Q touch $@
 	@$(ECHO)
 
