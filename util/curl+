@@ -19,7 +19,7 @@ main() {
 
   local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
 
-  MAKES_CACHE_NAME="$name" \
+  MAKES_CACHE_NAME=$name \
   MAKES_CACHE_DEPS=_ \
   "$makes_cache" "$target" \
     curl -fsSL -o "$target" "$url"

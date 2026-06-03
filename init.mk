@@ -30,6 +30,7 @@ null :=
 space := $(null) #
 
 ifdef MAKES-QUIET
+export MAKES_QUIET := 1
 Q ?= @
 O ?= &>/dev/null
 ECHO ?= :$(space)
