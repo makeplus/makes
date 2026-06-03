@@ -1,4 +1,4 @@
-K3D-VERSION ?= 5.8.3
+K3D-VERSION ?= 5.9.0
 # https://github.com/k3d-io/k3d
 
 ifndef K3D-LOADED
