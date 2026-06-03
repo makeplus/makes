@@ -21,7 +21,7 @@ SHELL-DEPS += $(HY)
 
 $(HY): $(UV)
 	@$(ECHO) "* Installing 'hy' locally"
-	$Q uv tool install hy==$(HY-VERSION)
+	$Q uv tool install hy==$(HY-VERSION) $O
 	$Q touch $@
 	@$(ECHO)
 

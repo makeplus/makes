@@ -29,6 +29,10 @@ export LANG := en_US.UTF-8
 null :=
 space := $(null) #
 
+ifdef MAKES_QUIET
+MAKES-QUIET := 1
+endif
+
 ifdef MAKES-QUIET
 export MAKES_QUIET := 1
 Q ?= @

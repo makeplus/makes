@@ -33,18 +33,18 @@ SHELL-DEPS += $(MAVEN)
 
 ifeq ($(OS-NAME),windows)
 $(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
-	cd $(LOCAL-ROOT) && tar -xzf cache/$(MAVEN-TAR)
-	touch $@
-	@echo
+	$Q cd $(LOCAL-ROOT) && tar -xzf cache/$(MAVEN-TAR)
+	$Q touch $@
+	@$(ECHO)
 else
 $(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
-	tar -C $(LOCAL-ROOT) -xzf $<
-	touch $@
-	@echo
+	$Q tar -C $(LOCAL-ROOT) -xzf $<
+	$Q touch $@
+	@$(ECHO)
 endif
 
 $(LOCAL-CACHE)/$(MAVEN-TAR):
-	@echo "* Installing 'maven' locally"
-	curl+ $(MAVEN-DOWN) > $@
+	@$(ECHO) "* Installing 'maven' locally"
+	$Q curl+ $(MAVEN-DOWN) > $@
 
 endif

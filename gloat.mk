@@ -19,7 +19,7 @@ SHELL-DEPS += $(GLOAT)
 
 
 $(GLOAT): $(GLOAT-DIR)
-	$Q gloat --version
+	$Q gloat --version $O
 	$Q touch $@
 	@$(ECHO)
 

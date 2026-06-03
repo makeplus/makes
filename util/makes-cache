@@ -43,7 +43,8 @@ main() (
   if [[ -e $target ]]; then
     cp -a "$target" "$cache_path"
     touch "$target"
-    echo "Cached: $cache_path" >&2
+    [[ ${MAKES_QUIET-} ]] ||
+      echo "Cached: $cache_path" >&2
   fi
 )
 

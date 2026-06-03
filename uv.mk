@@ -28,20 +28,20 @@ SHELL-DEPS += $(UV)
 
 ifeq ($(OS-NAME),windows)
 $(UV): $(LOCAL-CACHE)/$(UV-TAR)
-	cd $(LOCAL-CACHE) && unzip -q $(UV-TAR)
-	cp $(LOCAL-CACHE)/uv.exe $(LOCAL-BIN)/
-	touch $@
-	@echo
+	$Q cd $(LOCAL-CACHE) && unzip -q $(UV-TAR)
+	$Q cp $(LOCAL-CACHE)/uv.exe $(LOCAL-BIN)/
+	$Q touch $@
+	@$(ECHO)
 else
 $(UV): $(LOCAL-CACHE)/$(UV-TAR)
-	tar -C $(LOCAL-CACHE) -xzf $<
-	cp $(LOCAL-CACHE)/$(UV-DIR)/uv* $(LOCAL-BIN)/
-	touch $@
-	@echo
+	$Q tar -C $(LOCAL-CACHE) -xzf $<
+	$Q cp $(LOCAL-CACHE)/$(UV-DIR)/uv* $(LOCAL-BIN)/
+	$Q touch $@
+	@$(ECHO)
 endif
 
 $(LOCAL-CACHE)/$(UV-TAR):
-	@echo "* Installing 'uv' locally"
-	curl+ $(UV-DOWN) > $@
+	@$(ECHO) "* Installing 'uv' locally"
+	$Q curl+ $(UV-DOWN) > $@
 
 endif

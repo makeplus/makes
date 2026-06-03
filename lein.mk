@@ -29,8 +29,9 @@ SHELL-DEPS += $(LEIN)
 
 
 $(LEIN):: $(CLOJURE) $(MAVEN)
-	@echo "* Installing 'lein' locally"
-	curl+ $(LEIN-DOWN) > $@
-	chmod +x $@
+	@$(ECHO) "* Installing 'lein' locally"
+	$Q curl+ $(LEIN-DOWN) > $@
+	$Q chmod +x $@
+	@$(ECHO)
 
 endif

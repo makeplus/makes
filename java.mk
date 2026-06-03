@@ -38,22 +38,22 @@ SHELL-DEPS += $(JAVA)
 
 ifeq ($(OS-NAME),windows)
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
-	cd $(LOCAL-ROOT) && unzip -q cache/$(JAVA-ARCHIVE)
-	$(RM) -r $(JAVA-LOCAL)
-	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
-	touch $@
-	@echo
+	$Q cd $(LOCAL-ROOT) && unzip -q cache/$(JAVA-ARCHIVE)
+	$Q $(RM) -r $(JAVA-LOCAL)
+	$Q mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
+	$Q touch $@
+	@$(ECHO)
 else
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
-	cd $(LOCAL-ROOT) && tar -xzf cache/$(JAVA-ARCHIVE)
-	$(RM) -r $(JAVA-LOCAL)
-	mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
-	touch $@
-	@echo
+	$Q cd $(LOCAL-ROOT) && tar -xzf cache/$(JAVA-ARCHIVE)
+	$Q $(RM) -r $(JAVA-LOCAL)
+	$Q mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
+	$Q touch $@
+	@$(ECHO)
 endif
 
 $(LOCAL-CACHE)/$(JAVA-ARCHIVE):
-	@echo "* Installing 'java' locally"
-	curl+ $(JAVA-DOWN) > $@
+	@$(ECHO) "* Installing 'java' locally"
+	$Q curl+ $(JAVA-DOWN) > $@
 
 endif
