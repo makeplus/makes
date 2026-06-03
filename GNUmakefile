@@ -67,10 +67,10 @@ ifndef WITH
 	@echo "WITH=... not specified for 'make shell'"
 	@exit 1
 endif
-	$(MAKE) --no-pr -f makefile.mk shell
+	$Q $(MAKE) --no-pr -f makefile.mk shell
 
 $(SHELL-TARGETS):
-	$(MAKE) --no-pr -f makefile.mk shell WITH='$(if $(WITH),$(WITH) )$(@:%-shell=%)'
+	$Q $(MAKE) --no-pr -f makefile.mk shell WITH='$(if $(WITH),$(WITH) )$(@:%-shell=%)'
 
 ifdef BPAN_TEST_RUNNING
 TEST-TARGETS := $(TARGETS:%=%-test)
@@ -78,4 +78,3 @@ TEST-TARGETS := $(TARGETS:%=%-test)
 $(TEST-TARGETS):
 	@$(MAKE) --no-pr -f makefile.mk shell WITH='$(@:%-test=%)'
 endif
-
