@@ -31,7 +31,7 @@ main() (
     rm -rf "$target"
     cp -a "$cache_path" "$target"
     touch "$target"
-    [[ $MAKES_QUIET ]] ||
+    [[ ${MAKES_QUIET-} ]] ||
       echo "Restored from cache: $cache_path" >&2
     exit 0
   fi
