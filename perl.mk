@@ -35,6 +35,8 @@ export PERL_CPANM_HOME
 
 PERL-CPANFILE-DEPS := $(PERL-LOCAL)/.cpan-deps-installed
 
+unexport PERL5OPT PERL5LIB
+
 
 PERL := $(LOCAL-BIN)/perl
 PERL-CPAN-DEPS := $(PERL-LOCAL)/.cpan-deps-installed
