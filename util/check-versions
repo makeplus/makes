@@ -12,7 +12,6 @@ missing =::
 - fpc
 - gcc
 - gnat
-- golangci-lint
 - graalvm
 - glojure
 - java
@@ -26,7 +25,7 @@ defn show-missing():
     printf "* %-10s - %s\n": +"$name.mk" url
 
 parse-re =: qr("(?x)
-  [A-Z]+-VERSION\s\?=\s(\d+\..*)\n
+  [A-Z][A-Z0-9-]*-VERSION\s\?=\s(\d+\..*)\n
   (?s:.*)
   (https://(?:www\.)?github\.com/[-\w]+/[-\w]+)\n
   ")
