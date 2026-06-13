@@ -15,6 +15,7 @@ missing =::
 - gcc
 - gnat
 - graalvm
+- glojure
 - java
 - lein
 - pandoc
@@ -54,7 +55,7 @@ defn show-versions():
               format "* %-13s - %s": file url
             say: phrase
             new =: bash(url:cmd).out:lines:highest
-              .replace(/^(?:v|OTP-)/)
+              .replace(/^(?:v|bun-v|OTP-)/)
               .replace(/(?:\.ROLLING)$/)
             if new != ver:
               conj files: +[file ver new url]
@@ -80,7 +81,7 @@ defn cmd(url): |
       --tags \
       $url | \
     cut -d/ -f3 | \
-    grep -E '^([a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
+    grep -E '^(bun-v|[a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
 #    grep -E '^(v|go)?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$'
 
 defn highest(list):
