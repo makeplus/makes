@@ -12,6 +12,7 @@ missing =::
 - fpc
 - gcc
 - gnat
+- golangci-lint
 - graalvm
 - glojure
 - java
