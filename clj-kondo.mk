@@ -1,4 +1,5 @@
-CLJ-KONDO-VERSION ?= 2026.01.19
+CLJ-KONDO-VERSION ?= 2026.05.25
+# https://github.com/clj-kondo/clj-kondo
 
 ifndef CLJ-KONDO-LOADED
 CLJ-KONDO-LOADED := true

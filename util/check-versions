@@ -7,8 +7,6 @@ defn main():
 
 missing =::
 - bison
-- cabal
-- clj-kondo
 - cursor
 - flex
 - fpc
@@ -18,7 +16,6 @@ missing =::
 - glojure
 - java
 - lein
-- pandoc
 - raku
 
 defn show-missing():
@@ -55,10 +52,10 @@ defn show-versions():
               format "* %-13s - %s": file url
             say: phrase
             new =: bash(url:cmd).out:lines:highest
-              .replace(/^(?:v|bun-v|OTP-)/)
-              .replace(/(?:\.ROLLING)$/)
-            if new != ver:
-              conj files: +[file ver new url]
+            if new:
+              if new != ver:
+                conj files: +[file ver new url]
+                else: files
               else: files
           else: files
 
@@ -81,16 +78,11 @@ defn cmd(url): |
       --tags \
       $url | \
     cut -d/ -f3 | \
-    grep -E '^(bun-v|[a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
+    grep -E '^(Cabal-v|pandoc-cli-|bun-v|[a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$' | \
+    sed -E 's/^(Cabal-v|pandoc-cli-|bun-v|OTP-|[a-z]+-?)//; s/\.ROLLING$//' | \
+    sort -V
 #    grep -E '^(v|go)?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$'
 
 defn highest(list):
-  list .=: map(\(_.replace(/^([a-z]+-?)/)))
-  last:
-    sort-by _ list:
-      fn(v):
-        reduce _ "" v.split(/[-.]/):
-          fn(w s):
-            if s =~ /^\d+$/: +
-              "$w-$(format('%05d' s:I))"
-              "$w-$s"
+  list .=: filter(\(_))
+  last: list

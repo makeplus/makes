@@ -1,5 +1,5 @@
-GNAT-VERSION ?= 16.0.1-20260502
-GNAT-TAG ?= gnat-16.0.1-snapshot
+GNAT-VERSION ?= 16.1.0-rc2
+GNAT-TAG ?= gnat-16.1.0-rc2
 # https://github.com/alire-project/GNAT-FSF-builds
 
 ifndef GNAT-LOADED

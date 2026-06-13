@@ -1,4 +1,4 @@
-LEIN-VERSION ?= 2.12.0
+LEIN-VERSION ?= 2.13.0
 # https://codeberg.org/leiningen/leiningen/tags
 
 ifndef LEIN-LOADED
