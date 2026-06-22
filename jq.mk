@@ -1,4 +1,4 @@
-JQ-VERSION ?= 1.8.1
+JQ-VERSION ?= 1.8.2
 # https://github.com/jqlang/jq
 
 ifndef JQ-LOADED
