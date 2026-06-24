@@ -17,6 +17,8 @@ ifdef IS-LINUX
 BUILD-OS := linux
 else ifdef IS-MACOS
 BUILD-OS := macosx
+else ifdef IS-WINDOWS
+BUILD-OS := mingw
 else
 $(error Can't build lua on this OS)
 endif

@@ -15,6 +15,8 @@ OA1-macos-arm64 := mac/aarch64
 OA2-macos-arm64 := macaarch64
 OA1-macos-int64 := mac/x64
 OA2-macos-int64 := mac64
+OA1-windows-int64 := winnt/x64
+OA2-windows-int64 := win64
 
 JULIA-DIR := julia-$(JULIA-VERSION)
 JULIA-TAR := $(JULIA-DIR)-$(OA2-$(OS-ARCH)).tar.gz
@@ -27,7 +29,11 @@ JULIA-BIN := $(JULIA-LOCAL)/bin
 override PATH := $(JULIA-BIN):$(PATH)
 export PATH
 
+ifeq ($(OS-NAME),windows)
+JULIA := $(JULIA-BIN)/julia.exe
+else
 JULIA := $(JULIA-BIN)/julia
+endif
 
 SHELL-DEPS += $(JULIA)
 
