@@ -2,10 +2,10 @@
 
 source test/init slow
 
-# Free Pascal 3.2.2 does not publish the zip-based Win64 package that fpc.mk
-# installs on Unix-like platforms.
-if [[ $OSTYPE == msys* || $OSTYPE == cygwin* ]]; then
-  pass "Skipping fpc.t on Windows"
+# Free Pascal 3.2.2 publishes macOS as a DMG and Windows as an EXE, while
+# fpc.mk currently installs only the Unix tar layout.
+if [[ $OSTYPE == darwin* || $OSTYPE == msys* || $OSTYPE == cygwin* ]]; then
+  pass "Skipping fpc.t on this platform"
   done-testing
   exit 0
 fi
