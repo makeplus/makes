@@ -48,6 +48,9 @@ $(CLEAN-TARGETS):
 version-check:
 	util/check-versions
 
+version-update:
+	$Q $(MAKE) --no-pr -f makefile.mk shell WITH=ys CMD='util/version-update'
+
 remote ?= origin
 git-push:
 	$(eval HTTPS-URL := $(shell git remote get-url $(remote)))

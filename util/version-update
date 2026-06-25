@@ -1,0 +1,43 @@
+#!/usr/bin/env ys-0
+
+defn main():
+  output =: bash-out('make version-check')
+  print: output
+  when-not output.ends?("\n"):
+    say:
+  updates =: parse-updates(output)
+  if updates.# > 0:
+    then:
+      each update updates:
+        apply-update: update
+      say: "Updated $(updates.#) version(s)."
+    else:
+      say: 'All versions already up to date.'
+
+defn parse-updates(output):
+  output:lines
+    .keep(\(parse-update(_)))
+
+defn parse-update(line):
+  match =: line =~ /^(\S+\.mk)\s+(\S+)\s+->\s+(\S+)\s+/
+  when match:
+    +[match.1 match.2 match.3]
+
+defn apply-update([file old new]):
+  text =: read(file)
+  updated =:
+    text:lines
+      .map(\(update-line(_ old new)))
+      .join("\n")
+  write file: "$updated\n"
+  say: "$file: $old -> $new"
+
+defn update-line(line old new):
+  match =:
+    line =~ /^([A-Z][A-Z0-9-]*-VERSION\s+\?=\s+)(\S+)(.*)$/
+  if match:
+    then:
+      if match.2 == old:
+        then: "$(match.1)$new$(match.3)"
+        else: line
+    else: line
