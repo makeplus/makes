@@ -6,7 +6,7 @@ out=$(
   make --no-pr babashka-test CMD='which bb; bb --version'
 )
 
-has "$out" "$ROOT/local/bin/bb" "Found bb in local/bin"
+has "$out" "$ROOT/local/babashka-" "Found bb in local/babashka"
 
 has "$out" "v1." "Found babashka version"
 

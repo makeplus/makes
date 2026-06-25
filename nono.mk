@@ -7,8 +7,12 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 ifdef IS-MACOS
-include $(MAKES)/system.mk
-$(eval $(call system-require,nono))
+NONO := $(shell command -v nono)
+ifeq (,$(NONO))
+NONO := $(LOCAL-CACHE)/system/nono
+$(NONO):
+	$(error nono is not installed.   brew install nono)
+endif
 
 else
 # Linux: download prebuilt binary

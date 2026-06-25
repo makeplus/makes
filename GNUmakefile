@@ -4,10 +4,7 @@ include $M/init.mk
 export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $M/bpan.mk
-include $M/claude.mk
 include $M/clean.mk
-
-CLAUDE-MODE := full
 
 TARGETS := $(wildcard *.mk)
 TARGETS := $(TARGETS:%.mk=%)
@@ -37,8 +34,6 @@ v ?=
 t ?= test/*.t test/*/*.t
 
 
-claude: claude-nono
-
 test: $(BPAN)
 	prove -r$(if $(v), -v,) $t
 
@@ -52,9 +47,6 @@ $(CLEAN-TARGETS):
 
 version-check:
 	util/check-versions
-
-version-update: $(CLAUDE-READY)
-	$(CLAUDE-RUN) "$$(< .claude/skills/version-update/SKILL.md)"
 
 remote ?= origin
 git-push:
