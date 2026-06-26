@@ -2,9 +2,7 @@
 
 defn main():
   output =: bash-out('make version-check')
-  print: output
-  when-not output.ends?("\n"):
-    say:
+  say: output:chomp
   updates =: parse-updates(output)
   if updates.# > 0:
     then:
@@ -24,20 +22,19 @@ defn parse-update(line):
     +[match.1 match.2 match.3]
 
 defn apply-update([file old new]):
-  text =: read(file)
+  content =: read(file)
   updated =:
-    text:lines
+    content:lines
       .map(\(update-line(_ old new)))
-      .join("\n")
-  write file: "$updated\n"
+      .text()
+  write file: updated
   say: "$file: $old -> $new"
 
 defn update-line(line old new):
   match =:
     line =~ /^([A-Z][A-Z0-9-]*-VERSION\s+\?=\s+)(\S+)(.*)$/
   if match:
-    then:
-      if match.2 == old:
-        then: "$(match.1)$new$(match.3)"
-        else: line
+    if match.2 == old: +
+      "$(match.1)$new$(match.3)"
+      line
     else: line

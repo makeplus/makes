@@ -41,7 +41,6 @@ defn show-versions():
     .remove(\(_.replace(/\.mk/).in?(missing)))
 
   files =:
-    # reduce _ [] ['go.mk']:
     reduce _ [] files:
       fn(files file):
         _ ver url =:
@@ -81,8 +80,6 @@ defn cmd(url): |
     grep -E '^(Cabal-v|pandoc-cli-|bun-v|[a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$' | \
     sed -E 's/^(Cabal-v|pandoc-cli-|bun-v|OTP-|[a-z]+-?)//; s/\.ROLLING$//' | \
     sort -V
-#    grep -E '^(v|go)?[0-9]+\.[0-9]+\.[0-9]+(-[-.0-9a-zA-Z]+)?$'
 
 defn highest(list):
-  list .=: filter(\(_))
-  last: list
+  list.filter(\(_)).$
