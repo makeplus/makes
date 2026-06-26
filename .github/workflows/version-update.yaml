@@ -2,7 +2,7 @@ name: Version Update
 
 on:
   schedule:
-  - cron: 0 6,7 * * *
+  - cron: 0 4 * * *
   workflow_dispatch:
 
 permissions:
@@ -13,23 +13,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check 2am Eastern
-      id: eastern
-      if: github.event_name == 'schedule'
-      run: |
-        if [[ $(TZ=America/New_York date +%H) != 02 ]]; then
-          echo 'Not 2am Eastern; skipping.'
-          echo 'run=false' >> $GITHUB_OUTPUT
-        else
-          echo 'run=true' >> $GITHUB_OUTPUT
-        fi
-
     - name: Checkout code
-      if: github.event_name != 'schedule' || steps.eastern.outputs.run == 'true'
       uses: actions/checkout@v4
 
     - name: Cache local dependencies
-      if: github.event_name != 'schedule' || steps.eastern.outputs.run == 'true'
       uses: actions/cache@v4
       with:
         path: local/
@@ -37,17 +24,14 @@ jobs:
         restore-keys: ${{ runner.os }}-makes-local-
 
     - name: Configure git
-      if: github.event_name != 'schedule' || steps.eastern.outputs.run == 'true'
       run: |
         git config user.name 'github-actions[bot]'
         git config user.email 'github-actions[bot]@users.noreply.github.com'
 
     - name: Update versions
-      if: github.event_name != 'schedule' || steps.eastern.outputs.run == 'true'
       run: make version-update
 
     - name: Commit and push changes
-      if: github.event_name != 'schedule' || steps.eastern.outputs.run == 'true'
       run: |
         if git diff --quiet; then
           echo 'All versions already up to date'
