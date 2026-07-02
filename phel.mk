@@ -1,4 +1,4 @@
-PHEL-VERSION ?= 0.46.0
+PHEL-VERSION ?= 0.47.0
 # https://github.com/phel-lang/phel-lang
 
 ifndef PHEL-LOADED
