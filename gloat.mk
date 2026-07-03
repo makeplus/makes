@@ -1,4 +1,4 @@
-GLOAT-VERSION ?= 0.1.55
+GLOAT-VERSION ?= 0.1.56
 # https://github.com/gloathub/gloat
 
 ifndef GLOAT-LOADED
