@@ -19,12 +19,25 @@ main() {
 
   local makes_cache=${BASH_SOURCE[0]%/*}/makes-cache
 
-  MAKES_CACHE_NAME=$name \
-  MAKES_CACHE_DEPS=_ \
-  "$makes_cache" "$target" \
-    curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors -o "$target" "$url"
+  # Retry in the shell: curl's --retry misses some transient errors
+  # (HTTP/2 stream resets) and --retry-all-errors needs curl 7.71+,
+  # newer than ubuntu:20.04 build containers have.
+  local try
+  for try in 1 2 3 4 5; do
+    if MAKES_CACHE_NAME=$name \
+       MAKES_CACHE_DEPS=_ \
+       "$makes_cache" "$target" \
+         curl -fsSL -o "$target" "$url"; then
+      cat "$target"
+      return 0
+    fi
+    if [[ $try -lt 5 ]]; then
+      echo "curl+ failed to fetch '$url' (try $try of 5); retrying" >&2
+      sleep 3
+    fi
+  done
 
-  cat "$target"
+  die "curl+ failed to fetch '$url' after 5 tries"
 }
 
 main "$@"
