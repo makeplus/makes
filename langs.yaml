@@ -220,6 +220,67 @@ Batch Script:
     package: source repository
     publish: git tag or source archive
     auth: git host credentials
+C:
+  desc: >
+    C is a small, portable systems programming language that remains central to
+    operating systems, embedded software, language runtimes, and performance
+    sensitive libraries. Its explicit memory model and close mapping to machine
+    behavior make it a foundational language for understanding native code.
+  slug: gcc
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source archive
+    publish: git tag or source archive
+    auth: git host credentials
+C#:
+  desc: >
+    C# is a modern, statically typed language in the .NET ecosystem. It is used
+    for web services, desktop applications, games, cloud systems, and tooling,
+    with strong libraries and mature cross-platform runtime support.
+  slug: dotnet
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: NuGet
+    site: https://www.nuget.org/
+    package: .csproj or .nuspec
+    publish: dotnet nuget push
+    auth: NuGet API key
+C++:
+  desc: >
+    C++ extends C-style systems programming with abstraction mechanisms,
+    generic programming, and a large standard library. It is widely used where
+    performance, resource control, and native interoperability are important.
+  slug: gcc
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source archive
+    publish: git tag or source archive
+    auth: git host credentials
 Cairo:
   desc: >
     Cairo is a language for writing provable programs, best known from the
@@ -1642,6 +1703,48 @@ Vim script:
     package: plugin files
     publish: upload to vim.org or git tag
     auth: vim.org account or git credentials
+Visual Basic:
+  desc: >
+    Visual Basic is a .NET language with a long history in business and desktop
+    application development. Modern Visual Basic runs on the .NET SDK and
+    emphasizes readable syntax, framework integration, and rapid application
+    development.
+  slug: dotnet
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: NuGet
+    site: https://www.nuget.org/
+    package: .vbproj or .nuspec
+    publish: dotnet nuget push
+    auth: NuGet API key
+WebAssembly:
+  desc: >
+    WebAssembly is a portable binary instruction format for running code in
+    browsers, servers, and embedded runtimes. It is designed as a compilation
+    target with a small virtual instruction set, sandboxed execution, and
+    growing support through WASI.
+  slug: webassembly
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: false
+  exer: true
+  ship:
+    registry: OCI/npm/varies
+    site: varies
+    package: .wasm module or component
+    publish: package registry or source archive
+    auth: registry or git host credentials
 Wren:
   desc: >
     Wren is a small class-based scripting language designed for embedding in
