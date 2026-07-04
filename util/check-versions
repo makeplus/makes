@@ -13,9 +13,9 @@ missing =::
 - gcc
 - gnat
 - graalvm
-- glojure
 - java
 - lein
+- ocaml
 - raku
 
 defn show-missing():

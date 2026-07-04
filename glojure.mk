@@ -1,5 +1,4 @@
-GLOJURE-VERSION ?= 0.6.5-rc28
-# https://github.com/gloathub/glojure
+GLOJURE-VERSION ?= 0.6.7
 
 ifndef GLOJURE-LOADED
 GLOJURE-LOADED := true
@@ -11,11 +10,11 @@ OA-linux-int64 := linux_amd64
 OA-macos-arm64 := darwin_arm64
 
 ifeq (,$(OA-$(OS-ARCH)))
-$(error 'glojure' has no prebuilt binary for $(OS-ARCH); see https://github.com/gloathub/glojure)
+$(error 'glojure' has no prebuilt binary for $(OS-ARCH); see https://github.com/glojurelang/glojure)
 endif
 
 GLOJURE-TAR := glj-$(GLOJURE-VERSION)-$(OA-$(OS-ARCH)).tar.gz
-GLOJURE-DOWN := https://github.com/gloathub/glojure
+GLOJURE-DOWN := https://github.com/glojurelang/glojure
 GLOJURE-DOWN := $(GLOJURE-DOWN)/releases/download/v$(GLOJURE-VERSION)/$(GLOJURE-TAR)
 
 GLOJURE-LOCAL := $(LOCAL-ROOT)/glojure-$(GLOJURE-VERSION)

@@ -1,6 +1,30 @@
+# Name:
+#   desc: >
+#     Language description. 1-3 sentences.
+#   slug: Lower case word that is name of .mk file
+#   makes: Has a .mk file here
+#   fast: Can install from prebuilt binary
+#   linux: Supports Linux
+#   macos: Supports macOS
+#   win: Support Windows
+#   ffi: Supports FFI for linking to shared libraries. .so, .dylib, .dll
+#   json: Supports reading and writing JSON
+#   exer: Is a language on exercism.org
+#   ship: # Info about publishing libraries for the language
+#     registry:
+#     site:
+#     package:
+#     publish:
+#     auth:
+
 8th:
+  desc: >
+    8th is a compact concatenative language in the Forth family with a
+    commercial, batteries-included runtime. It emphasizes small deployments,
+    cross-platform binaries, and embeddable scripting.
   slug: 8th
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -14,8 +38,14 @@
     publish: git tag or source archive
     auth: git host credentials
 ABAP:
+  desc: >
+    ABAP is SAP's long-lived business application language, deeply tied to ERP
+    systems and enterprise workflows. It is unusual among mainstream languages
+    because the primary development target is often a live SAP system rather
+    than a local compiler.
   slug: abap
   makes: false
+  fast: false
   linux: true
   macos: false
   win: true
@@ -29,8 +59,14 @@ ABAP:
     publish: push abapGit repository
     auth: SAP system and git credentials
 Ada:
-  slug: ada
+  desc: >
+    Ada was designed for large, safety-critical systems where readability,
+    strong typing, and compile-time checks matter. It remains important in
+    aerospace, defense, rail, and other domains where correctness requirements
+    are explicit.
+  slug: gnat
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -44,8 +80,13 @@ Ada:
     publish: alr publish
     auth: GitHub PAT for alire-index PR
 ARM64 Assembly:
+  desc: >
+    ARM64 Assembly exposes the instruction set used by modern phones, Apple
+    Silicon Macs, and many servers. It is close to the hardware and useful for
+    learning calling conventions, registers, and machine-level performance.
   slug: arm64-assembly
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -59,8 +100,13 @@ ARM64 Assembly:
     publish: git tag or source archive
     auth: git host credentials
 Arturo:
+  desc: >
+    Arturo is a small, expressive language influenced by Rebol, Forth, and
+    functional scripting. It focuses on readable code, flexible data handling,
+    and a friendly command-line experience.
   slug: arturo
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -74,8 +120,13 @@ Arturo:
     publish: GitHub PR to arturo-lang/pkgr.art
     auth: GitHub account
 AWK:
+  desc: >
+    AWK is a text-processing language built around pattern-action rules. It is
+    tiny, ubiquitous on Unix-like systems, and still excellent for quick
+    structured transformations of line-oriented data.
   slug: awk
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -89,8 +140,13 @@ AWK:
     publish: git tag or source archive
     auth: git host credentials
 Babashka:
+  desc: >
+    Babashka brings fast-starting Clojure scripting to the command line through
+    a native executable. It is popular for build scripts, automation, and small
+    tools that benefit from Clojure syntax without JVM startup cost.
   slug: babashka
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -104,8 +160,14 @@ Babashka:
     publish: clj deploy or lein deploy clojars
     auth: Clojars deploy token
 Ballerina:
+  desc: >
+    Ballerina is designed for network services and integration-heavy
+    applications. Its syntax and standard library make concepts like APIs, data
+    formats, concurrency, and service boundaries first-class.
   slug: ballerina
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -119,8 +181,13 @@ Ballerina:
     publish: bal push
     auth: Ballerina Central access token
 Bash:
+  desc: >
+    Bash is the standard interactive shell and scripting language on many
+    Unix-like systems. It is strongest for process orchestration, pipes,
+    environment management, and glue code around existing tools.
   slug: bash
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -134,8 +201,13 @@ Bash:
     publish: git tag or source archive
     auth: git host credentials
 Batch Script:
+  desc: >
+    Batch Script is the traditional Windows command interpreter language. It is
+    limited but still useful for simple automation in environments where
+    cmd.exe is always available.
   slug: batch
   makes: false
+  fast: false
   linux: false
   macos: false
   win: true
@@ -149,8 +221,13 @@ Batch Script:
     publish: git tag or source archive
     auth: git host credentials
 Cairo:
+  desc: >
+    Cairo is a language for writing provable programs, best known from the
+    Starknet ecosystem. It is built around execution traces and proofs rather
+    than conventional native execution alone.
   slug: cairo
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -164,8 +241,14 @@ Cairo:
     publish: scarb publish
     auth: SCARB_REGISTRY_AUTH_TOKEN
 CFML:
+  desc: >
+    CFML, originally ColdFusion Markup Language, is a web-focused dynamic
+    language with tag and script syntaxes. It has a long history in
+    server-rendered applications and rapid database-backed web development.
   slug: cfml
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -179,8 +262,14 @@ CFML:
     publish: box publish
     auth: ForgeBox API token
 Clojure:
+  desc: >
+    Clojure is a modern Lisp on the JVM with immutable data structures and
+    strong support for interactive development. Its emphasis on data,
+    functions, and simplicity makes it popular for robust backend systems.
   slug: clojure
   makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -194,8 +283,14 @@ Clojure:
     publish: clj deploy or lein deploy clojars
     auth: Clojars deploy token
 COBOL:
+  desc: >
+    COBOL is a business programming language created for readable
+    data-processing programs. It remains important because many banking,
+    insurance, and government systems still run large COBOL codebases.
   slug: cobol
-  makes: false
+  makes: true
+  fast: false
+  uses: gcc
   linux: true
   macos: true
   win: true
@@ -209,8 +304,14 @@ COBOL:
     publish: git tag or source archive
     auth: git host credentials
 CoffeeScript:
+  desc: >
+    CoffeeScript compiles to JavaScript and was influential in popularizing
+    cleaner syntax ideas later adopted by JavaScript itself. It favors
+    significant whitespace, concise functions, and readable object literals.
   slug: coffeescript
-  makes: false
+  makes: true
+  fast: true
+  uses: node
   linux: true
   macos: true
   win: true
@@ -224,8 +325,13 @@ CoffeeScript:
     publish: npm publish
     auth: npm token or trusted publishing OIDC
 Common Lisp:
-  slug: common-lisp
-  makes: false
+  desc: >
+    Common Lisp is a powerful multi-paradigm Lisp with macros, interactive
+    development, and a standardized core. Implementations like SBCL provide
+    high-performance native compilation while preserving a dynamic workflow.
+  slug: sbcl
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -239,8 +345,13 @@ Common Lisp:
     publish: GitHub PR or request to Quicklisp dist
     auth: GitHub/email maintainer flow
 Crystal:
+  desc: >
+    Crystal combines Ruby-like syntax with static typing and native
+    compilation. It aims to keep scripting-language ergonomics while producing
+    efficient standalone binaries.
   slug: crystal
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -254,8 +365,14 @@ Crystal:
     publish: git tag and catalog indexing
     auth: git host credentials
 D:
+  desc: >
+    D is a systems programming language that mixes C-like performance with
+    modern features such as templates, slices, and garbage collection options.
+    It is often used where native speed and expressive metaprogramming are both
+    useful.
   slug: d
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -269,8 +386,13 @@ D:
     publish: dub publish or registry submit
     auth: DUB registry account/GitHub
 Dart:
+  desc: >
+    Dart is a class-based language best known as the language of Flutter. It
+    supports both ahead-of-time and just-in-time compilation, making it useful
+    for mobile, web, server, and tooling workflows.
   slug: dart
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -284,8 +406,14 @@ Dart:
     publish: dart pub publish
     auth: Google OAuth2 account
 Delphi Pascal:
-  slug: delphi-pascal
+  desc: >
+    Delphi Pascal is an Object Pascal dialect associated with rapid native
+    application development. It is known for strong GUI tooling, readable
+    syntax, and a long-lived ecosystem for desktop and business software.
+  slug: delphi
   makes: true
+  fast: true
+  uses: fpc
   linux: true
   macos: true
   win: true
@@ -299,8 +427,14 @@ Delphi Pascal:
     publish: submit package to GetIt or OPM repository
     auth: vendor/repository maintainer account
 Elixir:
+  desc: >
+    Elixir runs on the Erlang VM and brings a Ruby-influenced syntax to
+    fault-tolerant concurrent systems. It is especially strong for distributed
+    services, real-time web applications, and actor-style processes.
   slug: elixir
   makes: true
+  fast: false
+  uses: erlang
   linux: true
   macos: true
   win: true
@@ -314,8 +448,13 @@ Elixir:
     publish: mix hex.publish
     auth: Hex API key/OAuth token
 Elm:
+  desc: >
+    Elm is a purely functional language for front-end web applications. Its
+    type system, architecture, and friendly compiler messages are designed to
+    eliminate many common runtime errors.
   slug: elm
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -329,8 +468,13 @@ Elm:
     publish: elm publish
     auth: Elm/GitHub package verification
 Emacs Lisp:
+  desc: >
+    Emacs Lisp is the extension language of Emacs and one of the most widely
+    deployed Lisp dialects. It is tightly connected to interactive editor
+    customization, packages, and live development.
   slug: emacs-lisp
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -344,8 +488,13 @@ Emacs Lisp:
     publish: GitHub PR to archive recipe
     auth: GitHub or GNU ELPA maintainer account
 Erlang:
+  desc: >
+    Erlang was built for highly available telecom systems and is centered on
+    lightweight processes and message passing. Its runtime supports hot
+    upgrades, supervision trees, and resilient distributed systems.
   slug: erlang
   makes: true
+  fast: false
   linux: true
   macos: true
   win: true
@@ -359,8 +508,13 @@ Erlang:
     publish: rebar3 hex publish
     auth: Hex API key
 Euphoria:
+  desc: >
+    Euphoria is a simple interpreted language with a focus on approachability
+    and fast development. It uses a small set of flexible data types and can
+    translate programs to C for standalone executables.
   slug: euphoria
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -374,8 +528,14 @@ Euphoria:
     publish: git tag or source archive
     auth: git host credentials
 F#:
+  desc: >
+    F# is a functional-first .NET language that also supports object-oriented
+    and imperative programming. It is strong for domain modeling, data
+    transformation, and applications that benefit from .NET interoperability.
   slug: fsharp
   makes: true
+  fast: true
+  uses: dotnet
   linux: true
   macos: true
   win: true
@@ -389,8 +549,13 @@ F#:
     publish: dotnet nuget push
     auth: NuGet API key or trusted publishing OIDC
 Factor:
+  desc: >
+    Factor is a concatenative language where programs are composed by chaining
+    words that manipulate a stack. It includes an unusually rich interactive
+    environment, optimizing compiler, and extensive standard library.
   slug: factor
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -404,8 +569,13 @@ Factor:
     publish: git tag or contribute vocabulary to Factor repository
     auth: git host credentials
 Fortran:
+  desc: >
+    Fortran is one of the oldest high-level languages still in active use. It
+    remains central in scientific computing, numerical simulation, and
+    high-performance array-oriented code.
   slug: fortran
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -419,8 +589,13 @@ Fortran:
     publish: fpm publish
     auth: registry/GitHub account
 Free Pascal:
-  slug: free-pascal
+  desc: >
+    Free Pascal is an open-source Pascal compiler compatible with multiple
+    Pascal dialects. It targets many platforms and is often paired with Lazarus
+    for cross-platform GUI applications.
+  slug: fpc
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -434,8 +609,13 @@ Free Pascal:
     publish: submit package to repository
     auth: repository maintainer account
 Futhark:
+  desc: >
+    Futhark is a functional array language designed for high-performance
+    parallel code. It can compile numerical programs to GPU-oriented backends
+    while keeping a compact, ML-like source language.
   slug: futhark
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -449,8 +629,13 @@ Futhark:
     publish: git tag or source archive
     auth: git host credentials
 Gleam:
+  desc: >
+    Gleam is a statically typed functional language for the Erlang ecosystem.
+    It offers friendly syntax and type checking while compiling to Erlang or
+    JavaScript.
   slug: gleam
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -464,8 +649,13 @@ Gleam:
     publish: gleam publish
     auth: Hex OAuth/API token
 Glojure:
+  desc: >
+    Glojure is a Clojure dialect implemented for the Go ecosystem. It explores
+    Lisp-style data and functional programming while integrating with Go
+    tooling and deployment patterns.
   slug: glojure
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -479,8 +669,13 @@ Glojure:
     publish: git tag module version
     auth: git host credentials
 Go:
+  desc: >
+    Go is a small, compiled language designed for simple concurrency and
+    maintainable systems programming. Its fast compiler, standard formatting,
+    and static binaries make it popular for infrastructure software.
   slug: go
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -494,8 +689,14 @@ Go:
     publish: git tag module version
     auth: git host credentials
 Groovy:
+  desc: >
+    Groovy is a dynamic JVM language with concise syntax and strong Java
+    interoperability. It is widely used for build logic, scripting, testing,
+    and Gradle-based automation.
   slug: groovy
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -509,8 +710,13 @@ Groovy:
     publish: gradle publish or mvn deploy
     auth: Sonatype Central token
 Haskell:
-  slug: haskell
+  desc: >
+    Haskell is a lazy, purely functional language with a powerful static type
+    system. It is influential in language research and practical domains that
+    benefit from strong abstraction and correctness guarantees.
+  slug: ghc
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -524,8 +730,14 @@ Haskell:
     publish: cabal upload
     auth: Hackage account/API token
 Hy:
+  desc: >
+    Hy is a Lisp that compiles to Python abstract syntax trees. It lets Python
+    programmers use macros and Lisp syntax while keeping access to Python
+    libraries and runtime behavior.
   slug: hy
   makes: true
+  fast: true
+  uses: python
   linux: true
   macos: true
   win: true
@@ -539,8 +751,13 @@ Hy:
     publish: python -m twine upload
     auth: PyPI API token or trusted publishing OIDC
 Idris:
+  desc: >
+    Idris is a dependently typed functional language where types can express
+    detailed program properties. It is often used to explore proofs, totality,
+    and advanced type-driven development.
   slug: idris
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -554,8 +771,13 @@ Idris:
     publish: GitHub PR to package collection
     auth: GitHub account
 Janet:
+  desc: >
+    Janet is a small Lisp-like language designed for embedding, scripting, and
+    systems glue. It has lightweight concurrency, a compact runtime, and a
+    practical standard library.
   slug: janet
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -569,8 +791,13 @@ Janet:
     publish: git tag or jpm installable repository
     auth: git host credentials
 Java:
+  desc: >
+    Java is a class-based language and platform built around portable bytecode
+    and a mature virtual machine. It remains a major choice for enterprise
+    systems, Android heritage, and large backend services.
   slug: java
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -583,9 +810,34 @@ Java:
     package: pom.xml or build.gradle
     publish: mvn deploy or gradle publish
     auth: Sonatype Central token
+JavaScript:
+  desc: >
+    JavaScript is the language of the web and a widely used general-purpose
+    runtime language through Node.js. Its event-driven model and enormous
+    package ecosystem make it common for front-end, back-end, and tooling work.
+  slug: node
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: npm
+    site: https://www.npmjs.com/
+    package: package.json
+    publish: npm publish
+    auth: npm access token
 jq:
+  desc: >
+    jq is a small functional language for querying and transforming JSON
+    streams. It is especially useful in shell pipelines, API tooling, and
+    structured command-line data processing.
   slug: jq
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -599,8 +851,13 @@ jq:
     publish: git tag or source archive
     auth: git host credentials
 Julia:
+  desc: >
+    Julia is a high-level dynamic language designed for numerical and
+    scientific computing. Its multiple dispatch and JIT compiler let users
+    write generic code that can still run close to native speed.
   slug: julia
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -614,8 +871,14 @@ Julia:
     publish: Registrator creates General registry PR
     auth: GitHub account
 Kotlin:
+  desc: >
+    Kotlin is a modern JVM language with null-safety, concise syntax, and
+    strong Java interoperability. It is widely used for Android, backend
+    services, multiplatform projects, and Gradle build logic.
   slug: kotlin
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -629,8 +892,13 @@ Kotlin:
     publish: gradle publish
     auth: Sonatype Central token
 Lean:
+  desc: >
+    Lean is both a functional programming language and an interactive theorem
+    prover. It is used for formal mathematics, verified software, and
+    type-driven programming experiments.
   slug: lean
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -644,8 +912,14 @@ Lean:
     publish: publish release for Reservoir indexing
     auth: GitHub account
 Lisp Flavoured Erlang:
+  desc: >
+    Lisp Flavoured Erlang brings Lisp syntax and macros to the Erlang VM. It
+    keeps access to Erlang's concurrency and fault-tolerance model while
+    offering a more Lisp-like programming style.
   slug: lfe
   makes: false
+  fast: false
+  uses: erlang
   linux: true
   macos: true
   win: true
@@ -659,8 +933,13 @@ Lisp Flavoured Erlang:
     publish: rebar3 hex publish
     auth: Hex API key
 Lua:
+  desc: >
+    Lua is a small embeddable scripting language with a minimal core and
+    flexible tables. It is widely used in games, plugins, configuration, and
+    applications that need a lightweight extension language.
   slug: lua
   makes: true
+  fast: false
   linux: true
   macos: true
   win: true
@@ -674,8 +953,14 @@ Lua:
     publish: luarocks upload
     auth: LuaRocks API key
 MIPS Assembly:
+  desc: >
+    MIPS Assembly is a classic RISC assembly language often used in computer
+    architecture education. Its regular instruction set makes it useful for
+    learning low-level execution, registers, and memory layout.
   slug: mips
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -689,8 +974,14 @@ MIPS Assembly:
     publish: git tag or source archive
     auth: git host credentials
 MoonScript:
+  desc: >
+    MoonScript is a language that compiles to Lua with syntax inspired by
+    CoffeeScript. It adds classes, comprehensions, and concise expressions
+    while preserving access to Lua runtimes.
   slug: moonscript
-  makes: false
+  makes: true
+  fast: true
+  uses: lua
   linux: true
   macos: true
   win: true
@@ -704,8 +995,13 @@ MoonScript:
     publish: luarocks upload
     auth: LuaRocks API key
 Nim:
+  desc: >
+    Nim is a statically typed language with Python-like syntax and native code
+    generation. It combines metaprogramming, optional garbage collection, and C
+    interop for systems and application programming.
   slug: nim
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -719,8 +1015,14 @@ Nim:
     publish: GitHub PR to nim-lang/packages
     auth: GitHub account
 Objective-C:
+  desc: >
+    Objective-C extends C with Smalltalk-style dynamic messaging. It was the
+    primary language for Apple platform development for many years and remains
+    important in older macOS and iOS codebases.
   slug: objective-c
-  makes: false
+  makes: true
+  fast: true
+  uses: clang
   linux: true
   macos: true
   win: true
@@ -734,8 +1036,13 @@ Objective-C:
     publish: pod trunk push
     auth: CocoaPods trunk token
 OCaml:
+  desc: >
+    OCaml is a strict functional language with strong static typing, type
+    inference, and a pragmatic module system. It is used in compilers, theorem
+    proving, finance, and systems where correctness and expressiveness matter.
   slug: ocaml
-  makes: false
+  makes: true
+  fast: false
   linux: true
   macos: true
   win: true
@@ -749,8 +1056,13 @@ OCaml:
     publish: GitHub PR to opam-repository
     auth: GitHub account
 Odin:
+  desc: >
+    Odin is a systems language designed as a modern alternative for
+    data-oriented and game programming. It emphasizes explicit control, simple
+    semantics, and practical native compilation.
   slug: odin
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -764,8 +1076,13 @@ Odin:
     publish: git tag or source archive
     auth: git host credentials
 Perl:
+  desc: >
+    Perl is a flexible scripting language famous for text processing, regular
+    expressions, and CPAN. It has powered system administration, web
+    applications, and glue code for decades.
   slug: perl
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -779,8 +1096,13 @@ Perl:
     publish: upload to PAUSE
     auth: PAUSE account
 Pharo:
+  desc: >
+    Pharo is a modern Smalltalk environment centered on live objects and
+    image-based development. Its interactive tooling makes the boundary between
+    programming, debugging, and inspecting unusually fluid.
   slug: pharo
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -794,8 +1116,14 @@ Pharo:
     publish: git tag repository baseline
     auth: git host credentials
 Phel:
+  desc: >
+    Phel is a Lisp dialect that runs on PHP. It brings immutable data, macros,
+    and functional programming ideas to the PHP ecosystem while compiling into
+    PHP-compatible code.
   slug: phel
   makes: true
+  fast: true
+  uses: php
   linux: true
   macos: true
   win: true
@@ -809,8 +1137,13 @@ Phel:
     publish: publish git repository to Packagist
     auth: Packagist account/token
 PHP:
+  desc: >
+    PHP is a dynamic language built for server-side web development. It powers
+    a large share of the web and has evolved into a modern language with strong
+    package tooling and broad hosting support.
   slug: php
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -824,8 +1157,13 @@ PHP:
     publish: publish git repository to Packagist
     auth: Packagist account/token
 PowerShell:
+  desc: >
+    PowerShell is a shell and scripting language built around structured
+    objects rather than plain text streams. It is deeply integrated with
+    Windows administration and is also available cross-platform.
   slug: powershell
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -839,8 +1177,13 @@ PowerShell:
     publish: Publish-Module
     auth: PowerShell Gallery API key
 Prolog:
+  desc: >
+    Prolog is a logic programming language where programs are expressed as
+    facts, rules, and queries. It is well suited to symbolic reasoning, search
+    problems, parsers, and constraint-style thinking.
   slug: prolog
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -854,8 +1197,13 @@ Prolog:
     publish: pack_upload or pack_submit
     auth: SWI pack server account
 PureScript:
+  desc: >
+    PureScript is a strongly typed functional language inspired by Haskell that
+    compiles primarily to JavaScript. It is used for front-end and full-stack
+    applications that benefit from precise types and pure functions.
   slug: purescript
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -869,8 +1217,13 @@ PureScript:
     publish: publish docs and register package
     auth: GitHub account
 Pyret:
+  desc: >
+    Pyret is an educational programming language designed around readable
+    syntax, testing, and data-centric programming. It is used to teach
+    programming and programming-language concepts in a friendly environment.
   slug: pyret
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -884,8 +1237,13 @@ Pyret:
     publish: git tag or source archive
     auth: git host credentials
 Python:
+  desc: >
+    Python is a general-purpose dynamic language known for readability and a
+    huge package ecosystem. It is widely used in automation, web development,
+    data science, education, and machine learning.
   slug: python
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -899,8 +1257,13 @@ Python:
     publish: python -m twine upload
     auth: PyPI API token or trusted publishing OIDC
 R:
+  desc: >
+    R is a language and environment for statistics, visualization, and data
+    analysis. Its package ecosystem and interactive workflow make it central in
+    academia, data science, and statistical computing.
   slug: r
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -914,8 +1277,13 @@ R:
     publish: R CMD build and submit to CRAN
     auth: CRAN maintainer email/web submission
 Racket:
+  desc: >
+    Racket is a Lisp-family language designed for language-oriented
+    programming. It includes excellent tooling for creating domain-specific
+    languages, teaching languages, and experimental programming models.
   slug: racket
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -929,8 +1297,13 @@ Racket:
     publish: add package to catalog
     auth: Racket package catalog account
 Raku:
+  desc: >
+    Raku is a highly expressive language descended from the Perl 6 project. It
+    features grammars, gradual typing, concurrency constructs, and a rich set
+    of operators and data abstractions.
   slug: raku
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -944,8 +1317,14 @@ Raku:
     publish: fez upload
     auth: fez account/API token
 ReasonML:
+  desc: >
+    ReasonML gives OCaml a JavaScript-like syntax while preserving OCaml's type
+    system and functional core. It was designed to make ML-family programming
+    more approachable to web developers.
   slug: reasonml
-  makes: false
+  makes: true
+  fast: true
+  uses: node
   linux: true
   macos: true
   win: true
@@ -959,8 +1338,13 @@ ReasonML:
     publish: npm publish or opam PR
     auth: npm token or GitHub account
 Red:
+  desc: >
+    Red is a compact language inspired by Rebol with both high-level scripting
+    and lower-level systems ambitions. It aims for small self-contained
+    binaries and a broad range of deployment targets.
   slug: red
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -974,8 +1358,13 @@ Red:
     publish: git tag or source archive
     auth: git host credentials
 Roc:
+  desc: >
+    Roc is a functional language focused on fast, friendly application
+    development with explicit platforms. It separates application logic from
+    host capabilities and emphasizes predictable performance.
   slug: roc
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -989,8 +1378,13 @@ Roc:
     publish: git tag or source archive
     auth: git host credentials
 Ruby:
+  desc: >
+    Ruby is a dynamic object-oriented language designed for programmer
+    happiness and expressive code. It is best known for Rails but remains
+    useful for scripting, automation, and domain-specific APIs.
   slug: ruby
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1004,8 +1398,13 @@ Ruby:
     publish: gem push
     auth: RubyGems API key or trusted publishing OIDC
 Rust:
+  desc: >
+    Rust is a systems programming language focused on memory safety without
+    garbage collection. Its ownership model, strong tooling, and package
+    ecosystem make it popular for reliable native software.
   slug: rust
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1019,8 +1418,14 @@ Rust:
     publish: cargo publish
     auth: crates.io API token or trusted publishing OIDC
 Scala:
+  desc: >
+    Scala combines object-oriented and functional programming on the JVM. It is
+    known for expressive type abstractions and is used in distributed data
+    systems, backend services, and functional programming communities.
   slug: scala
-  makes: false
+  makes: true
+  fast: true
+  uses: java
   linux: true
   macos: true
   win: true
@@ -1034,8 +1439,14 @@ Scala:
     publish: sbt publishSigned
     auth: Sonatype Central token
 Scheme:
+  desc: >
+    Scheme is a minimalist Lisp dialect with lexical scope and a small, elegant
+    core. It has had major influence in programming language education,
+    interpreters, continuations, and macro systems.
   slug: scheme
-  makes: false
+  makes: true
+  fast: true
+  uses: racket
   linux: true
   macos: true
   win: true
@@ -1049,8 +1460,13 @@ Scheme:
     publish: git tag or Akku package submit
     auth: git host credentials
 SQLite:
+  desc: >
+    SQLite is an embedded SQL database engine that stores a complete database
+    in a single file. Its command language and C library are ubiquitous in
+    applications, devices, browsers, and testing workflows.
   slug: sqlite
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1064,8 +1480,14 @@ SQLite:
     publish: git tag or source archive
     auth: git host credentials
 Standard ML:
+  desc: >
+    Standard ML is a statically typed functional language with a formal
+    definition and a powerful module system. It has influenced many typed
+    functional languages and remains important in compilers and programming
+    language research.
   slug: sml
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1079,8 +1501,13 @@ Standard ML:
     publish: git tag or source archive
     auth: git host credentials
 Swift:
+  desc: >
+    Swift is Apple's modern systems and application language with safety
+    features, generics, and value types. It is used for Apple platforms and
+    increasingly for server-side and cross-platform native development.
   slug: swift
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1094,8 +1521,13 @@ Swift:
     publish: git tag semantic version
     auth: git host credentials
 Tcl:
+  desc: >
+    Tcl is a small embeddable scripting language built around commands and
+    strings. It is often paired with Tk for portable GUIs and is valued for
+    extension, automation, and tool control.
   slug: tcl
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1109,8 +1541,14 @@ Tcl:
     publish: submit to Tcllib or Teapot repository
     auth: repository maintainer account
 TypeScript:
+  desc: >
+    TypeScript adds static typing and modern tooling to JavaScript. It is
+    widely used for large web applications, Node.js services, and libraries
+    where editor feedback and type contracts improve maintainability.
   slug: typescript
   makes: true
+  fast: true
+  uses: node
   linux: true
   macos: true
   win: true
@@ -1124,8 +1562,13 @@ TypeScript:
     publish: npm publish
     auth: npm token or trusted publishing OIDC
 Uiua:
+  desc: >
+    Uiua is a stack-based array language with a distinctive glyph-oriented
+    notation. It emphasizes tacit array transformations and interactive
+    exploration of concise programs.
   slug: uiua
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1139,8 +1582,13 @@ Uiua:
     publish: git tag or source archive
     auth: git host credentials
 Unison:
+  desc: >
+    Unison is a functional language where code is content-addressed rather than
+    tracked primarily by filenames. Its model supports typed distributed
+    programming and refactoring based on semantic identity.
   slug: unison
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1154,8 +1602,13 @@ Unison:
     publish: ucm push to share
     auth: Unison Share account
 V:
-  slug: v
+  desc: >
+    V is a compiled language with Go-like simplicity and ambitions for fast
+    builds and small binaries. It targets systems, apps, and tooling with a
+    compact syntax and self-hosted compiler.
+  slug: vlang
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1169,8 +1622,14 @@ V:
     publish: submit package at vpm.vlang.io/new
     auth: GitHub account
 Vim script:
+  desc: >
+    Vim script is the extension language of Vim. It is specialized for editor
+    automation, configuration, plugins, and manipulating text buffers from
+    inside the editor.
   slug: vimscript
-  makes: false
+  makes: true
+  fast: true
+  uses: nvim
   linux: true
   macos: true
   win: true
@@ -1184,8 +1643,13 @@ Vim script:
     publish: upload to vim.org or git tag
     auth: vim.org account or git credentials
 Wren:
+  desc: >
+    Wren is a small class-based scripting language designed for embedding in
+    applications and games. It has a compact VM, fibers, and a syntax that
+    feels familiar to users of JavaScript or Lua.
   slug: wren
-  makes: false
+  makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1199,8 +1663,13 @@ Wren:
     publish: git tag or source archive
     auth: git host credentials
 x86-64 Assembly:
+  desc: >
+    x86-64 Assembly exposes the machine instructions used by most desktop and
+    server CPUs. It is valuable for learning calling conventions, optimization,
+    reverse engineering, and systems internals.
   slug: x86-64-assembly
   makes: false
+  fast: false
   linux: true
   macos: true
   win: true
@@ -1214,8 +1683,13 @@ x86-64 Assembly:
     publish: git tag or source archive
     auth: git host credentials
 YAMLScript:
+  desc: >
+    YAMLScript is a programming language that uses YAML syntax while compiling
+    through Clojure-based tooling. It aims to make configuration files
+    executable without abandoning structured YAML data.
   slug: yamlscript
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
@@ -1229,8 +1703,13 @@ YAMLScript:
     publish: git tag or publish binding to host language registry
     auth: git host or target registry credentials
 Zig:
+  desc: >
+    Zig is a systems language focused on explicit control, cross-compilation,
+    and replacing parts of the C toolchain. It has no hidden allocator, strong
+    compile-time execution, and excellent native build tooling.
   slug: zig
   makes: true
+  fast: true
   linux: true
   macos: true
   win: true
