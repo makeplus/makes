@@ -22,7 +22,7 @@ main() {
   MAKES_CACHE_NAME=$name \
   MAKES_CACHE_DEPS=_ \
   "$makes_cache" "$target" \
-    curl -fsSL -o "$target" "$url"
+    curl -fsSL --retry 5 --retry-delay 3 --retry-all-errors -o "$target" "$url"
 
   cat "$target"
 }
