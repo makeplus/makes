@@ -41,6 +41,10 @@ else
 FPC := $(FPC-BIN)/fpc
 endif
 
+# A local config so fpc does not depend on ~/.fpc.cfg or /etc/fpc.cfg.
+# Compile with: fpc -n @$(FPC-CFG) ...
+FPC-CFG := $(FPC-LOCAL)/fpc.cfg
+
 SHELL-DEPS += $(FPC)
 
 
@@ -56,6 +60,8 @@ else
 	  printf "$(FPC-LOCAL)\nn\nn\nn\nn\n" | bash install.sh > /dev/null 2>&1
 	$Q rm -rf $(LOCAL-CACHE)/fpc-$(FPC-VERSION).$(FPC-ARCH)
 endif
+	$Q $(FPC-BIN)/fpcmkcfg \
+	  -d basepath=$(FPC-LOCAL)/lib/fpc/$(FPC-VERSION) -o $(FPC-CFG)
 	$Q touch $@
 	@$(ECHO)
 
