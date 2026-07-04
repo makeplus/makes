@@ -34,7 +34,12 @@ $(SWIFT): $(LOCAL-CACHE)/$(SWIFTLY-TAR)
 	$Q cp $(LOCAL-TMP)/swiftly/swiftly $(SWIFTLY)
 	$Q chmod +x $(SWIFTLY)
 	$Q $(SWIFTLY) init --assume-yes --no-modify-profile --skip-install --quiet-shell-followup
-	$Q . $(SWIFTLY-HOME)/env.sh && $(SWIFTLY) install --use $(SWIFT-VERSION)
+	$Q . $(SWIFTLY-HOME)/env.sh && $(SWIFTLY) install --use $(SWIFT-VERSION) \
+	    --post-install-file $(SWIFTLY-HOME)/post-install.sh
+	$Q if [[ -s $(SWIFTLY-HOME)/post-install.sh ]]; then \
+	    echo "NOTE: Some system packages may be missing for Swift."; \
+	    echo "See: $(SWIFTLY-HOME)/post-install.sh"; \
+	fi
 	$Q touch $@
 	@$(ECHO)
 
