@@ -1,0 +1,1245 @@
+8th:
+  slug: 8th
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+ABAP:
+  slug: abap
+  makes: false
+  linux: true
+  macos: false
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: abapGit/source
+    site: https://abapgit.org/
+    package: ABAP package
+    publish: push abapGit repository
+    auth: SAP system and git credentials
+Ada:
+  slug: ada
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Alire
+    site: https://alire.ada.dev/
+    package: alire.toml
+    publish: alr publish
+    auth: GitHub PAT for alire-index PR
+ARM64 Assembly:
+  slug: arm64-assembly
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Arturo:
+  slug: arturo
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: pkgr.art
+    site: https://pkgr.art/
+    package: package repository
+    publish: GitHub PR to arturo-lang/pkgr.art
+    auth: GitHub account
+AWK:
+  slug: awk
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Babashka:
+  slug: babashka
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: Clojars/Maven
+    site: https://clojars.org/
+    package: deps.edn or pom.xml
+    publish: clj deploy or lein deploy clojars
+    auth: Clojars deploy token
+Ballerina:
+  slug: ballerina
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Ballerina Central
+    site: https://central.ballerina.io/
+    package: Ballerina.toml
+    publish: bal push
+    auth: Ballerina Central access token
+Bash:
+  slug: bash
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Batch Script:
+  slug: batch
+  makes: false
+  linux: false
+  macos: false
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Cairo:
+  slug: cairo
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: Scarb registry
+    site: https://scarbs.xyz/
+    package: Scarb.toml
+    publish: scarb publish
+    auth: SCARB_REGISTRY_AUTH_TOKEN
+CFML:
+  slug: cfml
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: ForgeBox
+    site: https://www.forgebox.io/
+    package: box.json
+    publish: box publish
+    auth: ForgeBox API token
+Clojure:
+  slug: clojure
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Clojars/Maven
+    site: https://clojars.org/
+    package: deps.edn or pom.xml
+    publish: clj deploy or lein deploy clojars
+    auth: Clojars deploy token
+COBOL:
+  slug: cobol
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+CoffeeScript:
+  slug: coffeescript
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: npm
+    site: https://www.npmjs.com/
+    package: package.json
+    publish: npm publish
+    auth: npm token or trusted publishing OIDC
+Common Lisp:
+  slug: common-lisp
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Quicklisp
+    site: https://www.quicklisp.org/
+    package: ASDF .asd system
+    publish: GitHub PR or request to Quicklisp dist
+    auth: GitHub/email maintainer flow
+Crystal:
+  slug: crystal
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: git/Shards catalog
+    site: https://shards.info/
+    package: shard.yml
+    publish: git tag and catalog indexing
+    auth: git host credentials
+D:
+  slug: d
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: DUB
+    site: https://code.dlang.org/
+    package: dub.json or dub.sdl
+    publish: dub publish or registry submit
+    auth: DUB registry account/GitHub
+Dart:
+  slug: dart
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: pub.dev
+    site: https://pub.dev/
+    package: pubspec.yaml
+    publish: dart pub publish
+    auth: Google OAuth2 account
+Delphi Pascal:
+  slug: delphi-pascal
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Delphi GetIt/OPM
+    site: https://getitnow.embarcadero.com/
+    package: Delphi package or Lazarus package
+    publish: submit package to GetIt or OPM repository
+    auth: vendor/repository maintainer account
+Elixir:
+  slug: elixir
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Hex.pm
+    site: https://hex.pm/
+    package: mix.exs
+    publish: mix hex.publish
+    auth: Hex API key/OAuth token
+Elm:
+  slug: elm
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Elm package catalog
+    site: https://package.elm-lang.org/
+    package: elm.json
+    publish: elm publish
+    auth: Elm/GitHub package verification
+Emacs Lisp:
+  slug: emacs-lisp
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: MELPA/ELPA
+    site: https://melpa.org/
+    package: package headers or recipe
+    publish: GitHub PR to archive recipe
+    auth: GitHub or GNU ELPA maintainer account
+Erlang:
+  slug: erlang
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Hex.pm
+    site: https://hex.pm/
+    package: rebar.config
+    publish: rebar3 hex publish
+    auth: Hex API key
+Euphoria:
+  slug: euphoria
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+F#:
+  slug: fsharp
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: NuGet
+    site: https://www.nuget.org/
+    package: .fsproj or .nuspec
+    publish: dotnet nuget push
+    auth: NuGet API key or trusted publishing OIDC
+Factor:
+  slug: factor
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: https://factorcode.org/
+    package: vocabulary source tree
+    publish: git tag or contribute vocabulary to Factor repository
+    auth: git host credentials
+Fortran:
+  slug: fortran
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Fortran Package Manager registry
+    site: https://registry-frontend.vercel.app/
+    package: fpm.toml
+    publish: fpm publish
+    auth: registry/GitHub account
+Free Pascal:
+  slug: free-pascal
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Fppkg/OPM
+    site: https://packages.lazarus-ide.org/
+    package: package manifest
+    publish: submit package to repository
+    auth: repository maintainer account
+Futhark:
+  slug: futhark
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Gleam:
+  slug: gleam
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Hex.pm
+    site: https://hex.pm/
+    package: gleam.toml
+    publish: gleam publish
+    auth: Hex OAuth/API token
+Glojure:
+  slug: glojure
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Go modules/source
+    site: https://pkg.go.dev/
+    package: go.mod
+    publish: git tag module version
+    auth: git host credentials
+Go:
+  slug: go
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Go module proxy
+    site: https://pkg.go.dev/
+    package: go.mod
+    publish: git tag module version
+    auth: git host credentials
+Groovy:
+  slug: groovy
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Maven Central
+    site: https://central.sonatype.com/
+    package: pom.xml or build.gradle
+    publish: gradle publish or mvn deploy
+    auth: Sonatype Central token
+Haskell:
+  slug: haskell
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Hackage
+    site: https://hackage.haskell.org/
+    package: .cabal
+    publish: cabal upload
+    auth: Hackage account/API token
+Hy:
+  slug: hy
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: PyPI
+    site: https://pypi.org/
+    package: pyproject.toml
+    publish: python -m twine upload
+    auth: PyPI API token or trusted publishing OIDC
+Idris:
+  slug: idris
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Pack package collection
+    site: https://github.com/stefan-hoeck/idris2-pack-db
+    package: ipkg
+    publish: GitHub PR to package collection
+    auth: GitHub account
+Janet:
+  slug: janet
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: JPM/source
+    site: https://github.com/janet-lang/jpm
+    package: project.janet
+    publish: git tag or jpm installable repository
+    auth: git host credentials
+Java:
+  slug: java
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Maven Central
+    site: https://central.sonatype.com/
+    package: pom.xml or build.gradle
+    publish: mvn deploy or gradle publish
+    auth: Sonatype Central token
+jq:
+  slug: jq
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Julia:
+  slug: julia
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: General registry
+    site: https://github.com/JuliaRegistries/General
+    package: Project.toml
+    publish: Registrator creates General registry PR
+    auth: GitHub account
+Kotlin:
+  slug: kotlin
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Maven Central
+    site: https://central.sonatype.com/
+    package: pom.xml or build.gradle.kts
+    publish: gradle publish
+    auth: Sonatype Central token
+Lean:
+  slug: lean
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Reservoir
+    site: https://reservoir.lean-lang.org/
+    package: lakefile.lean
+    publish: publish release for Reservoir indexing
+    auth: GitHub account
+Lisp Flavoured Erlang:
+  slug: lfe
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Hex.pm
+    site: https://hex.pm/
+    package: rebar.config
+    publish: rebar3 hex publish
+    auth: Hex API key
+Lua:
+  slug: lua
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: LuaRocks
+    site: https://luarocks.org/
+    package: rockspec
+    publish: luarocks upload
+    auth: LuaRocks API key
+MIPS Assembly:
+  slug: mips
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+MoonScript:
+  slug: moonscript
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: LuaRocks
+    site: https://luarocks.org/
+    package: rockspec
+    publish: luarocks upload
+    auth: LuaRocks API key
+Nim:
+  slug: nim
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Nimble package list
+    site: https://github.com/nim-lang/packages
+    package: .nimble
+    publish: GitHub PR to nim-lang/packages
+    auth: GitHub account
+Objective-C:
+  slug: objective-c
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: CocoaPods
+    site: https://cocoapods.org/
+    package: .podspec
+    publish: pod trunk push
+    auth: CocoaPods trunk token
+OCaml:
+  slug: ocaml
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: opam
+    site: https://opam.ocaml.org/
+    package: opam file
+    publish: GitHub PR to opam-repository
+    auth: GitHub account
+Odin:
+  slug: odin
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Perl:
+  slug: perl
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: CPAN
+    site: https://www.cpan.org/
+    package: Makefile.PL or dist.ini
+    publish: upload to PAUSE
+    auth: PAUSE account
+Pharo:
+  slug: pharo
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Metacello/source
+    site: https://github.com/pharo-open-documentation/pharo-wiki
+    package: BaselineOf package
+    publish: git tag repository baseline
+    auth: git host credentials
+Phel:
+  slug: phel
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Packagist
+    site: https://packagist.org/
+    package: composer.json
+    publish: publish git repository to Packagist
+    auth: Packagist account/token
+PHP:
+  slug: php
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Packagist
+    site: https://packagist.org/
+    package: composer.json
+    publish: publish git repository to Packagist
+    auth: Packagist account/token
+PowerShell:
+  slug: powershell
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: PowerShell Gallery
+    site: https://www.powershellgallery.com/
+    package: module manifest .psd1
+    publish: Publish-Module
+    auth: PowerShell Gallery API key
+Prolog:
+  slug: prolog
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: SWI-Prolog pack
+    site: https://www.swi-prolog.org/pack/list
+    package: pack.pl
+    publish: pack_upload or pack_submit
+    auth: SWI pack server account
+PureScript:
+  slug: purescript
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Pursuit/Spago registry
+    site: https://pursuit.purescript.org/
+    package: spago.yaml or packages.dhall
+    publish: publish docs and register package
+    auth: GitHub account
+Pyret:
+  slug: pyret
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Python:
+  slug: python
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: PyPI
+    site: https://pypi.org/
+    package: pyproject.toml
+    publish: python -m twine upload
+    auth: PyPI API token or trusted publishing OIDC
+R:
+  slug: r
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: CRAN
+    site: https://cran.r-project.org/
+    package: DESCRIPTION
+    publish: R CMD build and submit to CRAN
+    auth: CRAN maintainer email/web submission
+Racket:
+  slug: racket
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Racket Package Catalog
+    site: https://pkgs.racket-lang.org/
+    package: info.rkt
+    publish: add package to catalog
+    auth: Racket package catalog account
+Raku:
+  slug: raku
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Raku ecosystem
+    site: https://360.zef.pm/
+    package: META6.json
+    publish: fez upload
+    auth: fez account/API token
+ReasonML:
+  slug: reasonml
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: npm/opam
+    site: https://www.npmjs.com/
+    package: package.json or opam file
+    publish: npm publish or opam PR
+    auth: npm token or GitHub account
+Red:
+  slug: red
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Roc:
+  slug: roc
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Ruby:
+  slug: ruby
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: RubyGems
+    site: https://rubygems.org/
+    package: .gemspec
+    publish: gem push
+    auth: RubyGems API key or trusted publishing OIDC
+Rust:
+  slug: rust
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: crates.io
+    site: https://crates.io/
+    package: Cargo.toml
+    publish: cargo publish
+    auth: crates.io API token or trusted publishing OIDC
+Scala:
+  slug: scala
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Maven Central
+    site: https://central.sonatype.com/
+    package: build.sbt or pom.xml
+    publish: sbt publishSigned
+    auth: Sonatype Central token
+Scheme:
+  slug: scheme
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: source/Akku
+    site: https://akkuscm.org/
+    package: Akku.manifest or source repository
+    publish: git tag or Akku package submit
+    auth: git host credentials
+SQLite:
+  slug: sqlite
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Standard ML:
+  slug: sml
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Swift:
+  slug: swift
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: SwiftPM/source
+    site: https://swiftpackageindex.com/
+    package: Package.swift
+    publish: git tag semantic version
+    auth: git host credentials
+Tcl:
+  slug: tcl
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: Tcllib/Teapot
+    site: https://core.tcl-lang.org/tcllib/
+    package: pkgIndex.tcl or teapot metadata
+    publish: submit to Tcllib or Teapot repository
+    auth: repository maintainer account
+TypeScript:
+  slug: typescript
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: npm
+    site: https://www.npmjs.com/
+    package: package.json
+    publish: npm publish
+    auth: npm token or trusted publishing OIDC
+Uiua:
+  slug: uiua
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+Unison:
+  slug: unison
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: Unison Share
+    site: https://share.unison-lang.org/
+    package: Unison namespace
+    publish: ucm push to share
+    auth: Unison Share account
+V:
+  slug: v
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: VPM
+    site: https://vpm.vlang.io/
+    package: v.mod
+    publish: submit package at vpm.vlang.io/new
+    auth: GitHub account
+Vim script:
+  slug: vimscript
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: vim.org/GitHub
+    site: https://www.vim.org/scripts/
+    package: plugin files
+    publish: upload to vim.org or git tag
+    auth: vim.org account or git credentials
+Wren:
+  slug: wren
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+x86-64 Assembly:
+  slug: x86-64-assembly
+  makes: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+YAMLScript:
+  slug: yamlscript
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: source/GitHub releases
+    site: https://yamlscript.org/
+    package: ys source or binding manifest
+    publish: git tag or publish binding to host language registry
+    auth: git host or target registry credentials
+Zig:
+  slug: zig
+  makes: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: https://ziglang.org/
+    package: build.zig.zon
+    publish: publish source archive URL and hash
+    auth: git host credentials
