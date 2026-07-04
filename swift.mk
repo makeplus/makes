@@ -20,11 +20,16 @@ SHELL-DEPS += $(SWIFT)
 override PATH := $(SWIFTLY-HOME)/bin:$(PATH)
 export PATH
 export SWIFTLY_HOME_DIR := $(SWIFTLY-HOME)
+export SWIFTLY_BIN_DIR := $(SWIFTLY-HOME)/bin
+export SWIFTLY_TOOLCHAINS_DIR := $(SWIFTLY-HOME)/toolchains
+export GNUPGHOME := $(SWIFTLY-HOME)/gnupg
+export CLANG_MODULE_CACHE_PATH := $(SWIFTLY-HOME)/clang-modules
 
 
 $(SWIFT): $(LOCAL-CACHE)/$(SWIFTLY-TAR)
 	$Q rm -rf $(SWIFTLY-HOME) $(LOCAL-TMP)/swiftly
 	$Q mkdir -p $(SWIFTLY-HOME)/bin $(LOCAL-TMP)/swiftly
+	$Q mkdir -p -m 700 $(GNUPGHOME)
 	$Q tar -C $(LOCAL-TMP)/swiftly -xzf $<
 	$Q cp $(LOCAL-TMP)/swiftly/swiftly $(SWIFTLY)
 	$Q chmod +x $(SWIFTLY)
