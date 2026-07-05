@@ -1,4 +1,4 @@
-R-VERSION ?= 4.6.1
+R-VERSION ?= 4.6.0
 # https://www.r-project.org
 # https://github.com/r-hub/R
 
