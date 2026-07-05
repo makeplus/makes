@@ -10,6 +10,8 @@ OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := macos-arm64
 OA-macos-int64 := macos-x64
+OA-windows-arm64 := windows-arm64
+OA-windows-int64 := windows-x64
 
 DART-ZIP := dartsdk-$(OA-$(OS-ARCH))-release.zip
 DART-DOWN := https://storage.googleapis.com/dart-archive/channels/stable/release
@@ -20,7 +22,11 @@ DART-BIN := $(DART-LOCAL)/bin
 override PATH := $(DART-BIN):$(PATH)
 export PATH
 
+ifeq ($(OS-NAME),windows)
+DART := $(DART-BIN)/dart.exe
+else
 DART := $(DART-BIN)/dart
+endif
 
 SHELL-DEPS += $(DART)
 
