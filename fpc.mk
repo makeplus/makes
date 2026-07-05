@@ -57,7 +57,13 @@ $(FPC): $(LOCAL-CACHE)/$(FPC-ARCHIVE)
 	@$(ECHO) "Installing 'fpc' locally"
 ifeq ($(OS-NAME),windows)
 	$Q chmod +x $(LOCAL-CACHE)/$(FPC-ARCHIVE)
-	$Q $(LOCAL-CACHE)/$(FPC-ARCHIVE) /VERYSILENT /SUPPRESSMSGBOXES \
+# MSYS bash rewrites /FLAG arguments into Windows paths when calling
+# native programs, which turns the silent install flags into garbage
+# and makes the installer open its interactive GUI. Disable that
+# conversion for this one command (both spellings, to cover MSYS2
+# and Git for Windows):
+	$Q MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 \
+	  $(LOCAL-CACHE)/$(FPC-ARCHIVE) /SP- /VERYSILENT /SUPPRESSMSGBOXES \
 	  /NORESTART "/DIR=$$(cygpath -w $(FPC-LOCAL))"
 	$Q test -f $(FPC-CFG) || $(FPC-BIN)/fpcmkcfg.exe \
 	  -d "basepath=$$(cygpath -m $(FPC-LOCAL))" \
