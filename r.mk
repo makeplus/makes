@@ -15,25 +15,36 @@ OA-macos-int64 := x86_64
 R-DIR := r-$(R-VERSION)
 R-LOCAL := $(LOCAL-ROOT)/$(R-DIR)
 
+ifdef IS-WINDOWS
+# The r-hub project has no Windows builds; use the official CRAN
+# InnoSetup installer (every release is kept under old/):
+R-ARCHIVE := R-$(R-VERSION)-win.exe
+R-DOWN := https://cran.r-project.org/bin/windows/base/old
+R-DOWN := $(R-DOWN)/$(R-VERSION)/$(R-ARCHIVE)
+else
 ifdef IS-LINUX
 R-ARCHIVE := r-$(R-VERSION)-$(OA-$(OS-ARCH)).tar.gz
 else
 R-ARCHIVE := R-$(R-VERSION)-$(OA-$(OS-ARCH)).pkg
 endif
-
 R-DOWN := https://github.com/r-hub/R/releases/download
 R-DOWN := $(R-DOWN)/v$(R-VERSION)/$(R-ARCHIVE)
+endif
 
-ifdef IS-LINUX
+ifdef IS-MACOS
+R-FRAMEWORK := $(R-LOCAL)/Library/Frameworks/R.framework
+R-BIN := $(LOCAL-BIN)
+else
 R-BIN := $(R-LOCAL)/bin
 override PATH := $(R-BIN):$(PATH)
 export PATH
-else
-R-FRAMEWORK := $(R-LOCAL)/Library/Frameworks/R.framework
-R-BIN := $(LOCAL-BIN)
 endif
 
+ifdef IS-WINDOWS
+R := $(R-BIN)/R.exe
+else
 R := $(R-BIN)/R
+endif
 
 SHELL-DEPS += $(R)
 
@@ -70,6 +81,14 @@ endef
 export R_PROFILE_SITE_CODE
 
 $(R): $(LOCAL-CACHE)/$(R-ARCHIVE)
+ifdef IS-WINDOWS
+	chmod +x $<
+# MSYS bash rewrites /FLAG arguments into Windows paths when calling
+# native programs; disable that conversion for the installer flags:
+	MSYS2_ARG_CONV_EXCL='*' MSYS_NO_PATHCONV=1 \
+	  $< /SP- /VERYSILENT /SUPPRESSMSGBOXES /NORESTART \
+	  "/DIR=$$(cygpath -w $(R-LOCAL))"
+else
 ifdef IS-LINUX
 	mkdir -p $(R-LOCAL)
 	tar -C $(R-LOCAL) --strip-components=3 -xzf $<
@@ -97,6 +116,7 @@ else
 	ln -sf $(R-FRAMEWORK)/Versions/Current/Resources/bin/Rscript \
 	  $(LOCAL-BIN)/Rscript
 	[[ -e $@ ]]
+endif
 endif
 	touch $@
 	@echo

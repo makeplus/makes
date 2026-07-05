@@ -11,18 +11,25 @@ endif
 
 
 # FPM installation
+ifeq ($(OS-NAME),windows)
+FPM := $(LOCAL-BIN)/fpm.exe
+FPM-EXT := .exe
+else
 FPM := $(LOCAL-BIN)/fpm
+FPM-EXT :=
+endif
 FPM-DOWN := https://github.com/fortran-lang/fpm/releases/download/v$(FPM-VERSION)
 
 # Platforms with pre-built binaries
 FPM-OA-linux-int64 := linux-x86_64
 FPM-OA-macos-int64 := macos-x86_64
+FPM-OA-windows-int64 := windows-x86_64
 
 SHELL-DEPS += $(FPM)
 
 ifdef FPM-OA-$(OS-ARCH)
 # Use pre-built binary
-FPM-NAME := fpm-$(FPM-VERSION)-$(FPM-OA-$(OS-ARCH))-gcc-12
+FPM-NAME := fpm-$(FPM-VERSION)-$(FPM-OA-$(OS-ARCH))-gcc-12$(FPM-EXT)
 
 $(FPM): $(LOCAL-CACHE)/$(FPM-NAME)
 	cp $< $@
