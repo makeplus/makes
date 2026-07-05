@@ -8,8 +8,8 @@ $(eval $(call include-local))
 
 OA-linux-arm64 := linux_arm64
 OA-linux-int64 := linux_x64
-OA-macos-arm64 := macos_arm64
-OA-macos-int64 := macos_x64
+OA-macos-arm64 := macosx_arm64
+OA-macos-int64 := macosx_x64
 
 NIM-DIR := nim-$(NIM-VERSION)
 NIM-TAR := $(NIM-DIR)-$(OA-$(OS-ARCH)).tar.xz
