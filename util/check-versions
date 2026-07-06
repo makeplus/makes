@@ -10,12 +10,14 @@ missing =::
 - cursor
 - flex
 - fpc
+- freebasic
 - gcc
 - gnat
 - graalvm
 - java
 - lein
 - ocaml
+- processing
 - raku
 
 defn show-missing():

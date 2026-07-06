@@ -1,4 +1,4 @@
-SCRATCH-VERSION ?= 1.2.0
+SCRATCH-VERSION ?= 3.32.0
 # https://github.com/scratchfoundation/scratch-desktop
 
 ifndef SCRATCH-LOADED
