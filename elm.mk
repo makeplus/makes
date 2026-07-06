@@ -1,4 +1,4 @@
-ELM-VERSION ?= 0.19.1
+ELM-VERSION ?= 0.19.2
 # https://github.com/elm/compiler
 
 ifndef ELM-LOADED
