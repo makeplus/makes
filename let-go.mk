@@ -1,4 +1,5 @@
 LET-GO-VERSION ?= 1.11.1
+LET-GO-REPO ?= nooga/let-go
 
 ifndef LET-GO-LOADED
 LET-GO-LOADED := true
@@ -12,7 +13,7 @@ OA-macos-int64 := darwin_amd64
 
 LET-GO-DIR := let-go_$(LET-GO-VERSION)_$(OA-$(OS-ARCH))
 LET-GO-TAR := $(LET-GO-DIR).tar.gz
-LET-GO-DOWN := https://github.com/nooga/let-go
+LET-GO-DOWN := https://github.com/$(LET-GO-REPO)
 LET-GO-DOWN := $(LET-GO-DOWN)/releases/download/v$(LET-GO-VERSION)/$(LET-GO-TAR)
 
 LET-GO-LOCAL := $(LOCAL-ROOT)/let-go-$(LET-GO-VERSION)
