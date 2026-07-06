@@ -10,6 +10,7 @@ OA-linux-arm64 := linux
 OA-linux-int64 := linux
 OA-macos-arm64 := macos
 OA-macos-int64 := macos
+OA-windows-int64 := windows
 
 VLANG-ZIP := v_$(OA-$(OS-ARCH)).zip
 VLANG-DOWN := https://github.com/vlang/v/releases/download
@@ -20,7 +21,11 @@ VLANG-BIN := $(VLANG-LOCAL)
 override PATH := $(VLANG-BIN):$(PATH)
 export PATH
 
+ifeq ($(OS-NAME),windows)
+VLANG := $(VLANG-BIN)/v.exe
+else
 VLANG := $(VLANG-BIN)/v
+endif
 
 SHELL-DEPS += $(VLANG)
 

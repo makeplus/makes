@@ -10,21 +10,32 @@ OA-linux-arm64 := linux-aarch64
 OA-linux-int64 := linux-x64
 OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-x64
+OA-windows-int64 := windows-x64
 
 YAMLSCRIPT-DIR := ys-$(YAMLSCRIPT-VERSION)-$(OA-$(OS-ARCH))
+ifeq ($(OS-NAME),windows)
+YAMLSCRIPT-TAR := $(YAMLSCRIPT-DIR).zip
+YS := $(LOCAL-BIN)/ys-$(YAMLSCRIPT-VERSION).exe
+else
 YAMLSCRIPT-TAR := $(YAMLSCRIPT-DIR).tar.xz
+YS := $(LOCAL-BIN)/ys-$(YAMLSCRIPT-VERSION)
+endif
 YAMLSCRIPT-DOWN := https://github.com/yaml/yamlscript
 YAMLSCRIPT-DOWN := $(YAMLSCRIPT-DOWN)/releases/download/$(YAMLSCRIPT-VERSION)/$(YAMLSCRIPT-TAR)
-
-YS := $(LOCAL-BIN)/ys-$(YAMLSCRIPT-VERSION)
 
 SHELL-DEPS += $(YS)
 
 
 $(YS): $(LOCAL-CACHE)/$(YAMLSCRIPT-TAR)
+ifeq ($(OS-NAME),windows)
+	unzip -q -d $(LOCAL-CACHE) $<
+	[[ -e $(LOCAL-CACHE)/$(YAMLSCRIPT-DIR)/ys-$(YAMLSCRIPT-VERSION).exe ]]
+	mv $(LOCAL-CACHE)/$(YAMLSCRIPT-DIR)/ys* $(LOCAL-BIN)
+else
 	tar -C $(LOCAL-CACHE) -xf $<
 	[[ -e $(LOCAL-CACHE)/$(YAMLSCRIPT-DIR)/ys-$(YAMLSCRIPT-VERSION) ]]
 	mv $(LOCAL-CACHE)/$(YAMLSCRIPT-DIR)/ys* $(LOCAL-BIN)
+endif
 	touch $@
 	@echo
 

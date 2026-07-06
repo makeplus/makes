@@ -10,12 +10,17 @@ OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux-amd64
 OA-macos-arm64 := macos-arm64
 OA-macos-int64 := macos-amd64
+OA-windows-int64 := windows-amd64
 
+ifeq ($(OS-NAME),windows)
+JQ-NAME := jq-$(OA-$(OS-ARCH)).exe
+JQ := $(LOCAL-BIN)/jq.exe
+else
 JQ-NAME := jq-$(OA-$(OS-ARCH))
+JQ := $(LOCAL-BIN)/jq
+endif
 JQ-DOWN := https://github.com/jqlang/jq
 JQ-DOWN := $(JQ-DOWN)/releases/download/jq-$(JQ-VERSION)/$(JQ-NAME)
-
-JQ := $(LOCAL-BIN)/jq
 
 SHELL-DEPS += $(JQ)
 

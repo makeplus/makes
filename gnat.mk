@@ -11,6 +11,7 @@ OA-linux-arm64 := aarch64-linux
 OA-linux-int64 := x86_64-linux
 OA-macos-arm64 := aarch64-darwin
 OA-macos-int64 := x86_64-darwin
+OA-windows-int64 := x86_64-windows64
 
 GNAT-DIR := gnat-$(OA-$(OS-ARCH))-$(GNAT-VERSION)
 GNAT-TAR := $(GNAT-DIR).tar.gz
@@ -22,7 +23,11 @@ GNAT-BIN := $(GNAT-LOCAL)/bin
 override PATH := $(GNAT-BIN):$(PATH)
 export PATH
 
+ifeq ($(OS-NAME),windows)
+GNATMAKE := $(GNAT-BIN)/gnatmake.exe
+else
 GNATMAKE := $(GNAT-BIN)/gnatmake
+endif
 
 SHELL-DEPS += $(GNATMAKE)
 
