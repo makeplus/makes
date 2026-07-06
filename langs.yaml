@@ -119,6 +119,26 @@ Arturo:
     package: package repository
     publish: GitHub PR to arturo-lang/pkgr.art
     auth: GitHub account
+AutoHotkey:
+  desc: >
+    AutoHotkey is a scripting language for Windows automation, hotkeys, GUI
+    tools, and desktop workflow customization. It is widely used for small
+    productivity scripts and application-specific automation.
+  slug: autohotkey
+  makes: true
+  fast: true
+  linux: false
+  macos: false
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
 AWK:
   desc: >
     AWK is a text-processing language built around pattern-action rules. It is
@@ -629,6 +649,26 @@ Factor:
     package: vocabulary source tree
     publish: git tag or contribute vocabulary to Factor repository
     auth: git host credentials
+Forth:
+  desc: >
+    Forth is a compact stack-based language built around extensible words and
+    interactive development. It is used in embedded systems, boot firmware,
+    language experiments, and environments where small implementations matter.
+  slug: forth
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
 Fortran:
   desc: >
     Fortran is one of the oldest high-level languages still in active use. It
@@ -669,16 +709,17 @@ Free Pascal:
     package: package manifest
     publish: submit package to repository
     auth: repository maintainer account
-Futhark:
+FreeBASIC:
   desc: >
-    Futhark is a functional array language designed for high-performance
-    parallel code. It can compile numerical programs to GPU-oriented backends
-    while keeping a compact, ML-like source language.
-  slug: futhark
+    FreeBASIC is an open-source BASIC compiler with syntax inspired by
+    QuickBASIC and support for more modern systems programming features. It is
+    used for games, utilities, retro-style programming, and native desktop
+    applications.
+  slug: freebasic
   makes: true
   fast: true
   linux: true
-  macos: true
+  macos: false
   win: true
   ffi: true
   json: false
@@ -689,6 +730,47 @@ Futhark:
     package: source repository
     publish: git tag or source archive
     auth: git host credentials
+Futhark:
+  desc: >
+    Futhark is a functional array language designed for high-performance
+    parallel code. It can compile numerical programs to GPU-oriented backends
+    while keeping a compact, ML-like source language.
+  slug: futhark
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: false
+  ffi: true
+  json: false
+  exer: true
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
+GDScript:
+  desc: >
+    GDScript is Godot's integrated scripting language for game development. It
+    has Python-like syntax, tight editor integration, and APIs designed around
+    Godot scenes, nodes, signals, and game workflows.
+  slug: gdscript
+  makes: true
+  fast: true
+  uses: godot
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: Godot Asset Library
+    site: https://godotengine.org/asset-library/
+    package: asset metadata and project files
+    publish: submit asset to Godot Asset Library
+    auth: Godot account
 Gleam:
   desc: >
     Gleam is a statically typed functional language for the Erlang ecosystem.
@@ -790,6 +872,26 @@ Haskell:
     package: .cabal
     publish: cabal upload
     auth: Hackage account/API token
+Haxe:
+  desc: >
+    Haxe is a statically typed cross-platform language that can target
+    JavaScript, C++, C#, Java, Python, Lua, PHP, and other runtimes. It is used
+    for games, web applications, tooling, and shared code across platforms.
+  slug: haxe
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: haxelib
+    site: https://lib.haxe.org/
+    package: haxelib.json
+    publish: haxelib submit
+    auth: haxelib account
 Hy:
   desc: >
     Hy is a Lisp that compiles to Python abstract syntax trees. It lets Python
@@ -831,6 +933,26 @@ Idris:
     package: ipkg
     publish: GitHub PR to package collection
     auth: GitHub account
+J:
+  desc: >
+    J is an array programming language descended from APL, using ASCII tokens
+    instead of APL glyphs. It emphasizes terse array transformations, tacit
+    programming, and interactive mathematical exploration.
+  slug: j
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: true
+  ship:
+    registry: J addons
+    site: https://code.jsoftware.com/wiki/Addons
+    package: addon directory
+    publish: contribute addon to J package repository
+    auth: repository maintainer account
 Janet:
   desc: >
     Janet is a small Lisp-like language designed for embedding, scripting, and
@@ -1013,6 +1135,27 @@ Lua:
     package: rockspec
     publish: luarocks upload
     auth: LuaRocks API key
+MATLAB:
+  desc: >
+    MATLAB is a proprietary numerical computing language and environment used
+    heavily in engineering, scientific computing, signal processing, and
+    simulation. Its array-oriented syntax and large toolbox ecosystem make it
+    common in research and industry workflows.
+  slug: matlab
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: MATLAB File Exchange
+    site: https://www.mathworks.com/matlabcentral/fileexchange/
+    package: toolbox or source archive
+    publish: submit package to File Exchange
+    auth: MathWorks account
 MIPS Assembly:
   desc: >
     MIPS Assembly is a classic RISC assembly language often used in computer
@@ -1257,6 +1400,27 @@ Prolog:
     package: pack.pl
     publish: pack_upload or pack_submit
     auth: SWI pack server account
+Processing:
+  desc: >
+    Processing is a Java-based creative coding language and environment for
+    visual art, graphics, animation, and interactive sketches. It is widely
+    used in education, design, generative art, and prototyping.
+  slug: processing
+  makes: true
+  fast: true
+  uses: java
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Processing libraries
+    site: https://processing.org/reference/libraries/
+    package: library folder and metadata
+    publish: submit library to Processing contributions
+    auth: GitHub or project maintainer account
 PureScript:
   desc: >
     PureScript is a strongly typed functional language inspired by Haskell that
@@ -1428,7 +1592,7 @@ Roc:
   fast: true
   linux: true
   macos: true
-  win: true
+  win: false
   ffi: true
   json: true
   exer: true
@@ -1520,6 +1684,47 @@ Scheme:
     package: Akku.manifest or source repository
     publish: git tag or Akku package submit
     auth: git host credentials
+Scratch:
+  desc: >
+    Scratch is a block-based programming language and creative coding
+    environment designed for learning. It is widely used in schools and
+    introductory programming contexts for games, stories, animations, and
+    interactive projects.
+  slug: scratch
+  makes: true
+  fast: true
+  linux: false
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: Scratch website
+    site: https://scratch.mit.edu/
+    package: Scratch project
+    publish: share project on Scratch
+    auth: Scratch account
+Solidity:
+  desc: >
+    Solidity is a statically typed contract-oriented language for Ethereum and
+    compatible virtual machines. It is used to write smart contracts, tokens,
+    decentralized applications, and blockchain protocol components.
+  slug: solidity
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: true
+  ship:
+    registry: npm/source
+    site: https://www.npmjs.com/
+    package: package.json or contract source
+    publish: npm publish or verified contract source
+    auth: npm token or chain explorer account
 SQLite:
   desc: >
     SQLite is an embedded SQL database engine that stores a complete database
@@ -1622,6 +1827,26 @@ TypeScript:
     package: package.json
     publish: npm publish
     auth: npm token or trusted publishing OIDC
+Typst:
+  desc: >
+    Typst is a markup and scripting language for typesetting documents. It
+    combines concise document syntax with programmable layout and is used for
+    papers, reports, slides, and technical publishing.
+  slug: typst
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: Typst Universe
+    site: https://typst.app/universe/
+    package: typst.toml
+    publish: GitHub PR to typst/packages
+    auth: GitHub account
 Uiua:
   desc: >
     Uiua is a stack-based array language with a distinctive glyph-oriented
