@@ -99,6 +99,27 @@ ARM64 Assembly:
     package: source repository
     publish: git tag or source archive
     auth: git host credentials
+AssemblyScript:
+  desc: >
+    AssemblyScript is a TypeScript-like language designed specifically for
+    WebAssembly. It keeps familiar JavaScript-family syntax while adding
+    static types and a compiler that emits Wasm modules directly.
+  slug: assemblyscript
+  makes: false
+  fast: false
+  uses: node
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: npm
+    site: https://www.npmjs.com/
+    package: package.json
+    publish: npm publish
+    auth: npm token or trusted publishing OIDC
 Arturo:
   desc: >
     Arturo is a small, expressive language influenced by Rebol, Forth, and
@@ -831,6 +852,26 @@ Go:
     package: go.mod
     publish: git tag module version
     auth: git host credentials
+Grain:
+  desc: >
+    Grain is a functional language designed to compile to WebAssembly. It
+    combines ML-family ideas with approachable syntax, strong typing, and a
+    toolchain focused on browser, CLI, and WASI execution.
+  slug: grain
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: none
+    site: varies
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
 Groovy:
   desc: >
     Groovy is a dynamic JVM language with concise syntax and strong Java
@@ -1198,6 +1239,26 @@ MoonScript:
     package: rockspec
     publish: luarocks upload
     auth: LuaRocks API key
+Motoko:
+  desc: >
+    Motoko is a high-level language for Internet Computer canisters and their
+    WebAssembly execution model. It is designed around actor-style services,
+    async messaging, and safe application development on the IC platform.
+  slug: motoko
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: true
+  exer: false
+  ship:
+    registry: mops
+    site: https://mops.one/
+    package: mops.toml
+    publish: mops publish
+    auth: mops account/token
 Nim:
   desc: >
     Nim is a statically typed language with Python-like syntax and native code
