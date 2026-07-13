@@ -1,4 +1,4 @@
-VLANG-VERSION ?= 0.5.1
+VLANG-VERSION ?= 0.5.2
 # https://github.com/vlang/v
 
 ifndef VLANG-LOADED
