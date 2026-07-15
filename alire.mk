@@ -26,12 +26,14 @@ ALIRE-LOCAL := $(LOCAL-ROOT)/alire-$(ALIRE-VERSION)
 ALIRE-BIN := $(ALIRE-LOCAL)/bin
 ALR := $(ALIRE-BIN)/$(ALR-EXE)
 ALIRE_SETTINGS_DIR ?= $(LOCAL-ROOT)/alire-settings
+XDG_RUNTIME_DIR ?= $(LOCAL-ROOT)/alire-runtime
 
 SHELL-DEPS += $(ALR)
 
 override PATH := $(ALIRE-BIN):$(PATH)
 export PATH
 export ALIRE_SETTINGS_DIR
+export XDG_RUNTIME_DIR
 
 
 $(ALR): $(LOCAL-CACHE)/$(ALIRE-ZIP)
