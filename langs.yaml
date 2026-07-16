@@ -1218,6 +1218,27 @@ MIPS Assembly:
     package: source repository
     publish: git tag or source archive
     auth: git host credentials
+MoonBit:
+  desc: >
+    MoonBit is a statically typed general-purpose language built around fast
+    compilation and high-quality output for WebAssembly, JavaScript, and native
+    targets. Its toolchain includes the moon build system and package manager,
+    with packages published through the Mooncakes registry.
+  slug: moonbit
+  makes: true
+  fast: true
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Mooncakes
+    site: https://mooncakes.io/
+    package: moon.mod.json
+    publish: moon publish
+    auth: MoonBit account/token
 MoonScript:
   desc: >
     MoonScript is a language that compiles to Lua with syntax inspired by
