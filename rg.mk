@@ -1,4 +1,4 @@
-RG-VERSION ?= 15.1.0
+RG-VERSION ?= 15.2.0
 # https://github.com/BurntSushi/ripgrep
 
 ifndef RG-LOADED

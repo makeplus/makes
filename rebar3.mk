@@ -1,4 +1,4 @@
-REBAR3-VERSION ?= 3.25.1
+REBAR3-VERSION ?= 3.27.0
 # https://github.com/erlang/rebar3
 
 ifndef REBAR3-LOADED

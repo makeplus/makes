@@ -1,4 +1,4 @@
-CAIRO-VERSION ?= 2.19.2
+CAIRO-VERSION ?= 2.19.3
 # https://github.com/software-mansion/scarb
 
 ifndef CAIRO-LOADED
