@@ -4,6 +4,7 @@
 #   slug: Lower case word that is name of .mk file
 #   makes: Has a .mk file here
 #   fast: Can install from prebuilt binary
+#   docker: Fully qualified public container image name
 #   linux: Supports Linux
 #   macos: Supports macOS
 #   win: Support Windows
@@ -168,6 +169,7 @@ AWK:
   slug: awk
   makes: false
   fast: false
+  docker: docker.io/esolang/awk
   linux: true
   macos: true
   win: true
@@ -229,6 +231,7 @@ Bash:
   slug: bash
   makes: false
   fast: false
+  docker: docker.io/library/bash
   linux: true
   macos: true
   win: true
@@ -392,6 +395,7 @@ COBOL:
   slug: cobol
   makes: true
   fast: false
+  docker: docker.io/esolang/cobol
   uses: gcc
   linux: true
   macos: true
@@ -528,6 +532,28 @@ Delphi Pascal:
     package: Delphi package or Lazarus package
     publish: submit package to GetIt or OPM repository
     auth: vendor/repository maintainer account
+Dyalog APL:
+  desc: >
+    Dyalog APL is a modern commercial implementation of APL, a terse
+    array-oriented language using symbolic notation. It is used for exploratory
+    programming, analytics, and compact high-level solutions where array
+    transformations are central.
+  slug: dyalog
+  makes: false
+  fast: false
+  docker: docker.io/dyalog/dyalog
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: Tatin
+    site: https://tatin.dev/
+    package: apl-package.json
+    publish: Tatin client publish
+    auth: Tatin registry account/token
 Elixir:
   desc: >
     Elixir runs on the Erlang VM and brings a Ruby-influenced syntax to
@@ -536,6 +562,7 @@ Elixir:
   slug: elixir
   makes: true
   fast: false
+  docker: docker.io/library/elixir
   uses: erlang
   linux: true
   macos: true
@@ -577,6 +604,7 @@ Emacs Lisp:
   slug: emacs-lisp
   makes: false
   fast: false
+  docker: docker.io/silex/emacs
   linux: true
   macos: true
   win: true
@@ -597,6 +625,7 @@ Erlang:
   slug: erlang
   makes: true
   fast: false
+  docker: docker.io/library/erlang
   linux: true
   macos: true
   win: true
@@ -860,6 +889,7 @@ Grain:
   slug: grain
   makes: false
   fast: false
+  docker: ghcr.io/grain-lang/grain:main
   linux: true
   macos: true
   win: true
@@ -962,6 +992,7 @@ Idris:
   slug: idris
   makes: false
   fast: false
+  docker: docker.io/dgellow/idris2
   linux: true
   macos: true
   win: true
@@ -1143,6 +1174,7 @@ Lisp Flavoured Erlang:
   slug: lfe
   makes: false
   fast: false
+  docker: docker.io/lfex/lfe
   uses: erlang
   linux: true
   macos: true
@@ -1164,6 +1196,7 @@ Lua:
   slug: lua
   makes: true
   fast: false
+  docker: docker.io/nickblah/lua
   linux: true
   macos: true
   win: true
@@ -1185,6 +1218,7 @@ MATLAB:
   slug: matlab
   makes: false
   fast: false
+  docker: docker.io/mathworks/matlab
   linux: true
   macos: true
   win: true
@@ -1268,6 +1302,7 @@ Motoko:
   slug: motoko
   makes: false
   fast: false
+  docker: ghcr.io/dfinity/icp-dev-env:latest
   linux: true
   macos: true
   win: true
@@ -1329,6 +1364,7 @@ OCaml:
   slug: ocaml
   makes: true
   fast: false
+  docker: docker.io/ocaml/opam
   linux: true
   macos: true
   win: true
@@ -1917,6 +1953,7 @@ Typst:
   slug: typst
   makes: false
   fast: false
+  docker: ghcr.io/typst/typst
   linux: true
   macos: true
   win: true
@@ -2040,6 +2077,7 @@ WebAssembly:
   slug: webassembly
   makes: false
   fast: false
+  docker: docker.io/webassembly/toolchain
   linux: true
   macos: true
   win: true
