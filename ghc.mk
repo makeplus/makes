@@ -12,10 +12,11 @@ OA-macos-arm64 := aarch64-apple-darwin
 OA-macos-int64 := x86_64-apple-darwin
 OA-windows-int64 := x86_64-unknown-mingw32
 
-GHC-TAR := ghc-$(GHC-VERSION)-$(OA-$(OS-ARCH)).tar.xz
+GHC-TAR ?= ghc-$(GHC-VERSION)-$(OA-$(OS-ARCH)).tar.xz
 GHC-DOWN := https://downloads.haskell.org/ghc/$(GHC-VERSION)/$(GHC-TAR)
 
 GHC-LOCAL := $(LOCAL-ROOT)/ghc-$(GHC-VERSION)
+GHC-BUILD := $(LOCAL-TMP)/ghc-$(GHC-VERSION)
 GHC-BIN := $(GHC-LOCAL)/bin
 override PATH := $(GHC-BIN):$(PATH)
 export PATH
@@ -29,10 +30,13 @@ endif
 SHELL-DEPS += $(GHC)
 
 
-$(GHC): $(LOCAL-CACHE)/$(GHC-TAR)
-	tar -C $(LOCAL-ROOT) -xf $<
-	mv $(LOCAL-ROOT)/ghc-$(GHC-VERSION)-* $(GHC-LOCAL)
-	touch $@
+$(GHC): $(LOCAL-CACHE)/$(GHC-TAR) $(MAKES)/ghc.mk
+	rm -rf $(GHC-LOCAL) $(GHC-BUILD)
+	mkdir -p $(GHC-LOCAL) $(GHC-BUILD)
+	tar -C $(GHC-BUILD) --strip-components=1 -xf $<
+	cd $(GHC-BUILD) && ./configure --prefix=$(GHC-LOCAL)
+	$(MAKE) -C $(GHC-BUILD) install
+	rm -rf $(GHC-BUILD)
 	@echo
 
 $(LOCAL-CACHE)/$(GHC-TAR):

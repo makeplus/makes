@@ -8,6 +8,7 @@ $(eval $(call include-local))
 include $(MAKES)/ghc.mk
 
 export CABAL_DIR := $(LOCAL-HOME)/cabal
+CABAL-INDEX := $(CABAL_DIR)/.index-updated
 
 OA-linux-arm64 := aarch64-linux-deb12
 OA-linux-int64 := x86_64-linux-ubuntu22_04
@@ -47,5 +48,10 @@ endif
 $(LOCAL-CACHE)/$(CABAL-TAR):
 	@echo "* Installing 'Cabal $(CABAL-VERSION)' locally"
 	curl+ $(CABAL-DOWN) > $@
+
+$(CABAL-INDEX): $(CABAL) $(GHC)
+	@echo "* Updating the Cabal package index"
+	cabal update
+	touch $@
 
 endif
