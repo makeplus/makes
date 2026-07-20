@@ -54,8 +54,11 @@ ifeq (windows,$(OS-NAME))
 else
 	$Q tar -C $(MOONBIT-LOCAL)/lib -xzf $(LOCAL-CACHE)/$(MOONBIT-CORE)
 endif
-	$Q PATH=$(MOONBIT-LOCAL)/bin:$(PATH) $(MOON) -C $(MOONBIT-LOCAL)/lib/core bundle --warn-list -a --all
-	$Q PATH=$(MOONBIT-LOCAL)/bin:$(PATH) $(MOON) -C $(MOONBIT-LOCAL)/lib/core bundle --warn-list -a --target wasm-gc --quiet
+# PATH already has $(MOONBIT-LOCAL)/bin first from the exported
+# override above; an unquoted PATH=... prefix breaks sh on Windows
+# where PATH entries contain spaces and parens:
+	$Q $(MOON) -C $(MOONBIT-LOCAL)/lib/core bundle --warn-list -a --all
+	$Q $(MOON) -C $(MOONBIT-LOCAL)/lib/core bundle --warn-list -a --target wasm-gc --quiet
 	$Q touch $@
 	@$(ECHO)
 
