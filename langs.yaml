@@ -345,6 +345,26 @@ Cairo:
     package: Scarb.toml
     publish: scarb publish
     auth: SCARB_REGISTRY_AUTH_TOKEN
+Carp:
+  desc: >
+    Carp is a statically typed Lisp designed for real-time applications. It
+    compiles to C and uses deterministic memory management without a garbage
+    collector.
+  slug: carp
+  makes: false
+  fast: false
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: none
+    site: https://github.com/carp-lang/Carp
+    package: source repository
+    publish: git tag or source archive
+    auth: git host credentials
 CFML:
   desc: >
     CFML, originally ColdFusion Markup Language, is a web-focused dynamic
