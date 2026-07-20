@@ -1,4 +1,4 @@
-JOLT-VERSION ?= 0.4.7
+JOLT-VERSION ?= 0.4.8
 # https://github.com/jolt-lang/jolt
 
 ifndef JOLT-LOADED
