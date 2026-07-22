@@ -27,17 +27,18 @@ export PATH
 
 MAVEN-REPOSITORY := $(LOCAL-HOME)/.m2/repository
 MAVEN := $(MAVEN-BIN)/mvn
+MAVEN-JAVA := $(or $(JAVA),$(GRAALVM))
 
 SHELL-DEPS += $(MAVEN)
 
 
 ifeq ($(OS-NAME),windows)
-$(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
+$(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR) $(MAVEN-JAVA)
 	$Q cd $(LOCAL-ROOT) && tar -xzf cache/$(MAVEN-TAR)
 	$Q touch $@
 	@$(ECHO)
 else
-$(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR)
+$(MAVEN): $(LOCAL-CACHE)/$(MAVEN-TAR) $(MAVEN-JAVA)
 	$Q tar -C $(LOCAL-ROOT) -xzf $<
 	$Q touch $@
 	@$(ECHO)
