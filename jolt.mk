@@ -16,13 +16,13 @@ endif
 
 ifeq (windows,$(OS-NAME))
 JOLT-ARC-EXT := zip
-JOLT-EXE := joltc.exe
+JOLT-EXE := jolt.exe
 else
 JOLT-ARC-EXT := tar.gz
-JOLT-EXE := joltc
+JOLT-EXE := jolt
 endif
 
-JOLT-DIR := joltc-v$(JOLT-VERSION)-$(OA-$(OS-ARCH))
+JOLT-DIR := jolt-v$(JOLT-VERSION)-$(OA-$(OS-ARCH))
 JOLT-ARC := $(JOLT-DIR).$(JOLT-ARC-EXT)
 JOLT-DOWN := https://github.com/jolt-lang/jolt
 JOLT-DOWN := $(JOLT-DOWN)/releases/download/v$(JOLT-VERSION)/$(JOLT-ARC)
