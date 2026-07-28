@@ -10,7 +10,9 @@ OA-linux-int64 := linux_amd64
 OA-macos-arm64 := darwin_arm64
 
 ifeq (,$(OA-$(OS-ARCH)))
+ifndef GLOJURE_DIR
 $(error 'glojure' has no prebuilt binary for $(OS-ARCH); see https://github.com/glojurelang/glojure)
+endif
 endif
 
 GLOJURE-TAR := glj-$(GLOJURE-VERSION)-$(OA-$(OS-ARCH)).tar.gz
