@@ -12,9 +12,10 @@ OA-macos-arm64 := macos-aarch64
 OA-macos-int64 := macos-x64
 OA-windows-int64 := windows-x64
 
-# GraalVM no longer supports macOS Intel
+# GraalVM no longer supports macOS Intel.  Keep the module loadable so
+# projects that provide multiple engines can still use the other ones.
 ifeq ($(OS-NAME)-$(ARCH-NAME),macos-int64)
-$(error GraalVM no longer supports macOS Intel (x64))
+GRAALVM-UNAVAILABLE := GraalVM no longer supports macOS Intel (x64)
 endif
 
 ifeq ($(OS-NAME),windows)
@@ -43,7 +44,10 @@ JAVA := $(GRAALVM-BIN)/java
 SHELL-DEPS += $(GRAALVM)
 
 
-ifeq ($(OS-NAME),windows)
+ifdef GRAALVM-UNAVAILABLE
+$(GRAALVM) $(JAVA):
+	@$(error $(GRAALVM-UNAVAILABLE))
+else ifeq ($(OS-NAME),windows)
 $(GRAALVM) $(JAVA): $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE)
 	$Q if [[ ! -f $(GRAALVM) ]]; then \
 		cd $(LOCAL-ROOT) && unzip -q cache/$(GRAALVM-ARCHIVE) && \
