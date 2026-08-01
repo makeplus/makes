@@ -1,4 +1,4 @@
-HY-VERSION ?= 1.3.0
+HY-VERSION ?= 1.3.1
 # https://github.com/hylang/hy
 
 ifndef HY-LOADED
