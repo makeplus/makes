@@ -1,5 +1,5 @@
-GOBB-VERSION ?= 0.1.2
-# https://github.com/clojurestar/gobb
+GOBB-VERSION ?= 0.1.4
+# https://github.com/gloathub/gobb
 
 ifndef GOBB-LOADED
 GOBB-LOADED := true
@@ -14,7 +14,7 @@ OA-windows-arm64 := windows_arm64
 OA-windows-int64 := windows_amd64
 
 ifeq (,$(OA-$(OS-ARCH)))
-$(error 'gobb' has no prebuilt binary for $(OS-ARCH); see https://github.com/clojurestar/gobb)
+$(error 'gobb' has no prebuilt binary for $(OS-ARCH); see https://github.com/gloathub/gobb)
 endif
 
 ifeq (windows,$(OS-NAME))
@@ -27,7 +27,7 @@ endif
 
 GOBB-DIR := gobb-$(GOBB-VERSION)-$(OA-$(OS-ARCH))
 GOBB-ARC := $(GOBB-DIR).$(GOBB-ARC-EXT)
-GOBB-DOWN := https://github.com/clojurestar/gobb
+GOBB-DOWN := https://github.com/gloathub/gobb
 GOBB-DOWN := $(GOBB-DOWN)/releases/download/v$(GOBB-VERSION)/$(GOBB-ARC)
 
 GOBB-LOCAL := $(LOCAL-ROOT)/gobb-$(GOBB-VERSION)
