@@ -1,4 +1,4 @@
-LUA-VERSION ?= 5.5.0
+LUA-VERSION ?= 5.5.1
 # https://github.com/lua/lua
 
 ifndef LUA-LOADED
