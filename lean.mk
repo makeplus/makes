@@ -1,4 +1,4 @@
-LEAN-VERSION ?= 4.32.2
+LEAN-VERSION ?= 4.33.0
 # https://github.com/leanprover/lean4
 
 ifndef LEAN-LOADED
