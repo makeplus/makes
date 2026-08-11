@@ -470,6 +470,29 @@ Common Lisp:
     package: ASDF .asd system
     publish: GitHub PR or request to Quicklisp dist
     auth: GitHub/email maintainer flow
+Coq:
+  desc: >
+    Coq, now known as Rocq, is an interactive theorem prover and functional
+    programming language for developing machine-checked proofs. It is widely
+    used in formal mathematics, verified software, and programming-language
+    research.
+  slug: coq
+  makes: false
+  fast: false
+  docker: docker.io/coqorg/coq
+  uses: ocaml
+  linux: true
+  macos: true
+  win: true
+  ffi: false
+  json: false
+  exer: false
+  ship:
+    registry: Rocq opam repository
+    site: https://rocq-prover.org/opam/released
+    package: opam package
+    publish: submit package to the Rocq opam repository
+    auth: GitHub account
 Crystal:
   desc: >
     Crystal combines Ruby-like syntax with static typing and native
@@ -718,6 +741,26 @@ Factor:
     site: https://factorcode.org/
     package: vocabulary source tree
     publish: git tag or contribute vocabulary to Factor repository
+    auth: git host credentials
+Fil-C:
+  desc: >
+    Fil-C is a memory-safe implementation of C and C++ built on Clang. It uses
+    garbage collection, capability-based pointer checks, and runtime validation
+    while retaining broad compatibility with existing C and C++ code.
+  slug: fil-c
+  makes: false
+  fast: false
+  linux: true
+  macos: false
+  win: false
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: none
+    site: https://fil-c.org/
+    package: source repository
+    publish: git tag or source archive
     auth: git host credentials
 Forth:
   desc: >
@@ -1921,6 +1964,27 @@ Swift:
   ship:
     registry: SwiftPM/source
     site: https://swiftpackageindex.com/
+    package: Package.swift
+    publish: git tag semantic version
+    auth: git host credentials
+Swish:
+  desc: >
+    Swish is a Clojure-inspired Lisp written in Swift for embedding in Swift
+    applications or compiling into Swift projects. It provides a native command
+    line REPL and uses familiar Clojure data and programming concepts.
+  slug: swish
+  makes: false
+  fast: false
+  uses: swift
+  linux: false
+  macos: true
+  win: false
+  ffi: false
+  json: false
+  exer: false
+  ship:
+    registry: SwiftPM/source
+    site: https://github.com/infiniteNIL/swish
     package: Package.swift
     publish: git tag semantic version
     auth: git host credentials
