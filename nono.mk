@@ -1,4 +1,4 @@
-NONO-VERSION ?= 0.73.0
+NONO-VERSION ?= 0.74.0
 # https://github.com/always-further/nono
 
 ifndef NONO-LOADED

@@ -1,4 +1,4 @@
-GO-VERSION ?= 1.26.6
+GO-VERSION ?= 1.26.7
 # https://github.com/golang/go
 
 ifndef GO-LOADED
