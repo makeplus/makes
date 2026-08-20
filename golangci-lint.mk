@@ -1,4 +1,4 @@
-GOLANGCI-LINT-VERSION ?= 2.12.2
+GOLANGCI-LINT-VERSION ?= 2.13.0
 # https://github.com/golangci/golangci-lint
 
 ifndef GOLANGCI-LINT-LOADED

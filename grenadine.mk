@@ -1,4 +1,4 @@
-GRENADINE-VERSION ?= 0.1.10
+GRENADINE-VERSION ?= 0.1.11
 # https://github.com/clojurestar/grenadine
 
 ifndef GRENADINE-LOADED
