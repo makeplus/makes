@@ -1,3 +1,7 @@
+ifeq (,$(filter else-if,$(.FEATURES)))
+$(error Makes requires GNU Make 3.81 or newer)
+endif
+
 ifdef INIT-LOADED
 $(error init.mk already loaded)
 endif
