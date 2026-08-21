@@ -1,4 +1,4 @@
-TYPESCRIPT-VERSION ?= 6.0.3
+TYPESCRIPT-VERSION ?= 7.0.2
 # https://github.com/microsoft/TypeScript
 
 ifndef TYPESCRIPT-LOADED
