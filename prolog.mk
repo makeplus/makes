@@ -1,4 +1,4 @@
-TREALLA-VERSION ?= 3.5.25
+TREALLA-VERSION ?= 3.6.2
 # https://github.com/trealla-prolog/trealla
 
 ifndef PROLOG-LOADED
