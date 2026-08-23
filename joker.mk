@@ -1,4 +1,4 @@
-JOKER-VERSION ?= 1.9.0
+JOKER-VERSION ?= 1.10.0
 # https://github.com/candid82/joker
 
 ifndef JOKER-LOADED
