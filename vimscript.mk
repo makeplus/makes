@@ -1,4 +1,4 @@
-VIMSCRIPT-VERSION ?= 0.12.4
+VIMSCRIPT-VERSION ?= 0.12.5
 # https://github.com/neovim/neovim
 
 ifndef VIMSCRIPT-LOADED
