@@ -1,4 +1,4 @@
-CMAKE-VERSION ?= 4.4.2
+CMAKE-VERSION ?= 4.4.3
 # https://github.com/Kitware/CMake
 
 ifndef CMAKE-LOADED

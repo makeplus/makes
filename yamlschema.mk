@@ -1,4 +1,4 @@
-YAMLSCHEMA-VERSION ?= 0.1.3
+YAMLSCHEMA-VERSION ?= 0.1.4
 # https://github.com/yaml/yamlschema
 
 ifndef YAMLSCHEMA-LOADED
