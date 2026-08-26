@@ -32,11 +32,15 @@ check_platform() {
 }
 
 check_platform linux int64 \
-  ysd-0.1.3-linux_amd64.tar.gz ysd
+  ysd-0.1.5-linux_amd64.tar.gz ysd
+check_platform linux arm64 \
+  ysd-0.1.5-linux_arm64.tar.gz ysd
 check_platform macos arm64 \
-  ysd-0.1.3-darwin_arm64.tar.gz ysd
+  ysd-0.1.5-darwin_arm64.tar.gz ysd
 check_platform windows int64 \
-  ysd-0.1.3-windows_amd64.zip ysd.exe
+  ysd-0.1.5-windows_amd64.zip ysd.exe
+check_platform windows arm64 \
+  ysd-0.1.5-windows_arm64.zip ysd.exe
 
 out=$(
   make --no-print-directory -f "$makefile" \
@@ -48,16 +52,6 @@ has "$out" 'archive=ysd-9.8.7-linux_amd64.tar.gz' \
 has "$out" 'version=9.8.7' \
   'YAMLSCHEMA-VERSION overrides the module version'
 
-if out=$(
-  make --no-print-directory -f "$makefile" \
-    OS-NAME=linux ARCH-NAME=arm64 inspect 2>&1
-); then
-  fail 'Linux ARM is rejected'
-else
-  pass 'Linux ARM is rejected'
-fi
-has "$out" "'YAMLSchema' has no prebuilt binary for linux-arm64"
-
 if [[ -z ${slow-} ]]; then
   pass 'Use slow=1 to run the YAMLSchema installation test'
   done-testing
@@ -67,8 +61,8 @@ fi
 out=$(
   make --no-pr yamlschema-test CMD='which ysd; ysd --version'
 )
-has "$out" "$ROOT/local/yamlschema-0.1.3/bin/ysd" \
-  'Found ysd in local/yamlschema-0.1.3'
-has "$out" 'ysd 0.1.3' 'Found YAMLSchema version 0.1.3'
+has "$out" "$ROOT/local/yamlschema-0.1.5/bin/ysd" \
+  'Found ysd in local/yamlschema-0.1.5'
+has "$out" 'ysd 0.1.5' 'Found YAMLSchema version 0.1.5'
 
 done-testing

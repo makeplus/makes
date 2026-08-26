@@ -7,8 +7,10 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 OA-linux-int64 := linux_amd64
+OA-linux-arm64 := linux_arm64
 OA-macos-arm64 := darwin_arm64
 OA-windows-int64 := windows_amd64
+OA-windows-arm64 := windows_arm64
 
 ifeq (,$(OA-$(OS-ARCH)))
 $(error 'YAMLSchema' has no prebuilt binary for $(OS-ARCH); \
