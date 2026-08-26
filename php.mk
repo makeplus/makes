@@ -1,4 +1,4 @@
-PHP-VERSION ?= 8.5.9
+PHP-VERSION ?= 8.5.10
 # https://github.com/php/php-src
 
 ifndef PHP-LOADED
