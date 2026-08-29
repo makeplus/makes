@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+wrapper_dir=$(cd "$(dirname "$0")" && pwd -P)
+wrapper=$wrapper_dir/$(basename "$0")
+docker=${MAKES_DOCKER_REAL-}
+
+if [[ -z $docker || ! -x $docker ]]; then
+  while IFS= read -r candidate; do
+    candidate_dir=$(cd "$(dirname "$candidate")" && pwd -P)
+    candidate=$candidate_dir/$(basename "$candidate")
+    if [[ $candidate != "$wrapper" ]]; then
+      docker=$candidate
+      break
+    fi
+  done < <(type -aP docker || true)
+fi
+
+if [[ ${1-} == compose ]]; then
+  if [[ -n $docker ]] && "$docker" compose version >/dev/null 2>&1; then
+    exec "$docker" "$@"
+  fi
+  shift
+  exec "${MAKES_COMPOSE:-$wrapper_dir/docker-compose}" "$@"
+fi
+
+if [[ -z $docker ]]; then
+  printf '%s\n' 'ERROR: Docker is not installed or not in PATH.' >&2
+  exit 127
+fi
+
+exec "$docker" "$@"
