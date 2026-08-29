@@ -14,10 +14,12 @@ TARGETS := \
     clean \
     claude \
     docker \
+    docker-or-podman \
     git \
     help \
     init \
     local \
+    podman \
     shell \
    ,$(TARGETS))
 SHELL-TARGETS := $(TARGETS:%=%-shell)
