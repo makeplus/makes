@@ -1,4 +1,4 @@
-LDC-VERSION ?= 1.42.0
+LDC-VERSION ?= 1.43.0
 # https://github.com/ldc-developers/ldc
 
 ifndef LDC-LOADED
