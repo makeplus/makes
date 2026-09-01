@@ -1,4 +1,4 @@
-JANET-VERSION ?= 1.41.2
+JANET-VERSION ?= 1.42.0
 # https://github.com/janet-lang/janet
 
 ifndef JANET-LOADED
