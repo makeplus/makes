@@ -1,4 +1,4 @@
-JSONSCHEMA-VERSION ?= 16.8.0
+JSONSCHEMA-VERSION ?= 16.9.0
 # https://github.com/sourcemeta/jsonschema
 
 ifndef JSONSCHEMA-LOADED
