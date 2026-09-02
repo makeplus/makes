@@ -55,11 +55,17 @@ has "$out" "engine=$docker" 'Docker is preferred when both engines work'
 has "$out" "shell-deps=$docker" \
   'The managed shell checks only the selected engine'
 
+out=$(run_make docker-or-podman)
+is "$out" '' 'The public target validates Docker'
+
 out=$(DOCKER_TEST_INFO=fail run_make inspect)
 has "$out" "engine=$podman" \
   'Podman is selected when Docker is unavailable'
 has "$out" "shell-deps=$podman" \
   'The managed shell follows the Podman selection'
+
+out=$(DOCKER_TEST_INFO=fail run_make docker-or-podman)
+is "$out" '' 'The public target validates the Podman fallback'
 
 out=$(
   run_make DOCKER=missing-docker inspect
@@ -72,7 +78,7 @@ is "$out" '' 'The selected Podman prerequisite succeeds'
 if out=$(
   DOCKER_TEST_INFO=fail \
     PODMAN_TEST_INFO=fail \
-    run_make check 2>&1
+    run_make docker-or-podman 2>&1
 ); then
   fail 'The combined check fails when neither engine is available'
 else
