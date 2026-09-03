@@ -25,6 +25,15 @@ realclean:: clean
 	  $(RM) -r $(MAKES-REALCLEAN); \
 	fi
 
+# Make the local deps writable first so read-only trees (like cargo's
+# registry) don't defeat the removals in realclean and distclean.
+# This runs before the realclean prerequisite below.
+distclean::
+	@if [[ -d .cache ]]; then \
+	  set -x; \
+	  chmod -R +w .cache; \
+	fi
+
 distclean:: realclean
 ifdef MAKES-DISTCLEAN
 	@if [[ '$(MAKES-DISTCLEAN)' ]]; then \
