@@ -1,4 +1,4 @@
-UIUA-VERSION ?= 0.19.0
+UIUA-VERSION ?= 0.19.1
 # https://github.com/uiua-lang/uiua
 
 ifndef UIUA-LOADED
