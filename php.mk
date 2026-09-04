@@ -1,5 +1,8 @@
-PHP-VERSION ?= 8.5.10
-# https://github.com/php/php-src
+PHP-VERSION ?= 8.5.8
+# https://www.github.com/php/php-src
+# Only versions with a static-php build work here, so this is not
+# auto-updated.  Check the list before bumping it by hand:
+# https://dl.static-php.dev/static-php-cli/common/
 
 ifndef PHP-LOADED
 PHP-LOADED := true
