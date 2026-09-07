@@ -24,8 +24,8 @@
     commercial, batteries-included runtime. It emphasizes small deployments,
     cross-platform binaries, and embeddable scripting.
   slug: 8th
-  makes: true
-  fast: true
+  makes: false
+  fast: false
   linux: true
   macos: true
   win: true
