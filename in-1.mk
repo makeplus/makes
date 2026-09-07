@@ -1,4 +1,4 @@
-IN-1-VERSION ?= 0.1.0
+IN-1-VERSION ?= main
 # https://github.com/in-1-cc/in-1
 
 ifndef IN-1-LOADED
@@ -7,8 +7,8 @@ $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
 IN-1-REPO ?= https://github.com/in-1-cc/in-1
-# The git ref to clone; set it to a branch or commit to try one out
-IN-1-REF ?= v$(IN-1-VERSION)
+# The git ref to clone; override it to try another branch or tag
+IN-1-REF ?= $(IN-1-VERSION)
 IN-1-DIR ?= $(LOCAL-CACHE)/in-1-$(IN-1-VERSION)
 IN-1-BIN := $(IN-1-DIR)/bin
 
@@ -26,7 +26,7 @@ $(IN-1): $(IN-1-DIR)
 	@$(ECHO)
 
 $(IN-1-DIR):
-	@$(ECHO) "* Cloning 'in-1' locally (v$(IN-1-VERSION))"
+	@$(ECHO) "* Cloning 'in-1' locally ($(IN-1-REF))"
 	$Q git clone$(if $Q, -q) --depth=1 --branch $(IN-1-REF) \
 	  --config advice.detachedHead=false \
 	  $(IN-1-REPO) $@
