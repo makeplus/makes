@@ -13,28 +13,28 @@ ARTURO-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
-OA-linux-arm64 := mini-arm64-linux
-OA-linux-int64 := full-x86_64-linux
-OA-macos-arm64 := mini-arm64-macos
-OA-macos-int64 := full-x86_64-macos
+OA-linux-arm64 := linux-arm64-mini
+OA-linux-int64 := linux-amd64
+OA-macos-arm64 := macos-arm64-mini
+OA-macos-int64 := macos-amd64
 OA-windows-int64 := windows-amd64
 
 ARTURO-NAME := arturo-$(ARTURO-VERSION)-$(OA-$(OS-ARCH))
+ARTURO-ZIP := $(ARTURO-NAME).zip
 ifeq ($(OS-NAME),windows)
-ARTURO-TAR := $(ARTURO-NAME).zip
 ARTURO := $(LOCAL-BIN)/arturo.exe
 else
-ARTURO-TAR := $(ARTURO-NAME).tar.gz
 ARTURO := $(LOCAL-BIN)/arturo
 endif
 ARTURO-DOWN := https://github.com/arturo-lang/arturo
-ARTURO-DOWN := $(ARTURO-DOWN)/releases/download/v$(ARTURO-VERSION)/$(ARTURO-TAR)
+ARTURO-DOWN := $(ARTURO-DOWN)/releases/download/v$(ARTURO-VERSION)
+ARTURO-DOWN := $(ARTURO-DOWN)/$(ARTURO-ZIP)
 
 SHELL-DEPS += $(ARTURO)
 
 
 ifeq ($(OS-NAME),windows)
-$(ARTURO): $(LOCAL-CACHE)/$(ARTURO-TAR)
+$(ARTURO): $(LOCAL-CACHE)/$(ARTURO-ZIP)
 	rm -rf $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)
 	mkdir -p $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)
 	unzip -q -d $(LOCAL-TMP)/arturo-$(ARTURO-VERSION) $<
@@ -42,15 +42,17 @@ $(ARTURO): $(LOCAL-CACHE)/$(ARTURO-TAR)
 	touch $@
 	@echo
 else
-$(ARTURO): $(LOCAL-CACHE)/$(ARTURO-TAR)
-	tar -C $(LOCAL-CACHE) -xf $< -- arturo
-	[[ -e $(LOCAL-CACHE)/arturo ]]
-	mv $(LOCAL-CACHE)/arturo $@
+$(ARTURO): $(LOCAL-CACHE)/$(ARTURO-ZIP)
+	rm -rf $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)
+	mkdir -p $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)
+	unzip -q -d $(LOCAL-TMP)/arturo-$(ARTURO-VERSION) $<
+	[[ -e $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)/arturo ]]
+	mv $(LOCAL-TMP)/arturo-$(ARTURO-VERSION)/arturo $@
 	touch $@
 	@echo
 endif
 
-$(LOCAL-CACHE)/$(ARTURO-TAR):
+$(LOCAL-CACHE)/$(ARTURO-ZIP):
 	@echo "* Installing 'arturo' locally"
 	curl+ $(ARTURO-DOWN) > $@
 
