@@ -42,6 +42,15 @@ has "$out" "BABASHKA_BBIN_BIN_DIR=$ROOT/local/jus-9.8.7/bin" \
 has "$out" 'install io.github.paintparty/jus --git/tag v9.8.7' \
   'Installation pins the requested upstream tag'
 
+out=$(make --no-print-directory -n -f "$work/Makefile" \
+  JUS-SOURCE="$work/source with spaces" JUS-VERSION=dev \
+  "$ROOT/local/jus-dev/bin/jus")
+has "$out" "install '$work/source with spaces' --as jus" \
+  'Source override installs a quoted local checkout as jus'
+has "$out" "test -f '$work/source with spaces/bb.edn'" \
+  'Source override checks for the Jus project file'
+hasnt "$out" '--git/tag' 'Source override does not pin the published tag'
+
 if [[ -z ${slow-} ]]; then
   pass 'Use slow=1 to run the jus installation tests'
   done-testing

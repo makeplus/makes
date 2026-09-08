@@ -1,4 +1,5 @@
 JUS-VERSION ?= 0.2.0
+JUS-SOURCE ?=
 # https://github.com/paintparty/jus
 
 ifndef JUS-LOADED
@@ -19,8 +20,14 @@ export PATH
 
 $(JUS): $(BBIN) $(CLOJURE)
 	@$(ECHO) "* Installing 'jus' locally"
+ifneq (,$(JUS-SOURCE))
+	$Q test -f '$(JUS-SOURCE)/bb.edn'
+	$Q BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
+	  $(BBIN) install '$(JUS-SOURCE)' --as jus
+else
 	$Q BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
 	  $(BBIN) install io.github.paintparty/jus --git/tag v$(JUS-VERSION)
+endif
 	$Q test -x $@
 	$Q touch $@
 	@$(ECHO)
