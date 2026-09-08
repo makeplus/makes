@@ -1,4 +1,4 @@
-POWERSHELL-VERSION ?= 7.6.5
+POWERSHELL-VERSION ?= 7.6.6
 # https://github.com/PowerShell/PowerShell
 
 ifndef POWERSHELL-LOADED
