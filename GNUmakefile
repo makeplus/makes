@@ -4,6 +4,7 @@ include $M/init.mk
 export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $M/bpan.mk
+include $M/perl.mk
 include $M/clean.mk
 
 TARGETS := $(wildcard *.mk)
@@ -36,7 +37,7 @@ v ?=
 t ?= test/*.t test/*/*.t
 
 
-test: $(BPAN)
+test: $(BPAN) $(PERL)
 	prove -r$(if $(v), -v,) $t
 
 rev:

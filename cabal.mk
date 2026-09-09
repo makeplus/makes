@@ -10,16 +10,16 @@ include $(MAKES)/ghc.mk
 export CABAL_DIR := $(LOCAL-HOME)/cabal
 CABAL-INDEX := $(CABAL_DIR)/.index-updated
 
-OA-linux-arm64 := aarch64-linux-deb12
-OA-linux-int64 := x86_64-linux-ubuntu22_04
-OA-macos-arm64 := aarch64-darwin
-OA-macos-int64 := x86_64-darwin
-OA-windows-int64 := x86_64-windows
+CABAL-PLATFORM-linux-arm64 := aarch64-linux-unknown
+CABAL-PLATFORM-linux-int64 := x86_64-linux-unknown
+CABAL-PLATFORM-macos-arm64 := aarch64-apple-darwin
+CABAL-PLATFORM-macos-int64 := x86_64-apple-darwin
+CABAL-PLATFORM-windows-int64 := x86_64-mingw64
 
 ifeq ($(OS-NAME),windows)
-CABAL-TAR := cabal-install-$(CABAL-VERSION)-$(OA-$(OS-ARCH)).zip
+CABAL-TAR := cabal-install-$(CABAL-VERSION)-$(CABAL-PLATFORM-$(OS-ARCH)).zip
 else
-CABAL-TAR := cabal-install-$(CABAL-VERSION)-$(OA-$(OS-ARCH)).tar.xz
+CABAL-TAR := cabal-install-$(CABAL-VERSION)-$(CABAL-PLATFORM-$(OS-ARCH)).tar.xz
 endif
 CABAL-DOWN := https://downloads.haskell.org/~cabal
 CABAL-DOWN := $(CABAL-DOWN)/cabal-install-$(CABAL-VERSION)/$(CABAL-TAR)
