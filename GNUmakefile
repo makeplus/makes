@@ -51,7 +51,7 @@ version-check:
 	util/check-versions
 
 version-update:
-	$Q $(MAKE) --no-pr -f makefile.mk shell WITH=ys CMD='util/version-update'
+	$Q $(MAKE) --no-pr -f makefile.mk shell WITH=yamlscript CMD='util/version-update'
 
 remote ?= origin
 git-push:

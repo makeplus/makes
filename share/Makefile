@@ -10,11 +10,10 @@ include $M/init.mk
 # include $M/crystal.mk
 # include $M/go.mk
 # include $M/just.mk
-# include $M/pulumi.mk
 # include $M/python.mk
 # include $M/rust.mk
+# include $M/yamlscript.mk
 # include $M/yq.mk
-# include $M/ys.mk
 
 ### JVM Languages and Tools
 # include $M/java.mk
