@@ -4,6 +4,7 @@
 #   slug: Lower case word that is name of .mk file
 #   makes: Has a .mk file here
 #   fast: Can install from prebuilt binary
+#   time: Observed successful install duration, including possible cache reuse
 #   docker: Fully qualified public container image name
 #   linux: Supports Linux
 #   macos: Supports macOS
@@ -68,6 +69,7 @@ Ada:
   slug: gnat
   makes: true
   fast: true
+  time: 14.49s
   linux: true
   macos: true
   win: true
@@ -129,6 +131,7 @@ Arturo:
   slug: arturo
   makes: true
   fast: true
+  time: 0.43s
   linux: true
   macos: true
   win: true
@@ -190,6 +193,7 @@ Babashka:
   slug: babashka
   makes: true
   fast: true
+  time: 0.97s
   linux: true
   macos: true
   win: true
@@ -210,6 +214,7 @@ Ballerina:
   slug: ballerina
   makes: true
   fast: true
+  time: 14.69s
   uses: java
   linux: true
   macos: true
@@ -273,6 +278,7 @@ C:
   slug: gcc
   makes: true
   fast: true
+  time: 3.56s
   linux: true
   macos: true
   win: true
@@ -293,6 +299,7 @@ C#:
   slug: dotnet
   makes: true
   fast: true
+  time: 8.98s
   linux: true
   macos: true
   win: true
@@ -313,6 +320,7 @@ C++:
   slug: gcc
   makes: true
   fast: true
+  time: 3.56s
   linux: true
   macos: true
   win: true
@@ -333,6 +341,7 @@ Cairo:
   slug: cairo
   makes: true
   fast: true
+  time: 3.12s
   linux: true
   macos: true
   win: true
@@ -373,6 +382,7 @@ CFML:
   slug: cfml
   makes: true
   fast: true
+  time: 4.63s
   uses: java
   linux: true
   macos: true
@@ -386,6 +396,27 @@ CFML:
     package: box.json
     publish: box publish
     auth: ForgeBox API token
+Chez Scheme:
+  desc: >
+    Chez Scheme is a native-code Scheme implementation with R6RS support,
+    threads, and an extensive foreign-function interface.
+    Its language extensions and compiler make it a distinct Scheme environment.
+  slug: chezscheme
+  makes: true
+  fast: false
+  time: 207.28s
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: source/Akku
+    site: https://akkuscm.org/
+    package: Akku.manifest or source repository
+    publish: git tag or Akku package submit
+    auth: git host credentials
 Clojure:
   desc: >
     Clojure is a modern Lisp on the JVM with immutable data structures and
@@ -394,6 +425,7 @@ Clojure:
   slug: clojure
   makes: true
   fast: true
+  time: 3.66s
   uses: java
   linux: true
   macos: true
@@ -437,6 +469,7 @@ CoffeeScript:
   slug: coffeescript
   makes: true
   fast: true
+  time: 3.11s
   uses: node
   linux: true
   macos: true
@@ -458,6 +491,7 @@ Common Lisp:
   slug: sbcl
   makes: true
   fast: true
+  time: 3.10s
   linux: true
   macos: true
   win: true
@@ -501,6 +535,7 @@ Crystal:
   slug: crystal
   makes: true
   fast: true
+  time: 1.78s
   linux: true
   macos: true
   win: true
@@ -522,6 +557,7 @@ D:
   slug: d
   makes: true
   fast: true
+  time: 6.74s
   linux: true
   macos: true
   win: true
@@ -542,6 +578,7 @@ Dart:
   slug: dart
   makes: true
   fast: true
+  time: 9.06s
   linux: true
   macos: true
   win: true
@@ -562,6 +599,7 @@ Delphi Pascal:
   slug: delphi
   makes: true
   fast: true
+  time: 8.06s
   uses: fpc
   linux: true
   macos: true
@@ -689,6 +727,7 @@ Euphoria:
   slug: euphoria
   makes: true
   fast: true
+  time: 0.90s
   linux: true
   macos: true
   win: true
@@ -709,6 +748,7 @@ F#:
   slug: fsharp
   makes: true
   fast: true
+  time: 4.98s
   uses: dotnet
   linux: true
   macos: true
@@ -730,6 +770,7 @@ Factor:
   slug: factor
   makes: true
   fast: true
+  time: 3.02s
   linux: true
   macos: true
   win: true
@@ -790,6 +831,7 @@ Fortran:
   slug: fortran
   makes: true
   fast: true
+  time: 4.54s
   linux: true
   macos: true
   win: true
@@ -810,6 +852,7 @@ Free Pascal:
   slug: fpc
   makes: true
   fast: true
+  time: 4.87s
   linux: true
   macos: true
   win: true
@@ -831,6 +874,7 @@ FreeBASIC:
   slug: freebasic
   makes: true
   fast: true
+  time: 1.56s
   linux: true
   macos: false
   win: true
@@ -851,6 +895,7 @@ Futhark:
   slug: futhark
   makes: true
   fast: true
+  time: 1.24s
   linux: true
   macos: true
   win: false
@@ -871,6 +916,7 @@ GDScript:
   slug: gdscript
   makes: true
   fast: true
+  time: 2.77s
   uses: godot
   linux: true
   macos: true
@@ -892,6 +938,7 @@ Gleam:
   slug: gleam
   makes: true
   fast: true
+  time: 0.73s
   linux: true
   macos: true
   win: true
@@ -912,6 +959,7 @@ Glojure:
   slug: glojure
   makes: true
   fast: true
+  time: 0.72s
   linux: true
   macos: true
   win: true
@@ -932,6 +980,7 @@ Go:
   slug: go
   makes: true
   fast: true
+  time: 4.03s
   linux: true
   macos: true
   win: true
@@ -994,6 +1043,7 @@ Haskell:
   slug: ghc
   makes: true
   fast: true
+  time: 156.76s
   linux: true
   macos: true
   win: true
@@ -1034,6 +1084,7 @@ Hy:
   slug: hy
   makes: true
   fast: true
+  time: 0.89s
   uses: python
   linux: true
   macos: true
@@ -1096,6 +1147,7 @@ Janet:
   slug: janet
   makes: true
   fast: true
+  time: 0.47s
   linux: true
   macos: true
   win: true
@@ -1116,6 +1168,7 @@ Java:
   slug: java
   makes: true
   fast: true
+  time: 3.07s
   linux: true
   macos: true
   win: true
@@ -1136,6 +1189,7 @@ JavaScript:
   slug: node
   makes: true
   fast: true
+  time: 1.83s
   linux: true
   macos: true
   win: true
@@ -1156,6 +1210,7 @@ jq:
   slug: jq
   makes: true
   fast: true
+  time: 0.25s
   linux: true
   macos: true
   win: true
@@ -1176,6 +1231,7 @@ Julia:
   slug: julia
   makes: true
   fast: true
+  time: 42.39s
   linux: true
   macos: true
   win: true
@@ -1196,6 +1252,7 @@ Kotlin:
   slug: kotlin
   makes: true
   fast: true
+  time: 5.34s
   uses: java
   linux: true
   macos: true
@@ -1217,6 +1274,7 @@ Lean:
   slug: lean
   makes: true
   fast: true
+  time: 36.85s
   linux: true
   macos: true
   win: true
@@ -1259,6 +1317,7 @@ Lua:
   slug: lua
   makes: true
   fast: false
+  time: 8.19s
   docker: docker.io/nickblah/lua
   linux: true
   macos: true
@@ -1266,6 +1325,27 @@ Lua:
   ffi: true
   json: true
   exer: true
+  ship:
+    registry: LuaRocks
+    site: https://luarocks.org/
+    package: rockspec
+    publish: luarocks upload
+    auth: LuaRocks API key
+LuaJIT:
+  desc: >
+    LuaJIT extends Lua 5.1 with a tracing just-in-time compiler, built-in
+    bit operations, and a foreign-function interface.
+    It provides a distinct runtime and extension ecosystem for Lua programs.
+  slug: luajit
+  makes: true
+  fast: false
+  time: 33.61s
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
   ship:
     registry: LuaRocks
     site: https://luarocks.org/
@@ -1302,6 +1382,7 @@ MIPS Assembly:
   slug: mips
   makes: true
   fast: true
+  time: 2.66s
   uses: java
   linux: true
   macos: true
@@ -1324,6 +1405,7 @@ MoonBit:
   slug: moonbit
   makes: true
   fast: true
+  time: 9.11s
   linux: true
   macos: true
   win: true
@@ -1386,6 +1468,7 @@ Nim:
   slug: nim
   makes: true
   fast: true
+  time: 2.27s
   linux: true
   macos: true
   win: true
@@ -1406,6 +1489,7 @@ Objective-C:
   slug: objective-c
   makes: true
   fast: true
+  time: 127.98s
   uses: clang
   linux: true
   macos: true
@@ -1427,6 +1511,7 @@ OCaml:
   slug: ocaml
   makes: true
   fast: false
+  time: 162.43s
   docker: docker.io/ocaml/opam
   linux: true
   macos: true
@@ -1448,6 +1533,7 @@ Odin:
   slug: odin
   makes: true
   fast: true
+  time: 2.46s
   linux: true
   macos: true
   win: true
@@ -1468,6 +1554,7 @@ Perl:
   slug: perl
   makes: true
   fast: true
+  time: 1.30s
   linux: true
   macos: true
   win: true
@@ -1488,6 +1575,7 @@ Pharo:
   slug: pharo
   makes: true
   fast: true
+  time: 4.43s
   linux: true
   macos: true
   win: true
@@ -1508,6 +1596,7 @@ Phel:
   slug: phel
   makes: true
   fast: true
+  time: 2.45s
   uses: php
   linux: true
   macos: true
@@ -1529,6 +1618,7 @@ PHP:
   slug: php
   makes: true
   fast: true
+  time: 0.12s
   linux: true
   macos: true
   win: true
@@ -1549,6 +1639,7 @@ PowerShell:
   slug: powershell
   makes: true
   fast: true
+  time: 2.56s
   linux: true
   macos: true
   win: true
@@ -1569,6 +1660,7 @@ Prolog:
   slug: prolog
   makes: true
   fast: true
+  time: 0.65s
   linux: true
   macos: true
   win: true
@@ -1589,6 +1681,7 @@ Processing:
   slug: processing
   makes: true
   fast: true
+  time: 15.49s
   uses: java
   linux: true
   macos: true
@@ -1610,6 +1703,7 @@ PureScript:
   slug: purescript
   makes: true
   fast: true
+  time: 0.96s
   linux: true
   macos: true
   win: true
@@ -1630,6 +1724,7 @@ Pyret:
   slug: pyret
   makes: true
   fast: true
+  time: 5.80s
   linux: true
   macos: true
   win: true
@@ -1650,6 +1745,7 @@ Python:
   slug: python
   makes: true
   fast: true
+  time: 1.63s
   linux: true
   macos: true
   win: true
@@ -1670,6 +1766,7 @@ R:
   slug: r
   makes: true
   fast: true
+  time: 4.19s
   linux: true
   macos: true
   win: true
@@ -1690,6 +1787,7 @@ Racket:
   slug: racket
   makes: true
   fast: true
+  time: 8.13s
   linux: true
   macos: true
   win: true
@@ -1710,6 +1808,7 @@ Raku:
   slug: raku
   makes: true
   fast: true
+  time: 5.14s
   linux: true
   macos: true
   win: true
@@ -1730,6 +1829,7 @@ ReasonML:
   slug: reasonml
   makes: true
   fast: true
+  time: 2.39s
   uses: node
   linux: true
   macos: true
@@ -1751,6 +1851,7 @@ Red:
   slug: red
   makes: true
   fast: true
+  time: 2.87s
   linux: true
   macos: true
   win: true
@@ -1771,6 +1872,7 @@ Roc:
   slug: roc
   makes: true
   fast: true
+  time: 1.35s
   linux: true
   macos: true
   win: false
@@ -1791,6 +1893,7 @@ Ruby:
   slug: ruby
   makes: true
   fast: true
+  time: 3.27s
   linux: true
   macos: true
   win: true
@@ -1811,6 +1914,7 @@ Rust:
   slug: rust
   makes: true
   fast: true
+  time: 17.09s
   linux: true
   macos: true
   win: true
@@ -1831,6 +1935,7 @@ Scala:
   slug: scala
   makes: true
   fast: true
+  time: 1.78s
   uses: java
   linux: true
   macos: true
@@ -1852,6 +1957,7 @@ Scheme:
   slug: scheme
   makes: true
   fast: true
+  time: 4.76s
   uses: racket
   linux: true
   macos: true
@@ -1894,6 +2000,7 @@ Solidity:
   slug: solidity
   makes: true
   fast: true
+  time: 0.60s
   linux: true
   macos: true
   win: true
@@ -1914,6 +2021,7 @@ SQLite:
   slug: sqlite
   makes: true
   fast: true
+  time: 0.82s
   linux: true
   macos: true
   win: true
@@ -1955,6 +2063,7 @@ Swift:
   slug: swift
   makes: true
   fast: true
+  time: 32.89s
   linux: true
   macos: true
   win: true
@@ -1996,6 +2105,7 @@ Tcl:
   slug: tcl
   makes: true
   fast: true
+  time: 0.95s
   linux: true
   macos: true
   win: true
@@ -2016,6 +2126,7 @@ TypeScript:
   slug: typescript
   makes: true
   fast: true
+  time: 3.07s
   uses: node
   linux: true
   macos: true
@@ -2058,6 +2169,7 @@ Uiua:
   slug: uiua
   makes: true
   fast: true
+  time: 1.19s
   linux: true
   macos: true
   win: true
@@ -2078,6 +2190,7 @@ Unison:
   slug: unison
   makes: true
   fast: true
+  time: 1.46s
   linux: true
   macos: true
   win: true
@@ -2098,6 +2211,7 @@ V:
   slug: vlang
   makes: true
   fast: true
+  time: 1.29s
   linux: true
   macos: true
   win: true
@@ -2118,6 +2232,7 @@ Vim script:
   slug: vimscript
   makes: true
   fast: true
+  time: 0.62s
   uses: nvim
   linux: true
   macos: true
@@ -2140,6 +2255,7 @@ Visual Basic:
   slug: dotnet
   makes: true
   fast: true
+  time: 8.98s
   linux: true
   macos: true
   win: true
@@ -2182,6 +2298,7 @@ Wren:
   slug: wren
   makes: true
   fast: true
+  time: 0.40s
   linux: true
   macos: true
   win: true
@@ -2222,6 +2339,7 @@ YAMLScript:
   slug: yamlscript
   makes: true
   fast: true
+  time: 1.67s
   linux: true
   macos: true
   win: true
@@ -2242,6 +2360,7 @@ Zig:
   slug: zig
   makes: true
   fast: true
+  time: 20.48s
   linux: true
   macos: true
   win: true
