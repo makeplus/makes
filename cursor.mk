@@ -41,9 +41,9 @@ ifndef CURSOR-EXE
 $(error Unable to determine cursor executable)
 endif
 
-CURSOR := $(LOCAL-BIN)/$(CURSOR-EXE)
+CURSOR := $(LOCAL-BIN)/cursor
 
-SHELL-DEPS := $(CURSOR)
+SHELL-DEPS += $(CURSOR)
 
 
 $(CURSOR):

@@ -6,6 +6,8 @@ HAXE-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
+HAXE-LOCAL := $(LOCAL-ROOT)/haxe-$(HAXE-VERSION)
+
 OA-linux-arm64 := linux-arm64
 OA-linux-int64 := linux64
 OA-macos-arm64 := osx
@@ -22,7 +24,6 @@ HAXE-ARCHIVE := haxe-$(HAXE-VERSION)-$(OA-$(OS-ARCH)).tar.gz
 HAXE := $(HAXE-LOCAL)/haxe
 endif
 HAXE-DOWN := https://github.com/HaxeFoundation/haxe/releases/download/$(HAXE-VERSION)/$(HAXE-ARCHIVE)
-HAXE-LOCAL := $(LOCAL-ROOT)/haxe-$(HAXE-VERSION)
 
 SHELL-DEPS += $(HAXE)
 

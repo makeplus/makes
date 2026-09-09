@@ -6,6 +6,8 @@ J-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
+J-LOCAL := $(LOCAL-ROOT)/j-$(J-VERSION)
+
 OA-linux-int64 := linux
 OA-macos-arm64 := mac
 OA-macos-int64 := mac
@@ -24,7 +26,6 @@ J-ARCHIVE := j$(J-VERSION)_$(OA-$(OS-ARCH)).tar.gz
 J := $(J-LOCAL)/bin/jconsole
 endif
 J-DOWN := https://www.jsoftware.com/download/j9.7/install/$(J-ARCHIVE)
-J-LOCAL := $(LOCAL-ROOT)/j-$(J-VERSION)
 
 SHELL-DEPS += $(J)
 

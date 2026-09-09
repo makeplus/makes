@@ -9,6 +9,7 @@ include $(MAKES)/java.mk
 
 GROOVY-ZIP := apache-groovy-binary-$(GROOVY-VERSION).zip
 GROOVY-DOWN := https://downloads.apache.org/groovy/$(GROOVY-VERSION)/distribution/$(GROOVY-ZIP)
+GROOVY-ARCHIVE := https://archive.apache.org/dist/groovy/$(GROOVY-VERSION)/distribution/$(GROOVY-ZIP)
 GROOVY-LOCAL := $(LOCAL-ROOT)/groovy-$(GROOVY-VERSION)
 GROOVY := $(GROOVY-LOCAL)/bin/groovy
 
@@ -30,6 +31,10 @@ $(GROOVY): $(LOCAL-CACHE)/$(GROOVY-ZIP) $(JAVA)
 
 $(LOCAL-CACHE)/$(GROOVY-ZIP):
 	@$(ECHO) "* Installing 'groovy' locally"
-	$Q curl+ $(GROOVY-DOWN) > $@
+	$Q status=$$(curl -sSL -o $@.tmp -w '%{http_code}' $(GROOVY-DOWN)); \
+	  if [[ $$status = 404 ]]; then \
+	    curl+ $(GROOVY-ARCHIVE) > $@.tmp; \
+	  else [[ $$status = 200 ]]; fi; \
+	  mv $@.tmp $@
 
 endif

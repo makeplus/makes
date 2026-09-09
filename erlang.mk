@@ -6,6 +6,10 @@ ERLANG-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
 
+ifneq ($(OS-NAME),windows)
+include $(MAKES)/gcc.mk
+endif
+
 ERLANG-DIR := otp_src_$(ERLANG-VERSION)
 ifeq ($(OS-NAME),windows)
 ERLANG-ARC := otp_win64_$(ERLANG-VERSION).zip
@@ -46,10 +50,10 @@ $(ERL): $(LOCAL-CACHE)/$(ERLANG-ARC)
 	touch $@
 	@echo
 else
-$(ERL): $(LOCAL-CACHE)/$(ERLANG-ARC)
+$(ERL): $(LOCAL-CACHE)/$(ERLANG-ARC) $(GCC)
 	cd $(LOCAL-CACHE) && tar -xzf $<
 	cd $(LOCAL-CACHE)/$(ERLANG-DIR) && \
-		./configure --prefix=$(ERLANG-LOCAL) \
+		./configure --prefix=$(ERLANG-LOCAL) CC=$(GCC) \
 			--enable-dirty-schedulers \
 			--enable-smp-support \
 			--without-javac \

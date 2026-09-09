@@ -27,6 +27,18 @@ GCC-BIN := $(GCC-LOCAL)/bin
 override PATH := $(GCC-BIN):$(PATH)
 export PATH
 
+# xPack-built programs need the runtime libraries, not only the compiler.
+# Export only the selected native ABI directory, never the lib32 directory.
+ifeq ($(OS-NAME),linux)
+GCC-LIB := $(GCC-LOCAL)/$(if $(filter int64,$(ARCH-NAME)),lib64,lib)
+override LD_LIBRARY_PATH := $(GCC-LIB)$(if $(LD_LIBRARY_PATH),:$(LD_LIBRARY_PATH))
+export LD_LIBRARY_PATH
+else ifeq ($(OS-NAME),macos)
+GCC-LIB := $(GCC-LOCAL)/lib
+override DYLD_LIBRARY_PATH := $(GCC-LIB)$(if $(DYLD_LIBRARY_PATH),:$(DYLD_LIBRARY_PATH))
+export DYLD_LIBRARY_PATH
+endif
+
 GCC := $(GCC-BIN)/gcc
 GPP := $(GCC-BIN)/g++
 GFORTRAN := $(GCC-BIN)/gfortran

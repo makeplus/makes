@@ -1,10 +1,15 @@
 SMLNJ-VERSION ?= 110.99.9
+SML-VERSION = $(SMLNJ-VERSION)
 # https://smlnj.org/
 
 ifndef SML-LOADED
 SML-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 $(eval $(call include-local))
+
+ifeq (,$(filter linux-int64 macos-int64,$(OS-ARCH)))
+$(error sml.mk does not support $(OS-ARCH))
+endif
 
 SMLNJ-BASE := https://smlnj.cs.uchicago.edu/dist/working/$(SMLNJ-VERSION)
 SMLNJ-LOCAL := $(LOCAL-ROOT)/smlnj-$(SMLNJ-VERSION)
@@ -38,7 +43,7 @@ $(SML): $(SMLNJ-CACHE-FILES)
 	$Q rm -rf $(SMLNJ-LOCAL)
 	$Q mkdir -p $(SMLNJ-LOCAL)
 	$Q for f in $^; do tar -C $(SMLNJ-LOCAL) -xzf $$f; done
-	$Q cd $(SMLNJ-LOCAL) && config/install.sh -default $(SMLNJ-LOCAL)
+	$Q cd $(SMLNJ-LOCAL) && config/install.sh -default 64
 	$Q touch $@
 	@$(ECHO)
 

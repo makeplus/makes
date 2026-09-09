@@ -13,6 +13,8 @@ GMP-DOWN := https://ftp.gnu.org/gnu/gmp/$(GMP-TAR)
 GMP-LOCAL := $(LOCAL-ROOT)/gmp-$(GMP-VERSION)
 GMP-LIB := $(GMP-LOCAL)/lib/libgmp.a
 
+SHELL-DEPS += $(GMP-LIB)
+
 override PATH := $(GMP-LOCAL)/bin:$(PATH)
 export PATH
 override CPPFLAGS := -I$(GMP-LOCAL)/include $(CPPFLAGS)
