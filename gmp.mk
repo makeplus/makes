@@ -12,6 +12,8 @@ GMP-TAR := $(GMP-DIR).tar.xz
 GMP-DOWN := https://ftp.gnu.org/gnu/gmp/$(GMP-TAR)
 GMP-LOCAL := $(LOCAL-ROOT)/gmp-$(GMP-VERSION)
 GMP-LIB := $(GMP-LOCAL)/lib/libgmp.a
+# New build configuration invalidates libraries installed without PIC.
+GMP-PIC := $(LOCAL-ROOT)/.gmp-$(GMP-VERSION)-pic
 
 SHELL-DEPS += $(GMP-LIB)
 
@@ -23,12 +25,16 @@ export CPPFLAGS
 export LDFLAGS
 
 
-$(GMP-LIB): $(LOCAL-CACHE)/$(GMP-TAR) $(GCC)
+$(GMP-PIC):
+	$Q touch $@
+
+$(GMP-LIB): $(LOCAL-CACHE)/$(GMP-TAR) $(GCC) $(GMP-PIC)
 	$Q rm -rf $(GMP-LOCAL) $(LOCAL-TMP)/$(GMP-DIR)
 	$Q mkdir -p $(LOCAL-TMP)
 	$Q tar -C $(LOCAL-TMP) -xJf $<
 	$Q cd $(LOCAL-TMP)/$(GMP-DIR) && \
-	  ./configure --prefix=$(GMP-LOCAL) --disable-shared --enable-static && \
+	  ./configure --prefix=$(GMP-LOCAL) \
+	    --disable-shared --enable-static --with-pic CC=$(GCC) && \
 	  make && \
 	  make install
 	$Q touch $@

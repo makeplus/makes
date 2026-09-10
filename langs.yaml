@@ -362,6 +362,7 @@ Carp:
   slug: carp
   makes: true
   fast: false
+  time: 349.48s
   linux: true
   macos: true
   win: true
@@ -447,6 +448,7 @@ COBOL:
   slug: cobol
   makes: true
   fast: false
+  time: 93.64s
   docker: docker.io/esolang/cobol
   uses: gcc
   linux: true
@@ -643,6 +645,7 @@ Elixir:
   slug: elixir
   makes: true
   fast: false
+  time: 142.47s
   docker: docker.io/library/elixir
   uses: erlang
   linux: true
@@ -665,6 +668,7 @@ Elm:
   slug: elm
   makes: true
   fast: true
+  time: 0.80s
   linux: true
   macos: true
   win: true
@@ -706,6 +710,7 @@ Erlang:
   slug: erlang
   makes: true
   fast: false
+  time: 153.08s
   docker: docker.io/library/erlang
   linux: true
   macos: true
@@ -1022,6 +1027,7 @@ Groovy:
   slug: groovy
   makes: true
   fast: true
+  time: 33.04s
   uses: java
   linux: true
   macos: true
@@ -1064,6 +1070,7 @@ Haxe:
   slug: haxe
   makes: true
   fast: true
+  time: 0.73s
   linux: true
   macos: true
   win: true
@@ -1127,6 +1134,7 @@ J:
   slug: j
   makes: true
   fast: true
+  time: 0.47s
   linux: true
   macos: true
   win: true
@@ -1426,6 +1434,7 @@ MoonScript:
   slug: moonscript
   makes: true
   fast: true
+  time: 12.41s
   uses: lua
   linux: true
   macos: true
@@ -2043,6 +2052,7 @@ Standard ML:
   slug: sml
   makes: true
   fast: true
+  time: 37.60s
   linux: true
   macos: true
   win: true

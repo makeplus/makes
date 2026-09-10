@@ -29,7 +29,7 @@ $(COBC): $(LOCAL-CACHE)/$(COBOL-TAR) $(GMP-LIB) $(BERKELEYDB-LIB)
 	$Q cd $(LOCAL-TMP)/$(COBOL-DIR) && \
 	  ./configure --prefix=$(COBOL-LOCAL) --with-db CC=$(GCC) \
 	    BDB_CFLAGS="-I$(BERKELEYDB-LOCAL)/include" \
-	    BDB_LIBS="$(BERKELEYDB-LIB) -lpthread" \
+	    BDB_LIBS="$(BERKELEYDB-LIBS)" \
 	    CPPFLAGS="$(CPPFLAGS)" LDFLAGS="$(LDFLAGS)" && \
 	  make && \
 	  make install
