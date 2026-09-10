@@ -1,4 +1,4 @@
-SOLIDITY-VERSION ?= 0.8.36
+SOLIDITY-VERSION ?= 0.8.37
 # https://github.com/argotorg/solidity
 
 ifndef SOLIDITY-LOADED
