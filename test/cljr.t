@@ -10,12 +10,12 @@ cat > "$work/Makefile" <<MAKE
 M := $ROOT
 MAKES_LOCAL_DIR := $ROOT/local
 include \$(M)/init.mk
-include \$(M)/clojure-clr.mk
-include \$(M)/clojure-clr.mk
+include \$(M)/cljr.mk
+include \$(M)/cljr.mk
 
 inspect:
 	@printf '%s\n' \
-	  'executable=\$(CLOJURE-CLR)' \
+	  'executable=\$(CLJR)' \
 	  'dotnet=\$(DOTNET)' \
 	  'deps=\$(SHELL-DEPS)' \
 	  'home='\$\$DOTNET_CLI_HOME \
@@ -24,9 +24,9 @@ inspect:
 MAKE
 
 out=$(make --no-print-directory -f "$work/Makefile" \
-  CLOJURE-CLR-VERSION=9.8.7 inspect)
+  CLJR-VERSION=9.8.7 inspect)
 has "$out" \
-  "executable=$ROOT/local/clojure-clr-9.8.7/bin/cljr" \
+  "executable=$ROOT/local/cljr-9.8.7/bin/cljr" \
   'Version override selects a separate installation'
 has "$out" "dotnet=$ROOT/local/dotnet-sdk-" \
   'ClojureCLR includes the managed .NET SDK'
@@ -34,7 +34,7 @@ has "$out" "home=$ROOT/local/cache/dotnet-home" \
   '.NET CLI state stays local'
 has "$out" "packages=$ROOT/local/cache/nuget-packages" \
   'NuGet packages stay local'
-has "$out" "path=$ROOT/local/clojure-clr-9.8.7/bin:" \
+has "$out" "path=$ROOT/local/cljr-9.8.7/bin:" \
   'ClojureCLR is on PATH'
 deps=$(printf '%s\n' "$out" | while IFS= read -r line; do
   [[ $line != deps=* ]] || printf '%s' "${line#deps=}"
@@ -48,13 +48,13 @@ has "$out" '/bin/cljr.exe' \
   'Windows selects the executable suffix'
 
 out=$(make --no-print-directory -n -f "$work/Makefile" \
-  CLOJURE-CLR-VERSION=9.8.7 \
-  "$ROOT/local/clojure-clr-9.8.7/bin/cljr")
+  CLJR-VERSION=9.8.7 \
+  "$ROOT/local/cljr-9.8.7/bin/cljr")
 has "$out" \
   'dotnet tool install' \
   'Installation uses the managed .NET SDK'
 has "$out" \
-  "--tool-path $ROOT/local/clojure-clr-9.8.7/bin" \
+  "--tool-path $ROOT/local/cljr-9.8.7/bin" \
   'Installation uses a local .NET tool path'
 has "$out" \
   '--version 9.8.7 Clojure.Main' \
@@ -69,9 +69,9 @@ if [[ -z ${slow-} ]]; then
   exit 0
 fi
 
-out=$(make --no-pr clojure-clr-test \
+out=$(make --no-pr cljr-test \
   CMD='command -v cljr; printf "(+ 20 22)\n" | cljr')
-has "$out" "$ROOT/local/clojure-clr-1.12.6/bin/cljr" \
+has "$out" "$ROOT/local/cljr-1.12.6/bin/cljr" \
   'Found the managed ClojureCLR executable'
 has "$out" 'Clojure 1.12.6' 'Found the ClojureCLR version'
 has "$out" 'user=> 42' 'ClojureCLR evaluates an expression'
