@@ -23,12 +23,12 @@ export PATH
 SHELL-DEPS += $(CLJR)
 
 
-$(CLJR): $(DOTNET)
+$(CLJR): | $(DOTNET)
 	@$(ECHO) "* Installing 'cljr' locally"
 	$Q $(DOTNET) tool install \
 	  --tool-path $(CLJR-BIN) \
 	  --version $(CLJR-VERSION) Clojure.Main $O
-	$Q mv $(CLJR-BIN)/$(CLJR-TOOL) $@
+	$Q cp $(CLJR-BIN)/$(CLJR-TOOL) $@
 	$Q touch $@
 	@$(ECHO)
 
