@@ -2,8 +2,8 @@ ifndef FSHARP-LOADED
 FSHARP-LOADED := true
 $(if $(MAKES),,$(error Please 'include init.mk' first))
 
-include $(MAKES)/dotnet.mk
+include $(MAKES)/csharp.mk
 
-FSHARP := $(DOTNET)
+FSHARP := $(CSHARP)
 
 endif

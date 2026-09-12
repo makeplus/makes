@@ -19,8 +19,6 @@ CLJR := $(CLJR-BIN)/$(CLJR-EXE)
 
 override PATH := $(CLJR-BIN):$(PATH)
 export PATH
-export DOTNET_CLI_HOME ?= $(LOCAL-CACHE)/dotnet-home
-export NUGET_PACKAGES ?= $(LOCAL-CACHE)/nuget-packages
 
 SHELL-DEPS += $(CLJR)
 

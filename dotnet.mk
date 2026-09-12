@@ -1,5 +1,5 @@
-DOTNET-VERSION ?= 8.0.415
-# https://www.github.com/dotnet/sdk/tree/v8.0.414
+DOTNET-VERSION ?= 10.0.401
+# https://www.github.com/dotnet/sdk/tree/v10.0.401
 
 ifndef DOTNET-LOADED
 DOTNET-LOADED := true
@@ -26,6 +26,8 @@ DOTNET-ROOT := $(LOCAL-ROOT)/$(DOTNET-NAME)-$(DOTNET-VERSION)
 export DOTNET_ROOT := $(DOTNET-ROOT)
 override PATH := $(DOTNET-ROOT):$(PATH)
 export PATH
+export DOTNET_CLI_HOME ?= $(LOCAL-CACHE)/dotnet-home
+export NUGET_PACKAGES ?= $(LOCAL-CACHE)/nuget-packages
 
 DOTNET := $(DOTNET-ROOT)/dotnet
 

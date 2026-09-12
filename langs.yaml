@@ -296,7 +296,7 @@ C#:
     C# is a modern, statically typed language in the .NET ecosystem. It is used
     for web services, desktop applications, games, cloud systems, and tooling,
     with strong libraries and mature cross-platform runtime support.
-  slug: dotnet
+  slug: csharp
   makes: true
   fast: true
   time: 8.98s
@@ -754,7 +754,7 @@ F#:
   makes: true
   fast: true
   time: 4.98s
-  uses: dotnet
+  uses: csharp
   linux: true
   macos: true
   win: true
