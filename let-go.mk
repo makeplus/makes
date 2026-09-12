@@ -1,4 +1,5 @@
-LET-GO-VERSION ?= 1.11.1
+LET-GO-VERSION ?= 1.12.2
+# https://github.com/nooga/let-go
 LET-GO-REPO ?= nooga/let-go
 
 ifndef LET-GO-LOADED
