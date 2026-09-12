@@ -1,4 +1,4 @@
-AUTOHOTKEY-VERSION ?= 2.0.27
+AUTOHOTKEY-VERSION ?= 2.0.28
 # https://github.com/AutoHotkey/AutoHotkey
 
 ifndef AUTOHOTKEY-LOADED
