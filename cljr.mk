@@ -1,4 +1,4 @@
-CLJR-VERSION ?= 1.12.6
+CLJR-VERSION ?= 1.13.0-alpha6
 # https://github.com/clojure/clojure-clr
 
 ifndef CLJR-LOADED
