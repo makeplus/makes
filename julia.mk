@@ -1,5 +1,7 @@
 JULIA-VERSION ?= 1.13.0
-JULIA-VER ?= 1.12
+JULIA-MAJOR := $(word 1,$(subst ., ,$(JULIA-VERSION)))
+JULIA-MINOR := $(word 2,$(subst ., ,$(JULIA-VERSION)))
+JULIA-VER ?= $(JULIA-MAJOR).$(JULIA-MINOR)
 # https://github.com/JuliaLang/julia
 
 ifndef JULIA-LOADED
