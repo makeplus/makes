@@ -1,4 +1,4 @@
-HCLOUD-VERSION ?= 1.67.0
+HCLOUD-VERSION ?= 1.68.0
 # https://github.com/hetznercloud/cli
 
 ifndef HCLOUD-LOADED
