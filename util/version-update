@@ -1,7 +1,9 @@
 #!/usr/bin/env ys-0
 
+use: ipc
+
 defn main():
-  output =: bash-out('make version-check')
+  output =: ipc/sh-out('make' 'version-check')
   say: output:chomp
   updates =: parse-updates(output)
   if updates.# > 0:

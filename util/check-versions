@@ -1,5 +1,7 @@
 #!/usr/bin/env ys-0
 
+use: ipc fs
+
 defn main():
   show-missing:
   show-by-hand:
@@ -24,13 +26,11 @@ defn show-missing():
   say: 'Check support missing:'
   each name missing:
     url =: read("$name.mk") =~ /https:\/\/\S+/
-    printf "* %-10s - %s\n": +"$name.mk" url
+    say: format("* %-10s - %s" "$name.mk" url)
 
-parse-re =: qr("(?x)
-  [A-Z][A-Z0-9-]*-VERSION\s\?=\s(\d+\..*)\n
-  (?s:.*)
-  (https://(?:www\.)?github\.com/[-\w]+/[-\w]+)\n
-  ")
+version-re =: '[A-Z][A-Z0-9-]*-VERSION\s\?=\s(\d+\..*)\n'
+github-re =: '(?s:.*)(https://(www\.)?github\.com/[-\w]+/[-\w]+)\n'
+parse-re =: qr(version-re + github-re)
 
 files =: fs/glob('*.mk'):sort
 
@@ -52,7 +52,7 @@ defn show-versions():
             phrase =:
               format "* %-13s - %s": file url
             say: phrase
-            new =: bash(url:cmd).out:lines:highest
+            new =: ipc/shell(url:cmd).out:lines:highest
             if new:
               if new != ver:
                 conj files: +[file ver new url]
