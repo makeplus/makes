@@ -1,4 +1,4 @@
-LET-GO-VERSION ?= 1.12.2
+LET-GO-VERSION ?= 1.13.0
 # https://github.com/nooga/let-go
 LET-GO-REPO ?= nooga/let-go
 
