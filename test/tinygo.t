@@ -10,7 +10,7 @@ cat > "$work/Makefile" <<MAKE
 M := $ROOT
 MAKES_LOCAL_DIR := $work/local
 include \$(M)/init.mk
-include \$(M)/tiny-go.mk
+include \$(M)/tinygo.mk
 include \$(M)/tinygo.mk
 
 inspect:
@@ -67,7 +67,7 @@ has "$out" 'tinygo='"$work"'/local/tinygo-1.2.3/bin/tinygo' \
 
 deps=$(printf '%s\n' "$out" | perl -ne 'print $1 if /^deps=(.*)/')
 is "$(wc -w <<< "$deps" | tr -d ' ')" 1 \
-  'The compatibility include does not duplicate shell dependencies'
+  'Repeated includes do not duplicate shell dependencies'
 
 if out=$(
   make --no-print-directory -f "$work/Makefile" \
