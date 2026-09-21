@@ -1,4 +1,4 @@
-GOBB-VERSION ?= 0.1.8
+GOBB-VERSION ?= 0.1.10
 # https://github.com/gloathub/gobb
 
 ifndef GOBB-LOADED
