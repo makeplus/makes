@@ -1,4 +1,4 @@
-CLJFMT-VERSION ?= 0.16.5
+CLJFMT-VERSION ?= 0.16.6
 # https://github.com/weavejester/cljfmt
 
 ifndef CLJFMT-LOADED
