@@ -1,4 +1,4 @@
-TYPOS-VERSION ?= 1.50.2
+TYPOS-VERSION ?= 1.50.3
 # https://github.com/crate-ci/typos
 
 ifndef TYPOS-LOADED
