@@ -1,4 +1,4 @@
-GROOVY-VERSION ?= 5.0.7
+GROOVY-VERSION ?= 6.0.0
 # https://downloads.apache.org/groovy/
 
 ifndef GROOVY-LOADED

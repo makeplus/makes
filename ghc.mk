@@ -1,4 +1,4 @@
-GHC-VERSION ?= 9.12.1
+GHC-VERSION ?= 9.14.1
 # https://www.github.com/ghc/ghc/tags
 
 ifndef GHC-LOADED

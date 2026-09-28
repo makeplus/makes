@@ -1,4 +1,4 @@
-ODIN-VERSION ?= dev-2026-06
+ODIN-VERSION ?= dev-2026-09
 # https://github.com/odin-lang/Odin
 
 ifndef ODIN-LOADED
@@ -8,9 +8,9 @@ $(eval $(call include-local))
 
 OA-linux-arm64 := linux-arm64-$(ODIN-VERSION)
 OA-linux-int64 := linux-amd64-$(ODIN-VERSION)
-OA-macos-arm64 := macos-arm64-dev-06
+OA-macos-arm64 := macos-arm64-$(ODIN-VERSION)
 OA-macos-int64 := macos-amd64-$(ODIN-VERSION)
-OA-windows-int64 := windows-$(ODIN-VERSION)
+OA-windows-int64 := windows-amd64-$(ODIN-VERSION)
 
 ifeq (windows,$(OS-NAME))
   ODIN-EXT := zip

@@ -1,4 +1,4 @@
-NBB-VERSION ?= 1.5.212
+NBB-VERSION ?= 1.6.214
 # https://www.npmjs.com/package/nbb
 
 ifndef NBB-LOADED

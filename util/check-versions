@@ -35,6 +35,8 @@ version-re =: '[A-Z][A-Z0-9-]*-VERSION\s\?=\s(\d+\..*)\n'
 github-re =: '(?s:.*)(https://(www\.)?github\.com/[-\w]+/[-\w]+)\n'
 parse-re =: qr(version-re + github-re)
 version-file-re =: /(?m)^[A-Z][A-Z0-9-]*-VERSION\s+\?=/
+current-version-re =:
+  /(?m)^[A-Z][A-Z0-9-]*-VERSION\s+\?=\s+(\S+)/
 tag-re =: +
   '^(Cabal-v|pandoc-cli-|bun-v|[a-z]+-?)?' +
   '[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
@@ -44,13 +46,27 @@ files =: fs/glob('*.mk'):sort
 defn show-skipped():
   say: 'Version updates skipped:'
   skipped =: skipped-files()
-  width =: max(skipped.map(count)*)
-  pattern =: +'* %-' + width:S + 's - %s'
+  name-width =: max(skipped.map(count)*)
+  version-width =:
+    max(skipped.map(\(current-version(_).#))*)
+  pattern =: +
+    '%-' + name-width:S + 's  %-' +
+    version-width:S + 's  %s'
   each file skipped:
+    version =: current-version(file)
     url =: file:read =~ /https:\/\/\S+/
     if url:
-      say: format(pattern file url)
-      say: "* $file"
+      say: format(pattern file version url)
+      say: format(pattern file version '')
+
+defn current-version(file):
+  version =: file:read.re-find(current-version-re).1
+  if version.starts?('$('):
+    then: 'dynamic'
+    else:
+      if version =~ /^\d/:
+        then: "v$version"
+        else: version
 
 defn skipped-files():
   automatic =: automatic-files()

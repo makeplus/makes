@@ -1,4 +1,4 @@
-DART-VERSION ?= 3.6.2
+DART-VERSION ?= 3.13.4
 # https://dart.dev
 
 ifndef DART-LOADED

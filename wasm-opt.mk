@@ -1,4 +1,4 @@
-WASM-OPT-VERSION ?= version_126
+WASM-OPT-VERSION ?= version_133
 
 ifndef WASM-OPT-LOADED
 WASM-OPT-LOADED := true
@@ -10,7 +10,7 @@ OA-linux-int64 := x86_64-linux
 OA-macos-arm64 := arm64-macos
 OA-macos-int64 := x86_64-macos
 
-# https://github.com/WebAssembly/binaryen/releases/download/version_126/binaryen-version_126-x86_64-linux.tar.gz
+# https://github.com/WebAssembly/binaryen/releases/download/version_133/binaryen-version_133-x86_64-linux.tar.gz
 
 WASM-OPT-TAR := binaryen-$(WASM-OPT-VERSION)-$(OA-$(OS-ARCH)).tar.gz
 WASM-OPT-DIR := binaryen-$(WASM-OPT-VERSION)

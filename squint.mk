@@ -1,4 +1,4 @@
-SQUINT-VERSION ?= 0.14.208
+SQUINT-VERSION ?= 0.14.210
 # https://www.npmjs.com/package/squint-cljs
 
 ifndef SQUINT-LOADED

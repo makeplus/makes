@@ -1,4 +1,4 @@
-PROCESSING-VERSION ?= 4.5.5
+PROCESSING-VERSION ?= 4.5.7
 # https://github.com/processing/processing4
 
 ifndef PROCESSING-LOADED
@@ -14,7 +14,7 @@ OA-windows-int64 := windows-x64
 
 $(if $(OA-$(OS-ARCH)),,$(error processing.mk does not support $(OS-ARCH)))
 
-PROCESSING-TAG := processing-1433-$(PROCESSING-VERSION)
+PROCESSING-TAG := processing-1435-$(PROCESSING-VERSION)
 PROCESSING-ZIP := processing-$(PROCESSING-VERSION)-$(OA-$(OS-ARCH))-portable.zip
 PROCESSING-DOWN := https://github.com/processing/processing4/releases/download/$(PROCESSING-TAG)/$(PROCESSING-ZIP)
 PROCESSING-LOCAL := $(LOCAL-ROOT)/processing-$(PROCESSING-VERSION)

@@ -1,4 +1,4 @@
-MOONSCRIPT-VERSION ?= 0.5.0-1
+MOONSCRIPT-VERSION ?= 0.7.0-1
 # https://luarocks.org/modules/leafo/moonscript
 
 ifndef MOONSCRIPT-LOADED

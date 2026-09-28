@@ -1,7 +1,7 @@
 OCAML-VERSION ?= 5.5.0
 # https://github.com/ocaml/opam
 
-OPAM-VERSION ?= 2.5.1
+OPAM-VERSION ?= 2.6.0
 
 ifndef OCAML-LOADED
 OCAML-LOADED := true

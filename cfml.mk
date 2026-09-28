@@ -1,4 +1,4 @@
-COMMANDBOX-VERSION ?= 6.3.3
+COMMANDBOX-VERSION ?= 6.3.4
 # https://www.ortussolutions.com/products/commandbox
 
 ifndef CFML-LOADED

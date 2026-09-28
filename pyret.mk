@@ -1,4 +1,4 @@
-PYRET-VERSION ?= 0.1.19
+PYRET-VERSION ?= 0.1.27
 # https://www.npmjs.com/package/pyret-npm
 
 ifndef PYRET-LOADED

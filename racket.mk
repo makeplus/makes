@@ -1,4 +1,4 @@
-RACKET-VERSION ?= 9.2
+RACKET-VERSION ?= 9.3
 # https://download.racket-lang.org/
 
 ifndef RACKET-LOADED
