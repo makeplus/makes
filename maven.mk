@@ -1,5 +1,6 @@
-MAVEN-VERSION ?= 3.10.0
-# https://github.com/apache/maven
+MAVEN-VERSION ?= 3.9.16
+# https://www.github.com/apache/maven
+# Maven tags can precede binary releases, so update this version by hand.
 
 ifndef MAVEN-LOADED
 MAVEN-LOADED := true
