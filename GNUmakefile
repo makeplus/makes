@@ -54,6 +54,9 @@ version-check:
 version-update:
 	$Q $(MAKE) --no-pr -f makefile.mk shell WITH=yamlscript CMD='util/version-update'
 
+version-update-skipped:
+	util/check-versions --skipped
+
 remote ?= origin
 git-push:
 	$(eval HTTPS-URL := $(shell git remote get-url $(remote)))

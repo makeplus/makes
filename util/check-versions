@@ -2,10 +2,13 @@
 
 use: ipc fs
 
-defn main():
-  show-missing:
-  show-by-hand:
-  show-versions:
+defn main(mode=nil):
+  if mode == '--skipped':
+    show-skipped:
+    else:
+      show-missing:
+      show-by-hand:
+      show-versions:
 
 missing =::
 - bison
@@ -31,19 +34,43 @@ defn show-missing():
 version-re =: '[A-Z][A-Z0-9-]*-VERSION\s\?=\s(\d+\..*)\n'
 github-re =: '(?s:.*)(https://(www\.)?github\.com/[-\w]+/[-\w]+)\n'
 parse-re =: qr(version-re + github-re)
+version-file-re =: /(?m)^[A-Z][A-Z0-9-]*-VERSION\s+\?=/
+tag-re =: +
+  '^(Cabal-v|pandoc-cli-|bun-v|[a-z]+-?)?' +
+  '[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$'
 
 files =: fs/glob('*.mk'):sort
+
+defn show-skipped():
+  say: 'Version updates skipped:'
+  skipped =: skipped-files()
+  width =: max(skipped.map(count)*)
+  pattern =: +'* %-' + width:S + 's - %s'
+  each file skipped:
+    url =: file:read =~ /https:\/\/\S+/
+    if url:
+      say: format(pattern file url)
+      say: "* $file"
+
+defn skipped-files():
+  automatic =: automatic-files()
+  skipped =: version-files()
+  skipped: .remove(\(_.in?(automatic)))
+
+defn version-files():
+  files.filter(\(_:read.re-find(version-file-re)))
+
+defn automatic-files():
+  files: .remove(\(_:read.re-find(/www\.github/)))
+    .remove(\(_.replace(/\.mk/).in?(missing)))
+    .filter(\(_:read.re-find(parse-re)))
 
 defn show-versions():
   say:
   say: 'Checking current versions:'
 
-  files =: files
-    .remove(\(_:read.re-find(/www\.github/)))
-    .remove(\(_.replace(/\.mk/).in?(missing)))
-
   files =:
-    reduce _ [] files:
+    reduce _ [] automatic-files():
       fn(files file):
         _ ver url =:
           file:read =~ parse-re
@@ -79,7 +106,7 @@ defn cmd(url): |
       --tags \
       $url | \
     cut -d/ -f3 | \
-    grep -E '^(Cabal-v|pandoc-cli-|bun-v|[a-z]+-?)?[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?$' | \
+    grep -E '$tag-re' | \
     sed -E 's/^(Cabal-v|pandoc-cli-|bun-v|OTP-|[a-z]+-?)//; s/\.ROLLING$//' | \
     sort -V
 
