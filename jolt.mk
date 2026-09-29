@@ -29,8 +29,17 @@ JOLT-DOWN := $(JOLT-DOWN)/releases/download/v$(JOLT-VERSION)/$(JOLT-ARC)
 
 JOLT-LOCAL := $(LOCAL-ROOT)/jolt-$(JOLT-VERSION)
 JOLT := $(JOLT-LOCAL)/bin/$(JOLT-EXE)
+JOLT-BASH-COMPLETION := \
+  $(LOCAL-SHARE)/bash-completion/completions/jolt
+JOLT-ZSH-COMPLETION := $(LOCAL-SHARE)/zsh/site-functions/_jolt
+JOLT-FISH-COMPLETION := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/jolt.fish
 
-SHELL-DEPS += $(JOLT)
+SHELL-DEPS += \
+  $(JOLT) \
+  $(JOLT-BASH-COMPLETION) \
+  $(JOLT-ZSH-COMPLETION) \
+  $(JOLT-FISH-COMPLETION)
 
 override PATH := $(JOLT-LOCAL)/bin:$(PATH)
 export PATH
@@ -40,24 +49,27 @@ $(JOLT): $(LOCAL-CACHE)/$(JOLT-ARC)
 	$Q rm -rf $(LOCAL-TMP)/jolt-$(JOLT-VERSION)
 	$Q mkdir -p \
 	  $(JOLT-LOCAL)/bin \
-	  $(LOCAL-TMP)/jolt-$(JOLT-VERSION) \
-	  $(LOCAL-SHARE)/bash-completion/completions \
-	  $(LOCAL-SHARE)/zsh/site-functions \
-	  $(LOCAL-SHARE)/fish/vendor_completions.d
+	  $(LOCAL-TMP)/jolt-$(JOLT-VERSION)
 	$Q case '$(JOLT-ARC)' in \
 	  *.zip) unzip -q $< -d $(LOCAL-TMP)/jolt-$(JOLT-VERSION) ;; \
 	  *) tar -C $(LOCAL-TMP)/jolt-$(JOLT-VERSION) -xzf $< ;; \
 	esac
 	$Q cp $$(find $(LOCAL-TMP)/jolt-$(JOLT-VERSION) -name $(JOLT-EXE) -type f | head -1) $@
 	$Q chmod +x $@
-	$Q $@ completions bash > \
-	  $(LOCAL-SHARE)/bash-completion/completions/jolt
-	$Q $@ completions zsh > \
-	  $(LOCAL-SHARE)/zsh/site-functions/_jolt
-	$Q $@ completions fish > \
-	  $(LOCAL-SHARE)/fish/vendor_completions.d/jolt.fish
 	$Q touch $@
 	@$(ECHO)
+
+$(JOLT-BASH-COMPLETION): $(JOLT)
+	$Q mkdir -p $(@D)
+	$Q $(JOLT) completions bash > $@
+
+$(JOLT-ZSH-COMPLETION): $(JOLT)
+	$Q mkdir -p $(@D)
+	$Q $(JOLT) completions zsh > $@
+
+$(JOLT-FISH-COMPLETION): $(JOLT)
+	$Q mkdir -p $(@D)
+	$Q $(JOLT) completions fish > $@
 
 $(LOCAL-CACHE)/$(JOLT-ARC):
 	@$(ECHO) "* Installing 'jolt' locally"

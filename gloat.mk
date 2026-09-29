@@ -14,26 +14,51 @@ override PATH := $(GLOAT-BIN):$(PATH)
 export PATH
 
 GLOAT := $(GLOAT-BIN)/gloat
+GLOAT-BASH-COMPLETION := \
+  $(LOCAL-SHARE)/bash-completion/completions/gloat
+GLOAT-ZSH-COMPLETION := $(LOCAL-SHARE)/zsh/site-functions/_gloat
+GLOAT-FISH-COMPLETION := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/gloat.fish
+GLOAT-MAN-NAMES := \
+  gloat.1 \
+  gloat-go-interop.1 \
+  gloat-install.1 \
+  gloat-java-interop.1 \
+  gloat-repl.1 \
+  gloat-tutorial.1
+GLOAT-MAN := $(addprefix $(LOCAL-MAN)/man1/,$(GLOAT-MAN-NAMES))
 
-SHELL-DEPS += $(GLOAT)
+SHELL-DEPS += \
+  $(GLOAT) \
+  $(GLOAT-BASH-COMPLETION) \
+  $(GLOAT-ZSH-COMPLETION) \
+  $(GLOAT-FISH-COMPLETION) \
+  $(GLOAT-MAN)
 
 
 $(GLOAT): $(GLOAT-DIR)
 	$Q gloat --version $O
-	$Q mkdir -p \
-	  $(LOCAL-SHARE)/bash-completion/completions \
-	  $(LOCAL-SHARE)/zsh/site-functions \
-	  $(LOCAL-SHARE)/fish/vendor_completions.d \
-	  $(LOCAL-MAN)/man1
-	$Q cp $(GLOAT-DIR)/template/completion.bash \
-	  $(LOCAL-SHARE)/bash-completion/completions/gloat
-	$Q cp $(GLOAT-DIR)/template/completion.zsh \
-	  $(LOCAL-SHARE)/zsh/site-functions/_gloat
-	$Q cp $(GLOAT-DIR)/template/completion.fish \
-	  $(LOCAL-SHARE)/fish/vendor_completions.d/gloat.fish
-	$Q cp $(GLOAT-DIR)/man/man1/*.1 $(LOCAL-MAN)/man1/
 	$Q touch $@
 	@$(ECHO)
+
+$(GLOAT-BASH-COMPLETION): $(GLOAT)
+	$Q mkdir -p $(@D)
+	$Q cp $(GLOAT-DIR)/template/completion.bash \
+	  $@
+
+$(GLOAT-ZSH-COMPLETION): $(GLOAT)
+	$Q mkdir -p $(@D)
+	$Q cp $(GLOAT-DIR)/template/completion.zsh \
+	  $@
+
+$(GLOAT-FISH-COMPLETION): $(GLOAT)
+	$Q mkdir -p $(@D)
+	$Q cp $(GLOAT-DIR)/template/completion.fish \
+	  $@
+
+$(GLOAT-MAN): $(GLOAT)
+	$Q mkdir -p $(@D)
+	$Q cp $(GLOAT-DIR)/man/man1/$(@F) $@
 
 $(GLOAT-DIR):
 	@$(ECHO) "* Cloning 'gloat' locally (v$(GLOAT-VERSION))"

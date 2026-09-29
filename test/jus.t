@@ -32,7 +32,12 @@ has "$out" "path=$ROOT/local/jus-9.8.7/bin:" 'jus is on PATH'
 deps=$(printf '%s\n' "$out" | while IFS= read -r line; do
   [[ $line != deps=* ]] || printf '%s' "${line#deps=}"
 done)
-is "$(wc -w <<< "$deps" | tr -d ' ')" 5 \
+read -r -a dep_list <<< "$deps"
+declare -A unique_deps=()
+for dep in "${dep_list[@]}"; do
+  unique_deps[$dep]=1
+done
+is "${#dep_list[@]}" "${#unique_deps[@]}" \
   'Repeated includes do not duplicate shell dependencies'
 
 out=$(make --no-print-directory -n -f "$work/Makefile" \
