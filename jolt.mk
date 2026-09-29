@@ -38,13 +38,24 @@ export PATH
 
 $(JOLT): $(LOCAL-CACHE)/$(JOLT-ARC)
 	$Q rm -rf $(LOCAL-TMP)/jolt-$(JOLT-VERSION)
-	$Q mkdir -p $(JOLT-LOCAL)/bin $(LOCAL-TMP)/jolt-$(JOLT-VERSION)
+	$Q mkdir -p \
+	  $(JOLT-LOCAL)/bin \
+	  $(LOCAL-TMP)/jolt-$(JOLT-VERSION) \
+	  $(LOCAL-SHARE)/bash-completion/completions \
+	  $(LOCAL-SHARE)/zsh/site-functions \
+	  $(LOCAL-SHARE)/fish/vendor_completions.d
 	$Q case '$(JOLT-ARC)' in \
 	  *.zip) unzip -q $< -d $(LOCAL-TMP)/jolt-$(JOLT-VERSION) ;; \
 	  *) tar -C $(LOCAL-TMP)/jolt-$(JOLT-VERSION) -xzf $< ;; \
 	esac
 	$Q cp $$(find $(LOCAL-TMP)/jolt-$(JOLT-VERSION) -name $(JOLT-EXE) -type f | head -1) $@
 	$Q chmod +x $@
+	$Q $@ completions bash > \
+	  $(LOCAL-SHARE)/bash-completion/completions/jolt
+	$Q $@ completions zsh > \
+	  $(LOCAL-SHARE)/zsh/site-functions/_jolt
+	$Q $@ completions fish > \
+	  $(LOCAL-SHARE)/fish/vendor_completions.d/jolt.fish
 	$Q touch $@
 	@$(ECHO)
 

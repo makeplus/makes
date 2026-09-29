@@ -16,8 +16,9 @@ CLOJURE-DOWN := $(CLOJURE-DOWN)/$(CLOJURE-VERSION)/posix-install.sh
 
 CLOJURE-LOCAL := $(LOCAL-ROOT)/clojure-$(CLOJURE-VERSION)
 CLOJURE := $(CLOJURE-LOCAL)/bin/clojure
+CLOJURE-MAN := $(LOCAL-MAN)/man1/clojure.1
 
-SHELL-DEPS += $(CLOJURE)
+SHELL-DEPS += $(CLOJURE) $(CLOJURE-MAN)
 
 override PATH := $(CLOJURE-LOCAL)/bin:$(PATH)
 export PATH
@@ -28,5 +29,9 @@ $(CLOJURE): $(CLOJURE-DEPS) $(JAVA)
 	$Q bash <(curl+ $(CLOJURE-DOWN)) -p $(CLOJURE-LOCAL) $O
 	$Q touch $@
 	@$(ECHO)
+
+$(CLOJURE-MAN): $(CLOJURE)
+	$Q mkdir -p $(@D)
+	$Q cp $(CLOJURE-LOCAL)/share/man/man1/*.1 $(@D)/
 
 endif

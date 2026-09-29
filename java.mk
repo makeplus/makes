@@ -21,6 +21,7 @@ JAVA-DOWN := https://download.oracle.com/java
 JAVA-DOWN := $(JAVA-DOWN)/$(JAVA-VERSION)/latest/$(JAVA-ARCHIVE)
 
 JAVA-LOCAL := $(LOCAL-ROOT)/jdk-$(JAVA-VERSION)
+JAVA-TMP := $(LOCAL-TMP)/java-$(JAVA-VERSION)
 JAVA-HOME := $(JAVA-LOCAL)
 ifeq (macos,$(OS-NAME))
 JAVA-HOME := $(JAVA-HOME)/Contents/Home
@@ -38,16 +39,20 @@ SHELL-DEPS += $(JAVA)
 
 ifeq ($(OS-NAME),windows)
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
-	$Q cd $(LOCAL-ROOT) && unzip -q cache/$(JAVA-ARCHIVE)
+	$Q $(RM) -r $(JAVA-TMP)
+	$Q mkdir -p $(JAVA-TMP)
+	$Q unzip -q $< -d $(JAVA-TMP)
 	$Q $(RM) -r $(JAVA-LOCAL)
-	$Q mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
+	$Q mv $(JAVA-TMP)/jdk-$(JAVA-VERSION)* $(JAVA-LOCAL)
 	$Q touch $@
 	@$(ECHO)
 else
 $(JAVA): $(LOCAL-CACHE)/$(JAVA-ARCHIVE)
-	$Q cd $(LOCAL-ROOT) && tar -xzf cache/$(JAVA-ARCHIVE)
+	$Q $(RM) -r $(JAVA-TMP)
+	$Q mkdir -p $(JAVA-TMP)
+	$Q tar -C $(JAVA-TMP) -xzf $<
 	$Q $(RM) -r $(JAVA-LOCAL)
-	$Q mv $(LOCAL-ROOT)/jdk-$(JAVA-VERSION).* $(JAVA-LOCAL)
+	$Q mv $(JAVA-TMP)/jdk-$(JAVA-VERSION)* $(JAVA-LOCAL)
 	$Q touch $@
 	@$(ECHO)
 endif

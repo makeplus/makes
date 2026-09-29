@@ -20,6 +20,18 @@ SHELL-DEPS += $(GLOAT)
 
 $(GLOAT): $(GLOAT-DIR)
 	$Q gloat --version $O
+	$Q mkdir -p \
+	  $(LOCAL-SHARE)/bash-completion/completions \
+	  $(LOCAL-SHARE)/zsh/site-functions \
+	  $(LOCAL-SHARE)/fish/vendor_completions.d \
+	  $(LOCAL-MAN)/man1
+	$Q cp $(GLOAT-DIR)/template/completion.bash \
+	  $(LOCAL-SHARE)/bash-completion/completions/gloat
+	$Q cp $(GLOAT-DIR)/template/completion.zsh \
+	  $(LOCAL-SHARE)/zsh/site-functions/_gloat
+	$Q cp $(GLOAT-DIR)/template/completion.fish \
+	  $(LOCAL-SHARE)/fish/vendor_completions.d/gloat.fish
+	$Q cp $(GLOAT-DIR)/man/man1/*.1 $(LOCAL-MAN)/man1/
 	$Q touch $@
 	@$(ECHO)
 

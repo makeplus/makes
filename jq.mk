@@ -21,8 +21,11 @@ JQ := $(LOCAL-BIN)/jq
 endif
 JQ-DOWN := https://github.com/jqlang/jq
 JQ-DOWN := $(JQ-DOWN)/releases/download/jq-$(JQ-VERSION)/$(JQ-NAME)
+JQ-MAN-DOWN := https://raw.githubusercontent.com/jqlang/jq
+JQ-MAN-DOWN := $(JQ-MAN-DOWN)/jq-$(JQ-VERSION)/jq.1.prebuilt
+JQ-MAN := $(LOCAL-MAN)/man1/jq.1
 
-SHELL-DEPS += $(JQ)
+SHELL-DEPS += $(JQ) $(JQ-MAN)
 
 
 $(JQ): $(LOCAL-CACHE)/$(JQ-NAME)
@@ -34,5 +37,9 @@ $(JQ): $(LOCAL-CACHE)/$(JQ-NAME)
 $(LOCAL-CACHE)/$(JQ-NAME):
 	@echo "* Installing 'jq' locally"
 	curl+ $(JQ-DOWN) > $@
+
+$(JQ-MAN):
+	mkdir -p $(@D)
+	curl+ $(JQ-MAN-DOWN) > $@
 
 endif
