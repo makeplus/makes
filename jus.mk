@@ -1,4 +1,4 @@
-JUS-VERSION ?= 0.2.0
+JUS-VERSION ?= 0.3.0
 JUS-SOURCE ?=
 # https://github.com/paintparty/jus
 
