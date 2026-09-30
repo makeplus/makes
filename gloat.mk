@@ -14,11 +14,15 @@ override PATH := $(GLOAT-BIN):$(PATH)
 export PATH
 
 GLOAT := $(GLOAT-BIN)/gloat
-GLOAT-BASH-COMPLETION := \
+GLOAT-COMP-BASH := \
   $(LOCAL-SHARE)/bash-completion/completions/gloat
-GLOAT-ZSH-COMPLETION := $(LOCAL-SHARE)/zsh/site-functions/_gloat
-GLOAT-FISH-COMPLETION := \
+GLOAT-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_gloat
+GLOAT-COMP-FISH := \
   $(LOCAL-SHARE)/fish/vendor_completions.d/gloat.fish
+GLOAT-COMP := \
+  $(GLOAT-COMP-BASH) \
+  $(GLOAT-COMP-ZSH) \
+  $(GLOAT-COMP-FISH)
 GLOAT-MAN-NAMES := \
   gloat.1 \
   gloat-go-interop.1 \
@@ -30,9 +34,7 @@ GLOAT-MAN := $(addprefix $(LOCAL-MAN)/man1/,$(GLOAT-MAN-NAMES))
 
 SHELL-DEPS += \
   $(GLOAT) \
-  $(GLOAT-BASH-COMPLETION) \
-  $(GLOAT-ZSH-COMPLETION) \
-  $(GLOAT-FISH-COMPLETION) \
+  $(GLOAT-COMP) \
   $(GLOAT-MAN)
 
 
@@ -41,17 +43,17 @@ $(GLOAT): $(GLOAT-DIR)
 	$Q touch $@
 	@$(ECHO)
 
-$(GLOAT-BASH-COMPLETION): $(GLOAT)
+$(GLOAT-COMP-BASH): $(GLOAT)
 	$Q mkdir -p $(@D)
 	$Q cp $(GLOAT-DIR)/template/completion.bash \
 	  $@
 
-$(GLOAT-ZSH-COMPLETION): $(GLOAT)
+$(GLOAT-COMP-ZSH): $(GLOAT)
 	$Q mkdir -p $(@D)
 	$Q cp $(GLOAT-DIR)/template/completion.zsh \
 	  $@
 
-$(GLOAT-FISH-COMPLETION): $(GLOAT)
+$(GLOAT-COMP-FISH): $(GLOAT)
 	$Q mkdir -p $(@D)
 	$Q cp $(GLOAT-DIR)/template/completion.fish \
 	  $@

@@ -29,17 +29,19 @@ JOLT-DOWN := $(JOLT-DOWN)/releases/download/v$(JOLT-VERSION)/$(JOLT-ARC)
 
 JOLT-LOCAL := $(LOCAL-ROOT)/jolt-$(JOLT-VERSION)
 JOLT := $(JOLT-LOCAL)/bin/$(JOLT-EXE)
-JOLT-BASH-COMPLETION := \
+JOLT-COMP-BASH := \
   $(LOCAL-SHARE)/bash-completion/completions/jolt
-JOLT-ZSH-COMPLETION := $(LOCAL-SHARE)/zsh/site-functions/_jolt
-JOLT-FISH-COMPLETION := \
+JOLT-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_jolt
+JOLT-COMP-FISH := \
   $(LOCAL-SHARE)/fish/vendor_completions.d/jolt.fish
+JOLT-COMP := \
+  $(JOLT-COMP-BASH) \
+  $(JOLT-COMP-ZSH) \
+  $(JOLT-COMP-FISH)
 
 SHELL-DEPS += \
   $(JOLT) \
-  $(JOLT-BASH-COMPLETION) \
-  $(JOLT-ZSH-COMPLETION) \
-  $(JOLT-FISH-COMPLETION)
+  $(JOLT-COMP)
 
 override PATH := $(JOLT-LOCAL)/bin:$(PATH)
 export PATH
@@ -59,15 +61,15 @@ $(JOLT): $(LOCAL-CACHE)/$(JOLT-ARC)
 	$Q touch $@
 	@$(ECHO)
 
-$(JOLT-BASH-COMPLETION): $(JOLT)
+$(JOLT-COMP-BASH): $(JOLT)
 	$Q mkdir -p $(@D)
 	$Q $(JOLT) completions bash > $@
 
-$(JOLT-ZSH-COMPLETION): $(JOLT)
+$(JOLT-COMP-ZSH): $(JOLT)
 	$Q mkdir -p $(@D)
 	$Q $(JOLT) completions zsh > $@
 
-$(JOLT-FISH-COMPLETION): $(JOLT)
+$(JOLT-COMP-FISH): $(JOLT)
 	$Q mkdir -p $(@D)
 	$Q $(JOLT) completions fish > $@
 

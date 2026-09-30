@@ -53,22 +53,43 @@ include $(M)/gloat.mk
 include $(M)/jolt.mk
 
 support: \
-  $(GLOAT-BASH-COMPLETION) \
-  $(GLOAT-ZSH-COMPLETION) \
-  $(GLOAT-FISH-COMPLETION) \
+  $(GLOAT-COMP) \
   $(GLOAT-MAN) \
-  $(JOLT-BASH-COMPLETION) \
-  $(JOLT-ZSH-COMPLETION) \
-  $(JOLT-FISH-COMPLETION)
+  $(JOLT-COMP)
+
+completion-vars:
+	@printf '%s\n' \
+	  '$(GLOAT-COMP-BASH)' \
+	  '$(GLOAT-COMP-ZSH)' \
+	  '$(GLOAT-COMP-FISH)' \
+	  '$(JOLT-COMP-BASH)' \
+	  '$(JOLT-COMP-ZSH)' \
+	  '$(JOLT-COMP-FISH)'
 MAKE
 
-make --no-print-directory -f "$makefile" \
-  ROOT="$ROOT" \
-  TEST-LOCAL="$local_root" \
-  TEST-GLOAT="$gloat_root" \
-  OS-NAME=linux \
-  ARCH-NAME=int64 \
-  support
+make_args=(
+  --no-print-directory
+  -f "$makefile"
+  ROOT="$ROOT"
+  TEST-LOCAL="$local_root"
+  TEST-GLOAT="$gloat_root"
+  OS-NAME=linux
+  ARCH-NAME=int64
+)
+
+out=$(make "${make_args[@]}" completion-vars)
+expected=$(
+  printf '%s\n' \
+    "$local_root/share/bash-completion/completions/gloat" \
+    "$local_root/share/zsh/site-functions/_gloat" \
+    "$local_root/share/fish/vendor_completions.d/gloat.fish" \
+    "$local_root/share/bash-completion/completions/jolt" \
+    "$local_root/share/zsh/site-functions/_jolt" \
+    "$local_root/share/fish/vendor_completions.d/jolt.fish"
+)
+is "$out" "$expected" 'Per-shell completion variables use standard paths'
+
+make "${make_args[@]}" support
 
 for file in \
   share/bash-completion/completions/gloat \
