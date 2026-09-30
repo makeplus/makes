@@ -33,17 +33,17 @@ check_platform() {
 }
 
 check_platform linux int64 \
-  yamlstar-0.1.19-linux-x64.tar.xz yaml
+  yamlstar-0.1.21-linux-x64.tar.xz yaml
 check_platform linux arm64 \
-  yamlstar-0.1.19-linux-aarch64.tar.xz yaml
+  yamlstar-0.1.21-linux-aarch64.tar.xz yaml
 check_platform macos int64 \
-  yamlstar-0.1.19-macos-x64.tar.xz yaml
+  yamlstar-0.1.21-macos-x64.tar.xz yaml
 check_platform macos arm64 \
-  yamlstar-0.1.19-macos-arm64.tar.xz yaml
+  yamlstar-0.1.21-macos-arm64.tar.xz yaml
 check_platform windows int64 \
-  yamlstar-0.1.19-windows-x64.zip yaml.exe
+  yamlstar-0.1.21-windows-x64.zip yaml.exe
 check_platform windows arm64 \
-  yamlstar-0.1.19-windows-arm64.zip yaml.exe
+  yamlstar-0.1.21-windows-arm64.zip yaml.exe
 
 out=$(
   make --no-print-directory -f "$makefile" \

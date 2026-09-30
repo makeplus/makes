@@ -7,6 +7,12 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 local=$work/local
 
+case $OSTYPE in
+  msys*|cygwin*) exe=.exe ;;
+  *) exe= ;;
+esac
+read -r _ _ cljr_version < "$ROOT/cljr.mk"
+
 cat > "$work/Makefile" <<MAKE
 M := $ROOT
 MAKES_LOCAL_DIR := $local
@@ -27,7 +33,7 @@ MAKE
 out=$(make --no-print-directory -f "$work/Makefile" \
   CLJR-VERSION=9.8.7 inspect)
 has "$out" \
-  "executable=$local/cljr-9.8.7/bin/cljr" \
+  "executable=$local/cljr-9.8.7/bin/cljr$exe" \
   'Version override selects a separate installation'
 has "$out" "dotnet=$local/dotnet-sdk-" \
   'ClojureCLR includes the managed .NET SDK'
@@ -50,7 +56,7 @@ has "$out" '/bin/cljr.exe' \
 
 out=$(make --no-print-directory -n -f "$work/Makefile" \
   CLJR-VERSION=9.8.7 \
-  "$local/cljr-9.8.7/bin/cljr")
+  "$local/cljr-9.8.7/bin/cljr$exe")
 has "$out" \
   'dotnet tool install' \
   'Installation uses the managed .NET SDK'
@@ -64,7 +70,7 @@ has "$out" \
   "cp $local/cljr-9.8.7/bin/Clojure.Main" \
   'Installation preserves the upstream tool shim'
 
-cljr=$local/cljr-9.8.7/bin/cljr
+cljr=$local/cljr-9.8.7/bin/cljr$exe
 dotnet=$(printf '%s\n' "$out" | while IFS= read -r line; do
   [[ $line != *'/dotnet tool install'* ]] || printf '%s' "${line%% tool *}"
 done)
@@ -84,9 +90,9 @@ fi
 
 out=$(make --no-pr cljr-test \
   CMD='command -v cljr; printf "(+ 20 22)\n" | cljr')
-has "$out" "$ROOT/local/cljr-1.13.0-alpha6/bin/cljr" \
+has "$out" "$ROOT/local/cljr-$cljr_version/bin/cljr$exe" \
   'Found the managed ClojureCLR executable'
-has "$out" 'Clojure 1.13.0-alpha6' 'Found the ClojureCLR version'
+has "$out" "Clojure $cljr_version" 'Found the ClojureCLR version'
 has "$out" 'user=> 42' 'ClojureCLR evaluates an expression'
 
 done-testing

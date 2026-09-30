@@ -3,6 +3,12 @@
 # shellcheck disable=SC1091
 source test/init
 
+if [[ $OSTYPE == msys* || $OSTYPE == cygwin* ]]; then
+  pass "Skipping jus.t on Windows"
+  done-testing
+  exit 0
+fi
+
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 
@@ -33,11 +39,14 @@ deps=$(printf '%s\n' "$out" | while IFS= read -r line; do
   [[ $line != deps=* ]] || printf '%s' "${line#deps=}"
 done)
 read -r -a dep_list <<< "$deps"
-declare -A unique_deps=()
+unique_deps=
 for dep in "${dep_list[@]}"; do
-  unique_deps[$dep]=1
+  case " $unique_deps " in
+    *" $dep "*) ;;
+    *) unique_deps="${unique_deps:+$unique_deps }$dep" ;;
+  esac
 done
-is "${#dep_list[@]}" "${#unique_deps[@]}" \
+is "${#dep_list[@]}" "$(wc -w <<< "$unique_deps" | tr -d ' ')" \
   'Repeated includes do not duplicate shell dependencies'
 
 out=$(make --no-print-directory -n -f "$work/Makefile" \

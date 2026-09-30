@@ -3,6 +3,12 @@
 # shellcheck disable=SC1091
 source test/init
 
+if [[ $OSTYPE == msys* || $OSTYPE == cygwin* ]]; then
+  pass "Skipping bbin.t on Windows"
+  done-testing
+  exit 0
+fi
+
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 

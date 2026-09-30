@@ -32,15 +32,15 @@ check_platform() {
 }
 
 check_platform linux int64 \
-  ysd-0.1.5-linux_amd64.tar.gz ysd
+  ysd-0.1.12-linux_amd64.tar.gz ysd
 check_platform linux arm64 \
-  ysd-0.1.5-linux_arm64.tar.gz ysd
+  ysd-0.1.12-linux_arm64.tar.gz ysd
 check_platform macos arm64 \
-  ysd-0.1.5-darwin_arm64.tar.gz ysd
+  ysd-0.1.12-darwin_arm64.tar.gz ysd
 check_platform windows int64 \
-  ysd-0.1.5-windows_amd64.zip ysd.exe
+  ysd-0.1.12-windows_amd64.zip ysd.exe
 check_platform windows arm64 \
-  ysd-0.1.5-windows_arm64.zip ysd.exe
+  ysd-0.1.12-windows_arm64.zip ysd.exe
 
 out=$(
   make --no-print-directory -f "$makefile" \
@@ -61,8 +61,8 @@ fi
 out=$(
   make --no-pr yamlschema-test CMD='which ysd; ysd --version'
 )
-has "$out" "$ROOT/local/yamlschema-0.1.5/bin/ysd" \
-  'Found ysd in local/yamlschema-0.1.5'
-has "$out" 'ysd 0.1.5' 'Found YAMLSchema version 0.1.5'
+has "$out" "$ROOT/local/yamlschema-0.1.12/bin/ysd" \
+  'Found ysd in local/yamlschema-0.1.12'
+has "$out" 'ysd 0.1.12' 'Found YAMLSchema version 0.1.12'
 
 done-testing

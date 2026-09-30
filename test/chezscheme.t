@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+# shellcheck disable=SC1091,SC2153
 source test/init
 
 tmp=$(mktemp -d)
+tmp=$(cd "$tmp" && pwd -P)
 trap 'rm -rf "$tmp"' EXIT
 
 case $OSTYPE in
@@ -49,6 +51,14 @@ inspect:
 MAKE
 }
 
+find_command() {
+  local path=$1 name=$2 command dir
+
+  command=$(PATH="$path:$PATH" command -v "$name")
+  dir=$(cd "$(dirname "$command")" && pwd -P)
+  printf '%s/%s\n' "$dir" "$(basename "$command")"
+}
+
 matching=$tmp/matching
 mkdir -p "$matching"
 make_fake \
@@ -65,7 +75,7 @@ out=$(
   PATH="$matching:$PATH" \
     make --no-print-directory -f "$tmp/matching.mk" inspect
 )
-has "$out" "chez=$matching/chez$exe" \
+has "$out" "chez=$(find_command "$matching" chez)" \
   "matching system Chez is reused"
 has "$out" "petite=$matching/petite$exe" \
   "matching system Petite is reused"
@@ -98,7 +108,7 @@ out=$(
   PATH="$ordered:$PATH" \
     make --no-print-directory -f "$tmp/ordered.mk" inspect
 )
-has "$out" "chez=$ordered/scheme$exe" \
+has "$out" "chez=$(find_command "$ordered" scheme)" \
   "lookup continues to a valid later command"
 
 incomplete=$tmp/incomplete

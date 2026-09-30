@@ -33,17 +33,17 @@ check_platform() {
 }
 
 check_platform linux int64 \
-  libyamlstar-0.1.19-linux-x64.tar.xz libyamlstar.so
+  libyamlstar-0.1.21-linux-x64.tar.xz libyamlstar.so
 check_platform linux arm64 \
-  libyamlstar-0.1.19-linux-aarch64.tar.xz libyamlstar.so
+  libyamlstar-0.1.21-linux-aarch64.tar.xz libyamlstar.so
 check_platform macos int64 \
-  libyamlstar-0.1.19-macos-x64.tar.xz libyamlstar.dylib
+  libyamlstar-0.1.21-macos-x64.tar.xz libyamlstar.dylib
 check_platform macos arm64 \
-  libyamlstar-0.1.19-macos-arm64.tar.xz libyamlstar.dylib
+  libyamlstar-0.1.21-macos-arm64.tar.xz libyamlstar.dylib
 check_platform windows int64 \
-  libyamlstar-0.1.19-windows-x64.zip libyamlstar.dll
+  libyamlstar-0.1.21-windows-x64.zip libyamlstar.dll
 check_platform windows arm64 \
-  libyamlstar-0.1.19-windows-arm64.zip libyamlstar.dll
+  libyamlstar-0.1.21-windows-arm64.zip libyamlstar.dll
 
 out=$(
   make --no-print-directory -f "$makefile" \
@@ -66,7 +66,15 @@ fi
 
 make --no-pr libyamlstar-test CMD=true
 
-library=$ROOT/local/lib/libyamlstar.so
+library_name=$(
+  make --no-print-directory -f "$makefile" inspect |
+    while IFS='=' read -r key value; do
+      if [[ $key == library ]]; then
+        printf '%s\n' "$value"
+      fi
+    done
+)
+library=$ROOT/local/lib/$library_name
 if [[ -s $library ]]; then
   pass "Installed $library"
 else
