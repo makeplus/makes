@@ -2234,6 +2234,27 @@ V:
     package: v.mod
     publish: submit package at vpm.vlang.io/new
     auth: GitHub account
+Vala:
+  desc: >
+    Vala is a statically typed language for GNOME and GObject development. It
+    translates to C, provides direct access to C libraries, and produces native
+    programs without requiring a separate language runtime.
+  slug: vala
+  makes: false
+  fast: false
+  uses: gcc
+  linux: true
+  macos: true
+  win: true
+  ffi: true
+  json: true
+  exer: false
+  ship:
+    registry: none
+    site: https://vala.dev/
+    package: Meson project or source repository
+    publish: git tag or source archive
+    auth: git host credentials
 Vim script:
   desc: >
     Vim script is the extension language of Vim. It is specialized for editor
