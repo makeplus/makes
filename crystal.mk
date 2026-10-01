@@ -31,8 +31,24 @@ CRYSTAL := $(CRYSTAL-BIN)/crystal.exe
 else
 CRYSTAL := $(CRYSTAL-BIN)/crystal
 endif
+CRYSTAL-COMP-BASH := \
+  $(LOCAL-SHARE)/bash-completion/completions/crystal
+CRYSTAL-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_crystal
+CRYSTAL-COMP-FISH := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/crystal.fish
+CRYSTAL-COMP := \
+  $(CRYSTAL-COMP-BASH) \
+  $(CRYSTAL-COMP-ZSH) \
+  $(CRYSTAL-COMP-FISH)
+CRYSTAL-COMP-ZSH-CACHE := \
+  $(LOCAL-CACHE)/crystal-$(CRYSTAL-VERSION)-completion.zsh
+CRYSTAL-COMP-ZSH-DOWN := https://raw.githubusercontent.com
+CRYSTAL-COMP-ZSH-DOWN := \
+  $(CRYSTAL-COMP-ZSH-DOWN)/crystal-lang/crystal/$(CRYSTAL-VERSION)
+CRYSTAL-COMP-ZSH-DOWN := $(CRYSTAL-COMP-ZSH-DOWN)/etc/completion.zsh
+CRYSTAL-MAN := $(LOCAL-MAN)/man1/crystal.1.gz
 
-SHELL-DEPS += $(CRYSTAL)
+SHELL-DEPS += $(CRYSTAL) $(CRYSTAL-COMP) $(CRYSTAL-MAN)
 
 
 ifeq ($(OS-NAME),windows)
@@ -52,5 +68,26 @@ endif
 $(LOCAL-CACHE)/$(CRYSTAL-TAR):
 	@echo "* Installing 'crystal' locally"
 	curl+ $(CRYSTAL-DOWN) > $@
+
+$(CRYSTAL-COMP-BASH): $(CRYSTAL)
+	$Q mkdir -p $(@D)
+	$Q cp $(CRYSTAL-LOCAL)/share/bash-completion/completions/crystal $@
+
+$(CRYSTAL-COMP-ZSH): $(CRYSTAL-COMP-ZSH-CACHE)
+	$Q mkdir -p $(@D)
+	$Q cp $< $@
+
+$(CRYSTAL-COMP-FISH): $(CRYSTAL)
+	$Q mkdir -p $(@D)
+	$Q cp \
+	  $(CRYSTAL-LOCAL)/share/fish/vendor_completions.d/crystal.fish $@
+
+$(CRYSTAL-COMP-ZSH-CACHE):
+	$Q curl+ $(CRYSTAL-COMP-ZSH-DOWN) > $@
+
+$(CRYSTAL-MAN): $(CRYSTAL)
+	$Q mkdir -p $(LOCAL-MAN)/man1 $(LOCAL-MAN)/man5
+	$Q cp $(CRYSTAL-LOCAL)/share/man/man1/*.1.gz $(LOCAL-MAN)/man1/
+	$Q cp $(CRYSTAL-LOCAL)/share/man/man5/*.5.gz $(LOCAL-MAN)/man5/
 
 endif

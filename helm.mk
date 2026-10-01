@@ -28,12 +28,21 @@ HELM-DOWN := https://get.helm.sh/$(HELM-TAR)
 #------------------------------------------------------------------------------
 
 HELM := $(LOCAL-BIN)/helm
+HELM-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/helm
+HELM-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_helm
+HELM-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/helm.fish
+HELM-COMP := \
+  $(HELM-COMP-BASH) \
+  $(HELM-COMP-ZSH) \
+  $(HELM-COMP-FISH)
+HELM-MAN := $(LOCAL-MAN)/man1/helm.1
+HELM-SUPPORT-TMP := $(LOCAL-TMP)/helm-support-$(HELM-VERSION)
 
 #------------------------------------------------------------------------------
 # Shell Dependencies
 #------------------------------------------------------------------------------
 
-SHELL-DEPS += $(HELM)
+SHELL-DEPS += $(HELM) $(HELM-COMP) $(HELM-MAN)
 
 #------------------------------------------------------------------------------
 # Binary Installation Target
@@ -50,5 +59,33 @@ $(HELM): $(LOCAL-CACHE)/$(HELM-TAR)
 $(LOCAL-CACHE)/$(HELM-TAR):
 	@echo "* Installing 'helm' locally"
 	curl+ $(HELM-DOWN) > $@
+
+$(HELM-COMP-BASH): $(HELM)
+	$Q mkdir -p $(@D) $(HELM-SUPPORT-TMP)/{cache,config,data}
+	$Q HELM_CACHE_HOME=$(HELM-SUPPORT-TMP)/cache \
+	  HELM_CONFIG_HOME=$(HELM-SUPPORT-TMP)/config \
+	  HELM_DATA_HOME=$(HELM-SUPPORT-TMP)/data \
+	  $(HELM) completion bash > $@
+
+$(HELM-COMP-ZSH): $(HELM)
+	$Q mkdir -p $(@D) $(HELM-SUPPORT-TMP)/{cache,config,data}
+	$Q HELM_CACHE_HOME=$(HELM-SUPPORT-TMP)/cache \
+	  HELM_CONFIG_HOME=$(HELM-SUPPORT-TMP)/config \
+	  HELM_DATA_HOME=$(HELM-SUPPORT-TMP)/data \
+	  $(HELM) completion zsh > $@
+
+$(HELM-COMP-FISH): $(HELM)
+	$Q mkdir -p $(@D) $(HELM-SUPPORT-TMP)/{cache,config,data}
+	$Q HELM_CACHE_HOME=$(HELM-SUPPORT-TMP)/cache \
+	  HELM_CONFIG_HOME=$(HELM-SUPPORT-TMP)/config \
+	  HELM_DATA_HOME=$(HELM-SUPPORT-TMP)/data \
+	  $(HELM) completion fish > $@
+
+$(HELM-MAN): $(HELM)
+	$Q mkdir -p $(@D) $(HELM-SUPPORT-TMP)/{cache,config,data}
+	$Q HELM_CACHE_HOME=$(HELM-SUPPORT-TMP)/cache \
+	  HELM_CONFIG_HOME=$(HELM-SUPPORT-TMP)/config \
+	  HELM_DATA_HOME=$(HELM-SUPPORT-TMP)/data \
+	  $(HELM) docs --type man --dir $(@D)
 
 endif

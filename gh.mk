@@ -27,6 +27,14 @@ override PATH := $(GH-BIN):$(PATH)
 export PATH
 
 GH := $(GH-BIN)/gh
+GH-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/gh
+GH-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_gh
+GH-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/gh.fish
+GH-COMP := \
+  $(GH-COMP-BASH) \
+  $(GH-COMP-ZSH) \
+  $(GH-COMP-FISH)
+GH-MAN := $(LOCAL-MAN)/man1/gh.1
 
 GH-TOKEN-FILE ?= $(HOME)/.github-api-token
 
@@ -36,7 +44,7 @@ export GITHUB_TOKEN_FILE := $(GH-TOKEN-FILE)
 override GH-CMD := GITHUB_TOKEN=$$(< $$GITHUB_TOKEN_FILE) $(GH)
 endif
 
-SHELL-DEPS += $(GH)
+SHELL-DEPS += $(GH) $(GH-COMP) $(GH-MAN)
 
 
 ifeq ($(OS-NAME),linux)
@@ -57,5 +65,21 @@ endif
 $(LOCAL-CACHE)/$(GH-ARCHIVE):
 	@$(ECHO) "Installing 'gh' locally"
 	$Q curl+ $(GH-DOWN) > $@
+
+$(GH-COMP-BASH): $(GH)
+	$Q mkdir -p $(@D)
+	$Q $(GH) completion -s bash > $@
+
+$(GH-COMP-ZSH): $(GH)
+	$Q mkdir -p $(@D)
+	$Q $(GH) completion -s zsh > $@
+
+$(GH-COMP-FISH): $(GH)
+	$Q mkdir -p $(@D)
+	$Q $(GH) completion -s fish > $@
+
+$(GH-MAN): $(GH)
+	$Q mkdir -p $(@D)
+	$Q cp $(GH-LOCAL)/share/man/man1/*.1 $(@D)/
 
 endif
