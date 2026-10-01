@@ -33,8 +33,12 @@ ERL := $(ERLANG-BIN)/erl
 ERLC := $(ERLANG-BIN)/erlc
 ESCRIPT := $(ERLANG-BIN)/escript
 endif
+ERLANG-MAN := $(LOCAL-MAN)/man1/erl.1
 
 SHELL-DEPS += $(ERL)
+ifneq ($(OS-NAME),windows)
+SHELL-DEPS += $(ERLANG-MAN)
+endif
 
 
 ifeq ($(OS-NAME),windows)
@@ -72,5 +76,11 @@ endif
 $(LOCAL-CACHE)/$(ERLANG-ARC):
 	@echo "* Installing 'erlang' locally"
 	curl+ $(ERLANG-DOWN) > $@
+
+ifneq ($(OS-NAME),windows)
+$(ERLANG-MAN): $(ERL)
+	$Q mkdir -p $(@D)
+	$Q cp $(ERLANG-LOCAL)/lib/erlang/man/man1/* $(@D)/
+endif
 
 endif

@@ -33,8 +33,12 @@ override PATH := $(JAVA-BIN):$(PATH)
 export PATH
 
 JAVA := $(JAVA-BIN)/java
+JAVA-MAN := $(LOCAL-MAN)/man1/java.1
 
 SHELL-DEPS += $(JAVA)
+ifneq ($(OS-NAME),windows)
+SHELL-DEPS += $(JAVA-MAN)
+endif
 
 
 ifeq ($(OS-NAME),windows)
@@ -60,5 +64,11 @@ endif
 $(LOCAL-CACHE)/$(JAVA-ARCHIVE):
 	@$(ECHO) "* Installing 'java' locally"
 	$Q curl+ $(JAVA-DOWN) > $@
+
+ifneq ($(OS-NAME),windows)
+$(JAVA-MAN): $(JAVA)
+	$Q mkdir -p $(@D)
+	$Q cp $(JAVA-HOME)/man/man1/* $(@D)/
+endif
 
 endif

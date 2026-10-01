@@ -13,8 +13,9 @@ FUTHARK-TAR := $(FUTHARK-DIR).tar.xz
 FUTHARK-DOWN := https://github.com/diku-dk/futhark/releases/download/v$(FUTHARK-VERSION)/$(FUTHARK-TAR)
 FUTHARK-LOCAL := $(LOCAL-ROOT)/futhark-$(FUTHARK-VERSION)
 FUTHARK := $(FUTHARK-LOCAL)/bin/futhark
+FUTHARK-MAN := $(LOCAL-MAN)/man1/futhark.1.gz
 
-SHELL-DEPS += $(FUTHARK)
+SHELL-DEPS += $(FUTHARK) $(FUTHARK-MAN)
 
 override PATH := $(FUTHARK-LOCAL)/bin:$(PATH)
 export PATH
@@ -31,5 +32,9 @@ $(FUTHARK): $(LOCAL-CACHE)/$(FUTHARK-TAR)
 $(LOCAL-CACHE)/$(FUTHARK-TAR):
 	@$(ECHO) "* Installing 'futhark' locally"
 	$Q curl+ $(FUTHARK-DOWN) > $@
+
+$(FUTHARK-MAN): $(FUTHARK)
+	$Q mkdir -p $(@D)
+	$Q cp $(FUTHARK-LOCAL)/share/man/man1/* $(@D)/
 
 endif

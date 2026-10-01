@@ -24,11 +24,15 @@ LGX-DOWN := $(LGX-DOWN)/releases/download/v$(LGX-VERSION)/$(LGX-TAR)
 
 LGX-LOCAL := $(LOCAL-ROOT)/lgx-$(LGX-VERSION)
 LGX := $(LGX-LOCAL)/bin/lgx
+LGX-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/lgx
+LGX-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_lgx
+LGX-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/lgx.fish
+LGX-COMP := $(LGX-COMP-BASH) $(LGX-COMP-ZSH) $(LGX-COMP-FISH)
 
 export LGX_HOME ?= $(LOCAL-ROOT)/lgx
 export LGX_LG ?= $(LG)
 
-SHELL-DEPS += $(LGX)
+SHELL-DEPS += $(LGX) $(LGX-COMP)
 
 override PATH := $(LGX-LOCAL)/bin:$(PATH)
 export PATH
@@ -45,5 +49,17 @@ $(LGX): $(LOCAL-CACHE)/$(LGX-TAR) $(LG)
 $(LOCAL-CACHE)/$(LGX-TAR):
 	@$(ECHO) "* Installing 'lgx' locally"
 	$Q curl+ $(LGX-DOWN) > $@
+
+$(LGX-COMP-BASH): $(LGX)
+	$Q mkdir -p $(@D)
+	$Q $(LGX) completion bash > $@
+
+$(LGX-COMP-ZSH): $(LGX)
+	$Q mkdir -p $(@D)
+	$Q $(LGX) completion zsh > $@
+
+$(LGX-COMP-FISH): $(LGX)
+	$Q mkdir -p $(@D)
+	$Q $(LGX) completion fish > $@
 
 endif

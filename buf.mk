@@ -16,8 +16,13 @@ BUF-DOWN := https://github.com/bufbuild/buf
 BUF-DOWN := $(BUF-DOWN)/releases/download/v$(BUF-VERSION)/$(BUF-TAR)
 
 BUF := $(LOCAL-BIN)/buf
+BUF-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/buf
+BUF-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_buf
+BUF-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/buf.fish
+BUF-COMP := $(BUF-COMP-BASH) $(BUF-COMP-ZSH) $(BUF-COMP-FISH)
+BUF-MAN := $(LOCAL-SHARE)/man/man1/buf.1
 
-SHELL-DEPS += $(BUF)
+SHELL-DEPS += $(BUF) $(BUF-COMP) $(BUF-MAN)
 
 
 $(BUF): $(LOCAL-CACHE)/$(BUF-TAR)
@@ -29,5 +34,12 @@ $(BUF): $(LOCAL-CACHE)/$(BUF-TAR)
 $(LOCAL-CACHE)/$(BUF-TAR):
 	@$(ECHO) "* Installing 'buf' locally"
 	$Q curl+ $(BUF-DOWN) > $@
+
+$(BUF-COMP-BASH): $(BUF)
+	$Q mkdir -p $(@D)
+	$Q cp $(LOCAL-PREFIX)/etc/bash_completion.d/buf $@
+
+$(BUF-COMP-ZSH) $(BUF-COMP-FISH) $(BUF-MAN): $(BUF)
+	$Q test -s $@
 
 endif

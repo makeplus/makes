@@ -25,8 +25,12 @@ CAIRO-ARC := $(CAIRO-DIR).$(CAIRO-EXT)
 CAIRO-DOWN := https://github.com/software-mansion/scarb/releases/download/v$(CAIRO-VERSION)/$(CAIRO-ARC)
 CAIRO-LOCAL := $(LOCAL-ROOT)/cairo-$(CAIRO-VERSION)
 SCARB := $(CAIRO-LOCAL)/bin/$(SCARB-EXE)
+CAIRO-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/scarb
+CAIRO-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_scarb
+CAIRO-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/scarb.fish
+CAIRO-COMP := $(CAIRO-COMP-BASH) $(CAIRO-COMP-ZSH) $(CAIRO-COMP-FISH)
 
-SHELL-DEPS += $(SCARB)
+SHELL-DEPS += $(SCARB) $(CAIRO-COMP)
 
 override PATH := $(CAIRO-LOCAL)/bin:$(PATH)
 export PATH
@@ -47,5 +51,17 @@ endif
 $(LOCAL-CACHE)/$(CAIRO-ARC):
 	@$(ECHO) "* Installing 'cairo' locally"
 	$Q curl+ $(CAIRO-DOWN) > $@
+
+$(CAIRO-COMP-BASH): $(SCARB)
+	$Q mkdir -p $(@D)
+	$Q $(SCARB) completions bash > $@
+
+$(CAIRO-COMP-ZSH): $(SCARB)
+	$Q mkdir -p $(@D)
+	$Q $(SCARB) completions zsh > $@
+
+$(CAIRO-COMP-FISH): $(SCARB)
+	$Q mkdir -p $(@D)
+	$Q $(SCARB) completions fish > $@
 
 endif

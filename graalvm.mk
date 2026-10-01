@@ -40,8 +40,12 @@ export PATH
 
 GRAALVM := $(GRAALVM-BIN)/native-image
 JAVA := $(GRAALVM-BIN)/java
+GRAALVM-MAN := $(LOCAL-MAN)/man1/java.1
 
 SHELL-DEPS += $(GRAALVM)
+ifneq ($(OS-NAME),windows)
+SHELL-DEPS += $(GRAALVM-MAN)
+endif
 
 
 ifdef GRAALVM-UNAVAILABLE
@@ -68,5 +72,11 @@ endif
 $(LOCAL-CACHE)/$(GRAALVM-ARCHIVE):
 	@$(ECHO) "* Installing 'GraalVM' locally"
 	$Q curl+ $(GRAALVM-DOWN) > $@
+
+ifneq ($(OS-NAME),windows)
+$(GRAALVM-MAN): $(GRAALVM)
+	$Q mkdir -p $(@D)
+	$Q cp $(GRAALVM-HOME)/man/man1/* $(@D)/
+endif
 
 endif

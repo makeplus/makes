@@ -12,8 +12,13 @@ PHEL-DOWN := $(PHEL-DOWN)/releases/download/v$(PHEL-VERSION)/$(PHEL-PHAR)
 
 PHEL-LOCAL := $(LOCAL-ROOT)/phel-$(PHEL-VERSION)
 PHEL := $(PHEL-LOCAL)/bin/phel
+PHEL-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/phel
+PHEL-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_phel
+PHEL-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/phel.fish
+PHEL-COMP := $(PHEL-COMP-BASH) $(PHEL-COMP-ZSH) $(PHEL-COMP-FISH)
+PHEL-COMP-TMP := $(LOCAL-TMP)/phel-completion
 
-SHELL-DEPS += $(PHEL)
+SHELL-DEPS += $(PHEL) $(PHEL-COMP)
 
 override PATH := $(PHEL-LOCAL)/bin:$(PATH)
 export PATH
@@ -28,5 +33,17 @@ $(PHEL): $(LOCAL-CACHE)/phel-$(PHEL-VERSION).phar $(PHP)
 $(LOCAL-CACHE)/phel-$(PHEL-VERSION).phar:
 	@$(ECHO) "* Installing 'phel' locally"
 	$Q curl+ $(PHEL-DOWN) > $@
+
+$(PHEL-COMP-BASH): $(PHEL)
+	$Q mkdir -p $(@D) $(PHEL-COMP-TMP)
+	$Q cd $(PHEL-COMP-TMP) && $(PHEL) completion bash > $@
+
+$(PHEL-COMP-ZSH): $(PHEL)
+	$Q mkdir -p $(@D) $(PHEL-COMP-TMP)
+	$Q cd $(PHEL-COMP-TMP) && $(PHEL) completion zsh > $@
+
+$(PHEL-COMP-FISH): $(PHEL)
+	$Q mkdir -p $(@D) $(PHEL-COMP-TMP)
+	$Q cd $(PHEL-COMP-TMP) && $(PHEL) completion fish > $@
 
 endif

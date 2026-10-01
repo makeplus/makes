@@ -17,8 +17,11 @@ PANDOC-DOWN := https://github.com/jgm/pandoc/releases/download
 PANDOC-DOWN := $(PANDOC-DOWN)/$(PANDOC-VERSION)/$(PANDOC-TAR)
 
 PANDOC := $(LOCAL-BIN)/pandoc
+PANDOC-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/pandoc
+PANDOC-COMP := $(PANDOC-COMP-BASH)
+PANDOC-MAN := $(LOCAL-MAN)/man1/pandoc.1.gz
 
-SHELL-DEPS += $(PANDOC)
+SHELL-DEPS += $(PANDOC) $(PANDOC-COMP) $(PANDOC-MAN)
 
 
 $(PANDOC): $(LOCAL-CACHE)/$(PANDOC-TAR)
@@ -35,5 +38,14 @@ $(LOCAL-CACHE)/$(PANDOC-TAR):
 	@echo "* Installing 'pandoc' locally"
 	curl+ $(PANDOC-DOWN) > $@
 	@touch $@
+
+$(PANDOC-COMP-BASH): $(PANDOC)
+	$Q mkdir -p $(@D)
+	$Q $(PANDOC) --bash-completion > $@
+
+$(PANDOC-MAN): $(LOCAL-CACHE)/$(PANDOC-TAR)
+	$Q mkdir -p $(@D)
+	$Q tar -xOf $< \
+	  pandoc-$(PANDOC-VERSION)/share/man/man1/pandoc.1.gz > $@
 
 endif

@@ -24,8 +24,12 @@ endif
 POWERSHELL-DOWN := https://github.com/PowerShell/PowerShell/releases/download/v$(POWERSHELL-VERSION)/$(POWERSHELL-ARC)
 POWERSHELL-LOCAL := $(LOCAL-ROOT)/powershell-$(POWERSHELL-VERSION)
 PWSH := $(POWERSHELL-LOCAL)/$(POWERSHELL-EXE)
+POWERSHELL-MAN := $(LOCAL-MAN)/man1/pwsh.1
+POWERSHELL-MAN-DOWN := https://raw.githubusercontent.com/PowerShell/PowerShell
+POWERSHELL-MAN-DOWN := \
+  $(POWERSHELL-MAN-DOWN)/v$(POWERSHELL-VERSION)/assets/manpage/pwsh.1
 
-SHELL-DEPS += $(PWSH)
+SHELL-DEPS += $(PWSH) $(POWERSHELL-MAN)
 
 override PATH := $(POWERSHELL-LOCAL):$(PATH)
 export PATH
@@ -45,5 +49,9 @@ endif
 $(LOCAL-CACHE)/$(POWERSHELL-ARC):
 	@$(ECHO) "* Installing 'powershell' locally"
 	$Q curl+ $(POWERSHELL-DOWN) > $@
+
+$(POWERSHELL-MAN):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(POWERSHELL-MAN-DOWN) > $@
 
 endif

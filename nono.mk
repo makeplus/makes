@@ -26,8 +26,6 @@ NONO-DOWN := $(NONO-DOWN)/v$(NONO-VERSION)/$(NONO-TAR)
 
 NONO := $(LOCAL-BIN)/nono
 
-SHELL-DEPS += $(NONO)
-
 
 $(NONO): $(LOCAL-CACHE)/$(NONO-TAR)
 	tar -C $(LOCAL-BIN) -xf $< nono
@@ -40,5 +38,24 @@ $(LOCAL-CACHE)/$(NONO-TAR):
 	curl+ $(NONO-DOWN) > $@
 
 endif
+
+NONO-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/nono
+NONO-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_nono
+NONO-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/nono.fish
+NONO-COMP := $(NONO-COMP-BASH) $(NONO-COMP-ZSH) $(NONO-COMP-FISH)
+
+SHELL-DEPS += $(NONO) $(NONO-COMP)
+
+$(NONO-COMP-BASH): $(NONO)
+	$Q mkdir -p $(@D)
+	$Q $(NONO) completion bash > $@
+
+$(NONO-COMP-ZSH): $(NONO)
+	$Q mkdir -p $(@D)
+	$Q $(NONO) completion zsh > $@
+
+$(NONO-COMP-FISH): $(NONO)
+	$Q mkdir -p $(@D)
+	$Q $(NONO) completion fish > $@
 
 endif

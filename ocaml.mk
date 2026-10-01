@@ -27,8 +27,14 @@ OCAML-LOCAL := $(LOCAL-ROOT)/ocaml-$(OCAML-VERSION)
 OPAMROOT := $(OCAML-LOCAL)/opamroot
 OPAM := $(OCAML-LOCAL)/bin/$(OPAM-EXE)
 OCAML := $(OPAMROOT)/default/bin/ocaml
+OCAML-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/opam
+OCAML-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_opam
+OCAML-COMP := $(OCAML-COMP-BASH) $(OCAML-COMP-ZSH)
+OCAML-COMP-DOWN := https://raw.githubusercontent.com/ocaml/opam
+OCAML-COMP-DOWN := \
+  $(OCAML-COMP-DOWN)/$(OPAM-VERSION)/src/state/shellscripts
 
-SHELL-DEPS += $(OCAML)
+SHELL-DEPS += $(OCAML) $(OCAML-COMP)
 
 override PATH := $(OPAMROOT)/default/bin:$(OCAML-LOCAL)/bin:$(PATH)
 export PATH
@@ -52,5 +58,13 @@ $(OPAM): $(LOCAL-CACHE)/$(OPAM-BIN)
 $(LOCAL-CACHE)/$(OPAM-BIN):
 	@$(ECHO) "* Installing 'ocaml' locally"
 	$Q curl+ $(OPAM-DOWN) > $@
+
+$(OCAML-COMP-BASH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(OCAML-COMP-DOWN)/complete.sh > $@
+
+$(OCAML-COMP-ZSH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(OCAML-COMP-DOWN)/complete.zsh > $@
 
 endif

@@ -20,8 +20,12 @@ TPL-ZIP := tpl-$(OA-$(OS-ARCH)).zip
 TPL-DOWN := https://github.com/trealla-prolog/trealla/releases/download/v$(TREALLA-VERSION)/$(TPL-ZIP)
 TPL-LOCAL := $(LOCAL-ROOT)/trealla-$(TREALLA-VERSION)
 TPL := $(TPL-LOCAL)/bin/$(TPL-EXE)
+PROLOG-MAN := $(LOCAL-MAN)/man1/trealla.1
+PROLOG-MAN-DOWN := https://raw.githubusercontent.com/trealla-prolog/trealla
+PROLOG-MAN-DOWN := \
+  $(PROLOG-MAN-DOWN)/v$(TREALLA-VERSION)/man/trealla.1
 
-SHELL-DEPS += $(TPL)
+SHELL-DEPS += $(TPL) $(PROLOG-MAN)
 
 override PATH := $(TPL-LOCAL)/bin:$(PATH)
 export PATH
@@ -38,5 +42,9 @@ $(TPL): $(LOCAL-CACHE)/$(TPL-ZIP)
 $(LOCAL-CACHE)/$(TPL-ZIP):
 	@$(ECHO) "* Installing 'trealla prolog' locally"
 	$Q curl+ $(TPL-DOWN) > $@
+
+$(PROLOG-MAN):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(PROLOG-MAN-DOWN) > $@
 
 endif

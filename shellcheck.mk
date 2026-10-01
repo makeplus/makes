@@ -18,8 +18,11 @@ SHELLCHECK-DOWN := $(SHELLCHECK-DOWN)/releases/download/v$(SHELLCHECK-VERSION)/$
 
 SHELLCHECK-DIR := shellcheck-v$(SHELLCHECK-VERSION)
 SHELLCHECK := $(LOCAL-BIN)/shellcheck
+SHELLCHECK-MAN := $(LOCAL-MAN)/man1/shellcheck.1
+SHELLCHECK-MAN-DOWN := \
+  https://man.archlinux.org/man/shellcheck.1.en.raw
 
-SHELL-DEPS += $(SHELLCHECK)
+SHELL-DEPS += $(SHELLCHECK) $(SHELLCHECK-MAN)
 
 
 $(SHELLCHECK): $(LOCAL-CACHE)/$(SHELLCHECK-TAR)
@@ -32,5 +35,9 @@ $(SHELLCHECK): $(LOCAL-CACHE)/$(SHELLCHECK-TAR)
 $(LOCAL-CACHE)/$(SHELLCHECK-TAR):
 	@echo "* Installing 'shellcheck' locally"
 	curl+ $(SHELLCHECK-DOWN) > $@
+
+$(SHELLCHECK-MAN):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(SHELLCHECK-MAN-DOWN) > $@
 
 endif

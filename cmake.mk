@@ -28,8 +28,12 @@ export PATH
 CMAKE := $(CMAKE-BIN)/cmake
 CTEST := $(CMAKE-BIN)/ctest
 CPACK := $(CMAKE-BIN)/cpack
+CMAKE-SUPPORT := $(patsubst %/bin,%,$(CMAKE-BIN))
+CMAKE-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/cmake
+CMAKE-COMP := $(CMAKE-COMP-BASH)
+CMAKE-MAN := $(LOCAL-MAN)/man1/cmake.1
 
-SHELL-DEPS += $(CMAKE)
+SHELL-DEPS += $(CMAKE) $(CMAKE-COMP) $(CMAKE-MAN)
 
 
 $(CMAKE) $(CTEST) $(CPACK): $(LOCAL-CACHE)/$(CMAKE-TAR)
@@ -41,5 +45,13 @@ $(CMAKE) $(CTEST) $(CPACK): $(LOCAL-CACHE)/$(CMAKE-TAR)
 $(LOCAL-CACHE)/$(CMAKE-TAR):
 	@echo "* Installing 'cmake' locally"
 	curl+ $(CMAKE-DOWN) > $@
+
+$(CMAKE-COMP-BASH): $(CMAKE)
+	$Q mkdir -p $(@D)
+	$Q cp $(CMAKE-SUPPORT)/share/bash-completion/completions/cmake $@
+
+$(CMAKE-MAN): $(CMAKE)
+	$Q mkdir -p $(@D)
+	$Q cp $(CMAKE-SUPPORT)/man/man1/*.1 $(@D)/
 
 endif

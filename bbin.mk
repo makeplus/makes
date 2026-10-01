@@ -21,13 +21,16 @@ BBIN := $(BBIN-LOCAL)/bin/bbin
 BBIN-CACHE := bbin-$(BBIN-VERSION)
 BBIN-DOWN := https://raw.githubusercontent.com/babashka/bbin
 BBIN-DOWN := $(BBIN-DOWN)/v$(BBIN-VERSION)/bbin
+BBIN-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/bbin
+BBIN-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_bbin
+BBIN-COMP := $(BBIN-COMP-BASH) $(BBIN-COMP-ZSH)
 
 # Keep legacy home installations from taking precedence over these paths.
 export BABASHKA_BBIN_DIR := $(LOCAL-CACHE)/bbin-legacy
 export BABASHKA_BBIN_BIN_DIR := $(LOCAL-BIN)
 export BABASHKA_BBIN_JARS_DIR := $(LOCAL-CACHE)/bbin-jars
 
-SHELL-DEPS += $(BBIN)
+SHELL-DEPS += $(BBIN) $(BBIN-COMP)
 
 override PATH := $(BBIN-LOCAL)/bin:$(PATH)
 export PATH
@@ -43,5 +46,15 @@ $(BBIN): $(LOCAL-CACHE)/$(BBIN-CACHE) $(BB) $(JAVA)
 $(LOCAL-CACHE)/$(BBIN-CACHE):
 	@$(ECHO) "* Installing 'bbin' locally"
 	$Q curl+ $(BBIN-DOWN) > $@
+
+$(BBIN-COMP-BASH): $(BBIN)
+	$Q mkdir -p $(@D)
+	$Q printf '%s\n' 'complete -W "$$(bbin commands)" bbin' > $@
+
+$(BBIN-COMP-ZSH): $(BBIN)
+	$Q mkdir -p $(@D)
+	$Q printf '%s\n' \
+	  'function _bbin() { _arguments "1: :($$(bbin commands))" }' \
+	  'compdef _bbin bbin' > $@
 
 endif

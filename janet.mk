@@ -21,8 +21,9 @@ JANET := $(JANET-LOCAL)/bin/janet
 endif
 JANET-DOWN := https://github.com/janet-lang/janet
 JANET-DOWN := $(JANET-DOWN)/releases/download/v$(JANET-VERSION)/$(JANET-TAR)
+JANET-MAN := $(LOCAL-MAN)/man1/janet.1
 
-SHELL-DEPS += $(JANET)
+SHELL-DEPS += $(JANET) $(JANET-MAN)
 
 override PATH := $(JANET-LOCAL)/bin:$(PATH)
 export PATH
@@ -46,5 +47,9 @@ endif
 $(LOCAL-CACHE)/$(JANET-TAR):
 	@$(ECHO) "* Installing 'janet' locally"
 	$Q curl+ $(JANET-DOWN) > $@
+
+$(JANET-MAN): $(JANET)
+	$Q mkdir -p $(@D)
+	$Q cp $(JANET-LOCAL)/man/man1/janet.1 $@
 
 endif

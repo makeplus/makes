@@ -26,8 +26,13 @@ GHC := $(GHC-BIN)/ghc.exe
 else
 GHC := $(GHC-BIN)/ghc
 endif
+GHC-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/ghc
+GHC-COMP := $(GHC-COMP-BASH)
+GHC-COMP-DOWN := https://raw.githubusercontent.com/ghc/ghc
+GHC-COMP-DOWN := \
+  $(GHC-COMP-DOWN)/ghc-$(GHC-VERSION)-release/utils/completion/ghc.bash
 
-SHELL-DEPS += $(GHC)
+SHELL-DEPS += $(GHC) $(GHC-COMP)
 
 
 $(GHC): $(LOCAL-CACHE)/$(GHC-TAR) $(MAKES)/ghc.mk
@@ -42,5 +47,9 @@ $(GHC): $(LOCAL-CACHE)/$(GHC-TAR) $(MAKES)/ghc.mk
 $(LOCAL-CACHE)/$(GHC-TAR):
 	@echo "* Installing 'GHC $(GHC-VERSION)' locally"
 	curl+ $(GHC-DOWN) > $@
+
+$(GHC-COMP-BASH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(GHC-COMP-DOWN) > $@
 
 endif

@@ -26,8 +26,15 @@ VLANG := $(VLANG-BIN)/v.exe
 else
 VLANG := $(VLANG-BIN)/v
 endif
+VLANG-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/v
+VLANG-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_v
+VLANG-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/v.fish
+VLANG-COMP := \
+  $(VLANG-COMP-BASH) \
+  $(VLANG-COMP-ZSH) \
+  $(VLANG-COMP-FISH)
 
-SHELL-DEPS += $(VLANG)
+SHELL-DEPS += $(VLANG) $(VLANG-COMP)
 
 $(VLANG): $(LOCAL-CACHE)/$(VLANG-ZIP)
 	cd $(LOCAL-CACHE) && unzip -qo $(VLANG-ZIP)
@@ -39,5 +46,17 @@ $(VLANG): $(LOCAL-CACHE)/$(VLANG-ZIP)
 $(LOCAL-CACHE)/$(VLANG-ZIP):
 	@echo "* Installing 'v' locally"
 	curl+ $(VLANG-DOWN) > $@
+
+$(VLANG-COMP-BASH): $(VLANG)
+	$Q mkdir -p $(@D)
+	$Q $(VLANG) complete setup bash > $@
+
+$(VLANG-COMP-ZSH): $(VLANG)
+	$Q mkdir -p $(@D)
+	$Q $(VLANG) complete setup zsh > $@
+
+$(VLANG-COMP-FISH): $(VLANG)
+	$Q mkdir -p $(@D)
+	$Q $(VLANG) complete setup fish > $@
 
 endif

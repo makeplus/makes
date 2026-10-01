@@ -10,8 +10,9 @@ LUA-TAR := lua-$(LUA-VERSION).tar.gz
 LUA-DOWN := https://www.lua.org/ftp/$(LUA-TAR)
 
 LUA := $(LOCAL-BIN)/lua
+LUA-MAN := $(LOCAL-MAN)/man1/lua.1
 
-SHELL-DEPS += $(LUA)
+SHELL-DEPS += $(LUA) $(LUA-MAN)
 
 ifdef IS-LINUX
 BUILD-OS := linux
@@ -34,5 +35,8 @@ $(LUA): $(LOCAL-CACHE)/$(LUA-TAR)
 $(LOCAL-CACHE)/$(LUA-TAR):
 	@echo "* Installing 'Lua $(LUA-VERSION)' locally"
 	curl+ $(LUA-DOWN) >$@
+
+$(LUA-MAN): $(LUA)
+	$Q test -s $@
 
 endif

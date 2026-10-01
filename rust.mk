@@ -27,8 +27,20 @@ else
 CARGO := $(CARGO-BIN)/cargo
 RUSTUP := $(CARGO-BIN)/rustup
 endif
+RUST-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/cargo
+RUST-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_cargo
+RUSTUP-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/rustup
+RUSTUP-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_rustup
+RUSTUP-COMP-FISH := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/rustup.fish
+RUST-COMP := \
+  $(RUST-COMP-BASH) \
+  $(RUST-COMP-ZSH) \
+  $(RUSTUP-COMP-BASH) \
+  $(RUSTUP-COMP-ZSH) \
+  $(RUSTUP-COMP-FISH)
 
-SHELL-DEPS += $(CARGO)
+SHELL-DEPS += $(CARGO) $(RUST-COMP)
 
 
 $(CARGO):
@@ -48,5 +60,25 @@ $(CARGO):
 	rustup component add clippy
 	rustup component add rustfmt
 	touch $@
+
+$(RUST-COMP-BASH): $(CARGO)
+	$Q mkdir -p $(@D)
+	$Q $(RUSTUP) completions bash cargo > $@
+
+$(RUST-COMP-ZSH): $(CARGO)
+	$Q mkdir -p $(@D)
+	$Q $(RUSTUP) completions zsh cargo > $@
+
+$(RUSTUP-COMP-BASH): $(CARGO)
+	$Q mkdir -p $(@D)
+	$Q $(RUSTUP) completions bash rustup > $@
+
+$(RUSTUP-COMP-ZSH): $(CARGO)
+	$Q mkdir -p $(@D)
+	$Q $(RUSTUP) completions zsh rustup > $@
+
+$(RUSTUP-COMP-FISH): $(CARGO)
+	$Q mkdir -p $(@D)
+	$Q $(RUSTUP) completions fish rustup > $@
 
 endif

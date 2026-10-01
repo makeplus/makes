@@ -34,8 +34,12 @@ TASK-DOWN := $(TASK-DOWN)/v$(TASK-VERSION)/$(TASK-ARC)
 TASK-LOCAL := $(LOCAL-ROOT)/task-$(TASK-VERSION)
 TASK-TMP := $(LOCAL-TMP)/task-$(TASK-VERSION)
 TASK := $(TASK-LOCAL)/bin/$(TASK-EXE)
+TASK-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/task
+TASK-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_task
+TASK-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/task.fish
+TASK-COMP := $(TASK-COMP-BASH) $(TASK-COMP-ZSH) $(TASK-COMP-FISH)
 
-SHELL-DEPS += $(TASK)
+SHELL-DEPS += $(TASK) $(TASK-COMP)
 
 override PATH := $(TASK-LOCAL)/bin:$(PATH)
 export PATH
@@ -56,5 +60,17 @@ $(TASK): $(LOCAL-CACHE)/$(TASK-CACHE)
 $(LOCAL-CACHE)/$(TASK-CACHE):
 	@$(ECHO) "* Installing 'task' locally"
 	$Q curl+ $(TASK-DOWN) > $@
+
+$(TASK-COMP-BASH): $(TASK)
+	$Q mkdir -p $(@D)
+	$Q $(TASK) --completion bash > $@
+
+$(TASK-COMP-ZSH): $(TASK)
+	$Q mkdir -p $(@D)
+	$Q $(TASK) --completion zsh > $@
+
+$(TASK-COMP-FISH): $(TASK)
+	$Q mkdir -p $(@D)
+	$Q $(TASK) --completion fish > $@
 
 endif

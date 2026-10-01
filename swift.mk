@@ -12,6 +12,7 @@ OA-linux-int64 := x86_64
 SWIFTLY-HOME := $(LOCAL-ROOT)/swiftly
 SWIFTLY := $(SWIFTLY-HOME)/bin/swiftly
 SWIFT := $(SWIFTLY-HOME)/bin/swift
+SWIFT-MAN := $(LOCAL-MAN)/man1/swift.1
 ifeq ($(OS-NAME),macos)
 # macOS swiftly is a universal pkg (no arch in the name):
 SWIFTLY-ARCHIVE := swiftly.pkg
@@ -21,7 +22,7 @@ SWIFTLY-ARCHIVE := swiftly-$(OA-$(OS-ARCH)).tar.gz
 SWIFTLY-DOWN := https://download.swift.org/swiftly/linux/$(SWIFTLY-ARCHIVE)
 endif
 
-SHELL-DEPS += $(SWIFT)
+SHELL-DEPS += $(SWIFT) $(SWIFT-MAN)
 
 override PATH := $(SWIFTLY-HOME)/bin:$(PATH)
 export PATH
@@ -58,5 +59,12 @@ endif
 $(LOCAL-CACHE)/$(SWIFTLY-ARCHIVE):
 	@$(ECHO) "* Installing 'swift' locally"
 	$Q curl+ $(SWIFTLY-DOWN) > $@
+
+$(SWIFT-MAN): $(SWIFT)
+	$Q mkdir -p $(@D)
+	$Q page=$$(find $(SWIFTLY-HOME) -path '*/man/man1/swift.1' \
+	  -type f | head -1); \
+	  test -n "$$page"; \
+	  cp "$$page" $@
 
 endif

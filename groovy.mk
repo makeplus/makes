@@ -12,8 +12,10 @@ GROOVY-DOWN := https://downloads.apache.org/groovy/$(GROOVY-VERSION)/distributio
 GROOVY-ARCHIVE := https://archive.apache.org/dist/groovy/$(GROOVY-VERSION)/distribution/$(GROOVY-ZIP)
 GROOVY-LOCAL := $(LOCAL-ROOT)/groovy-$(GROOVY-VERSION)
 GROOVY := $(GROOVY-LOCAL)/bin/groovy
+GROOVY-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/groovy
+GROOVY-COMP := $(GROOVY-COMP-BASH)
 
-SHELL-DEPS += $(GROOVY)
+SHELL-DEPS += $(GROOVY) $(GROOVY-COMP)
 
 override PATH := $(GROOVY-LOCAL)/bin:$(PATH)
 export PATH
@@ -36,5 +38,9 @@ $(LOCAL-CACHE)/$(GROOVY-ZIP):
 	    curl+ $(GROOVY-ARCHIVE) > $@.tmp; \
 	  else [[ $$status = 200 ]]; fi; \
 	  mv $@.tmp $@
+
+$(GROOVY-COMP-BASH): $(GROOVY)
+	$Q mkdir -p $(@D)
+	$Q cp $(GROOVY-LOCAL)/bin/groovy_completion $@
 
 endif

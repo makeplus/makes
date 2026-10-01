@@ -31,8 +31,10 @@ NIM := $(NIM-BIN)/nim.exe
 else
 NIM := $(NIM-BIN)/nim
 endif
+NIM-MAN := $(LOCAL-MAN)/man1/nim.1
+NIM-MAN-DOWN := https://man.archlinux.org/man/nim.1.en.raw
 
-SHELL-DEPS += $(NIM)
+SHELL-DEPS += $(NIM) $(NIM-MAN)
 
 $(NIM): $(LOCAL-CACHE)/$(NIM-TAR)
 ifeq ($(OS-NAME),windows)
@@ -48,5 +50,9 @@ endif
 $(LOCAL-CACHE)/$(NIM-TAR):
 	@echo "* Installing 'nim' locally"
 	curl+ $(NIM-DOWN) > $@
+
+$(NIM-MAN):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(NIM-MAN-DOWN) > $@
 
 endif

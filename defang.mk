@@ -16,8 +16,15 @@ DEFANG-DOWN := https://github.com/defanglabs/defang/releases/download
 DEFANG-DOWN := $(DEFANG-DOWN)/v$(DEFANG-VERSION)/$(DEFANG-TAR)
 
 DEFANG := $(LOCAL-BIN)/defang
+DEFANG-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/defang
+DEFANG-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_defang
+DEFANG-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/defang.fish
+DEFANG-COMP := \
+  $(DEFANG-COMP-BASH) \
+  $(DEFANG-COMP-ZSH) \
+  $(DEFANG-COMP-FISH)
 
-SHELL-DEPS += $(DEFANG)
+SHELL-DEPS += $(DEFANG) $(DEFANG-COMP)
 
 
 $(DEFANG): $(LOCAL-CACHE)/$(DEFANG-TAR)
@@ -34,5 +41,17 @@ $(LOCAL-CACHE)/$(DEFANG-TAR):
 	@echo "* Installing 'defang' locally"
 	curl+ $(DEFANG-DOWN) > $@
 	@touch $@
+
+$(DEFANG-COMP-BASH): $(DEFANG)
+	$Q mkdir -p $(@D)
+	$Q $(DEFANG) completion bash > $@
+
+$(DEFANG-COMP-ZSH): $(DEFANG)
+	$Q mkdir -p $(@D)
+	$Q $(DEFANG) completion zsh > $@
+
+$(DEFANG-COMP-FISH): $(DEFANG)
+	$Q mkdir -p $(@D)
+	$Q $(DEFANG) completion fish > $@
 
 endif

@@ -25,11 +25,15 @@ else
 FENNEL := $(FENNEL-BIN)/fennel
 endif
 FENNEL-DOWN := https://fennel-lang.org/downloads/$(FENNEL-NAME)
+FENNEL-MAN := $(LOCAL-MAN)/man1/fennel.1
+FENNEL-MAN-DOWN := https://raw.githubusercontent.com/bakpakin/Fennel
+FENNEL-MAN-DOWN := \
+  $(FENNEL-MAN-DOWN)/$(FENNEL-VERSION)/man/man1/fennel.1
 
 override PATH := $(FENNEL-BIN):$(PATH)
 export PATH
 
-SHELL-DEPS += $(FENNEL)
+SHELL-DEPS += $(FENNEL) $(FENNEL-MAN)
 
 
 $(FENNEL): $(LOCAL-CACHE)/$(FENNEL-NAME) $(FENNEL-DEPS)
@@ -41,5 +45,9 @@ $(FENNEL): $(LOCAL-CACHE)/$(FENNEL-NAME) $(FENNEL-DEPS)
 $(LOCAL-CACHE)/$(FENNEL-NAME):
 	@$(ECHO) "* Installing 'fennel' locally"
 	$Q curl+ $(FENNEL-DOWN) > $@
+
+$(FENNEL-MAN):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(FENNEL-MAN-DOWN) > $@
 
 endif

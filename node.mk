@@ -30,8 +30,12 @@ NODE := $(NODE-BIN)/node
 endif
 override PATH := $(NODE-BIN):$(PATH)
 export PATH
+NODE-MAN := $(LOCAL-MAN)/man1/node.1
 
 SHELL-DEPS += $(NODE)
+ifneq ($(OS-NAME),windows)
+SHELL-DEPS += $(NODE-MAN)
+endif
 
 ifeq ($(OS-NAME),windows)
 $(NODE): $(LOCAL-CACHE)/$(NODE-TAR)
@@ -50,5 +54,14 @@ endif
 $(LOCAL-CACHE)/$(NODE-TAR):
 	@echo "* Installing 'node' and 'npm' locally"
 	curl+ $(NODE-DOWN) > $@
+
+ifneq ($(OS-NAME),windows)
+$(NODE-MAN): $(NODE)
+	$Q mkdir -p $(LOCAL-MAN)/man1 $(LOCAL-MAN)/man5 $(LOCAL-MAN)/man7
+	$Q cp $(NODE-LOCAL)/share/man/man1/* $(LOCAL-MAN)/man1/
+	$Q cp $(NODE-LOCAL)/lib/node_modules/npm/man/man1/* $(LOCAL-MAN)/man1/
+	$Q cp $(NODE-LOCAL)/lib/node_modules/npm/man/man5/* $(LOCAL-MAN)/man5/
+	$Q cp $(NODE-LOCAL)/lib/node_modules/npm/man/man7/* $(LOCAL-MAN)/man7/
+endif
 
 endif

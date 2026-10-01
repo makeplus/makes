@@ -15,6 +15,15 @@ LUAROCKS-TAR := luarocks-$(LUAROCKS-VERSION).tar.gz
 LUAROCKS-DOWN := https://luarocks.github.io/luarocks/releases/$(LUAROCKS-TAR)
 
 LUAROCKS := $(LOCAL-BIN)/luarocks
+LUAROCKS-COMP-BASH := \
+  $(LOCAL-SHARE)/bash-completion/completions/luarocks
+LUAROCKS-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_luarocks
+LUAROCKS-COMP-FISH := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/luarocks.fish
+LUAROCKS-COMP := \
+  $(LUAROCKS-COMP-BASH) \
+  $(LUAROCKS-COMP-ZSH) \
+  $(LUAROCKS-COMP-FISH)
 
 # Prefer the explicitly loaded Lua module when both runtimes are present.
 ifdef LUA-LOADED
@@ -27,7 +36,7 @@ LUAROCKS-LUA-VERSION := 5.1
 LUAROCKS-LUA-INCLUDE := $(LOCAL-INC)/luajit-$(LUAJIT-VERSION)
 endif
 
-SHELL-DEPS += $(LUAROCKS)
+SHELL-DEPS += $(LUAROCKS) $(LUAROCKS-COMP)
 
 
 $(LUAROCKS): $(LOCAL-CACHE)/$(LUAROCKS-TAR) $(LUAROCKS-LUA)
@@ -47,5 +56,17 @@ $(LUAROCKS): $(LOCAL-CACHE)/$(LUAROCKS-TAR) $(LUAROCKS-LUA)
 $(LOCAL-CACHE)/$(LUAROCKS-TAR):
 	@echo "* Installing 'LuaRocks $(LUAROCKS-VERSION)' locally"
 	curl+ $(LUAROCKS-DOWN) >$@
+
+$(LUAROCKS-COMP-BASH): $(LUAROCKS)
+	$Q mkdir -p $(@D)
+	$Q $(LUAROCKS) completion bash > $@
+
+$(LUAROCKS-COMP-ZSH): $(LUAROCKS)
+	$Q mkdir -p $(@D)
+	$Q $(LUAROCKS) completion zsh > $@
+
+$(LUAROCKS-COMP-FISH): $(LUAROCKS)
+	$Q mkdir -p $(@D)
+	$Q $(LUAROCKS) completion fish > $@
 
 endif

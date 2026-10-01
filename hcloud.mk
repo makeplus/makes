@@ -39,8 +39,22 @@ HCLOUD-DOWN := $(HCLOUD-DOWN)/v$(HCLOUD-VERSION)/$(HCLOUD-TAR)
 #------------------------------------------------------------------------------
 
 HCLOUD := $(LOCAL-BIN)/hcloud
+HCLOUD-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/hcloud
+HCLOUD-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_hcloud
+HCLOUD-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/hcloud.fish
+HCLOUD-COMP := \
+  $(HCLOUD-COMP-BASH) \
+  $(HCLOUD-COMP-ZSH) \
+  $(HCLOUD-COMP-FISH)
+HCLOUD-DEB-ARCH-arm64 := arm64
+HCLOUD-DEB-ARCH-int64 := amd64
+HCLOUD-DEB := \
+  hcloud-cli_$(HCLOUD-VERSION)_$(HCLOUD-DEB-ARCH-$(ARCH-NAME)).deb
+HCLOUD-DEB-DOWN := https://github.com/hetznercloud/cli/releases/download
+HCLOUD-DEB-DOWN := $(HCLOUD-DEB-DOWN)/v$(HCLOUD-VERSION)/$(HCLOUD-DEB)
+HCLOUD-MAN := $(LOCAL-MAN)/man1/hcloud.1
 
-SHELL-DEPS += $(HCLOUD)
+SHELL-DEPS += $(HCLOUD) $(HCLOUD-COMP) $(HCLOUD-MAN)
 
 #------------------------------------------------------------------------------
 # Binary Installation Targets
@@ -55,6 +69,27 @@ $(HCLOUD): $(LOCAL-CACHE)/$(HCLOUD-TAR)
 $(LOCAL-CACHE)/$(HCLOUD-TAR):
 	@echo "* Installing 'hcloud' locally"
 	curl+ $(HCLOUD-DOWN) > $@
+
+$(LOCAL-CACHE)/$(HCLOUD-DEB):
+	$Q curl+ $(HCLOUD-DEB-DOWN) > $@
+
+$(HCLOUD-COMP-BASH): $(HCLOUD)
+	$Q mkdir -p $(@D)
+	$Q $(HCLOUD) completion bash > $@
+
+$(HCLOUD-COMP-ZSH): $(HCLOUD)
+	$Q mkdir -p $(@D)
+	$Q $(HCLOUD) completion zsh > $@
+
+$(HCLOUD-COMP-FISH): $(HCLOUD)
+	$Q mkdir -p $(@D)
+	$Q $(HCLOUD) completion fish > $@
+
+$(HCLOUD-MAN): $(LOCAL-CACHE)/$(HCLOUD-DEB)
+	$Q mkdir -p $(@D) $(LOCAL-TMP)/hcloud-man
+	$Q ar p $< data.tar.gz | \
+	  tar -C $(LOCAL-TMP)/hcloud-man -xzf - ./usr/share/man/man1/hcloud.1
+	$Q cp $(LOCAL-TMP)/hcloud-man/usr/share/man/man1/hcloud.1 $@
 
 #------------------------------------------------------------------------------
 # Convenience Targets

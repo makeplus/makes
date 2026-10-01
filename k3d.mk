@@ -42,6 +42,10 @@ K3D-DOWN := https://github.com/k3d-io/k3d/releases/download/v$(K3D-VERSION)/$(K3
 #------------------------------------------------------------------------------
 
 K3D := $(LOCAL-BIN)/k3d
+K3D-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/k3d
+K3D-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_k3d
+K3D-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/k3d.fish
+K3D-COMP := $(K3D-COMP-BASH) $(K3D-COMP-ZSH) $(K3D-COMP-FISH)
 K3D-KUBECONFIG := $(LOCAL-CACHE)/k3d-$(K3D-CLUSTER-NAME)-kubeconfig
 
 # State marker file - indicates cluster exists and is running
@@ -65,7 +69,7 @@ endef
 # Shell Dependencies
 #------------------------------------------------------------------------------
 
-SHELL-DEPS += $(K3D)
+SHELL-DEPS += $(K3D) $(K3D-COMP)
 
 #------------------------------------------------------------------------------
 # Cleanup Integration
@@ -86,6 +90,18 @@ $(K3D): $(LOCAL-CACHE)/$(K3D-BIN-NAME)
 $(LOCAL-CACHE)/$(K3D-BIN-NAME):
 	@echo "* Installing 'k3d' locally"
 	curl+ $(K3D-DOWN) > $@
+
+$(K3D-COMP-BASH): $(K3D)
+	$Q mkdir -p $(@D)
+	$Q $(K3D) completion bash > $@
+
+$(K3D-COMP-ZSH): $(K3D)
+	$Q mkdir -p $(@D)
+	$Q $(K3D) completion zsh > $@
+
+$(K3D-COMP-FISH): $(K3D)
+	$Q mkdir -p $(@D)
+	$Q $(K3D) completion fish > $@
 
 #------------------------------------------------------------------------------
 # Idempotent Cluster Target

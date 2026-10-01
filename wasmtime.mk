@@ -19,8 +19,17 @@ WASMTIME-DOWN := https://github.com/bytecodealliance/wasmtime
 WASMTIME-DOWN := $(WASMTIME-DOWN)/releases/download/v$(WASMTIME-VERSION)/$(WASMTIME-TAR)
 
 WASMTIME := $(LOCAL-BIN)/wasmtime
+WASMTIME-COMP-BASH := \
+  $(LOCAL-SHARE)/bash-completion/completions/wasmtime
+WASMTIME-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_wasmtime
+WASMTIME-COMP-FISH := \
+  $(LOCAL-SHARE)/fish/vendor_completions.d/wasmtime.fish
+WASMTIME-COMP := \
+  $(WASMTIME-COMP-BASH) \
+  $(WASMTIME-COMP-ZSH) \
+  $(WASMTIME-COMP-FISH)
 
-SHELL-DEPS += $(WASMTIME)
+SHELL-DEPS += $(WASMTIME) $(WASMTIME-COMP)
 
 
 $(WASMTIME): $(LOCAL-CACHE)/$(WASMTIME-TAR)
@@ -33,5 +42,17 @@ $(WASMTIME): $(LOCAL-CACHE)/$(WASMTIME-TAR)
 $(LOCAL-CACHE)/$(WASMTIME-TAR):
 	@echo "* Installing 'wasmtime' locally"
 	curl+ $(WASMTIME-DOWN) > $@
+
+$(WASMTIME-COMP-BASH): $(WASMTIME)
+	$Q mkdir -p $(@D)
+	$Q $(WASMTIME) completion bash > $@
+
+$(WASMTIME-COMP-ZSH): $(WASMTIME)
+	$Q mkdir -p $(@D)
+	$Q $(WASMTIME) completion zsh > $@
+
+$(WASMTIME-COMP-FISH): $(WASMTIME)
+	$Q mkdir -p $(@D)
+	$Q $(WASMTIME) completion fish > $@
 
 endif

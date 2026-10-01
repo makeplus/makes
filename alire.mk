@@ -25,10 +25,15 @@ ALIRE-DOWN := $(ALIRE-DOWN)/v$(ALIRE-VERSION)/$(ALIRE-ZIP)
 ALIRE-LOCAL := $(LOCAL-ROOT)/alire-$(ALIRE-VERSION)
 ALIRE-BIN := $(ALIRE-LOCAL)/bin
 ALR := $(ALIRE-BIN)/$(ALR-EXE)
+ALIRE-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/alr
+ALIRE-COMP := $(ALIRE-COMP-BASH)
+ALIRE-COMP-DOWN := https://raw.githubusercontent.com/alire-project/alire
+ALIRE-COMP-DOWN := \
+  $(ALIRE-COMP-DOWN)/v$(ALIRE-VERSION)/scripts/alr-completion.bash
 ALIRE_SETTINGS_DIR ?= $(LOCAL-ROOT)/alire-settings
 XDG_RUNTIME_DIR ?= $(LOCAL-ROOT)/alire-runtime
 
-SHELL-DEPS += $(ALR)
+SHELL-DEPS += $(ALR) $(ALIRE-COMP)
 
 override PATH := $(ALIRE-BIN):$(PATH)
 export PATH
@@ -46,5 +51,9 @@ $(ALR): $(LOCAL-CACHE)/$(ALIRE-ZIP)
 $(LOCAL-CACHE)/$(ALIRE-ZIP):
 	@$(ECHO) "* Installing 'alire' locally"
 	$Q curl+ $(ALIRE-DOWN) > $@
+
+$(ALIRE-COMP-BASH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(ALIRE-COMP-DOWN) > $@
 
 endif

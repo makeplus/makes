@@ -17,7 +17,13 @@ BUN-DOWN := \
   https://github.com/oven-sh/bun/releases/download/bun-v$(BUN-VERSION)/$(BUN-ZIP)
 BUN-LOCAL := $(LOCAL-ROOT)/bun-v$(BUN-VERSION)
 BUN := $(BUN-LOCAL)/bin/bun
-SHELL-DEPS += $(BUN)
+BUN-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/bun
+BUN-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_bun
+BUN-COMP-FISH := $(LOCAL-SHARE)/fish/vendor_completions.d/bun.fish
+BUN-COMP := $(BUN-COMP-BASH) $(BUN-COMP-ZSH) $(BUN-COMP-FISH)
+BUN-COMP-DOWN := https://raw.githubusercontent.com/oven-sh/bun
+BUN-COMP-DOWN := $(BUN-COMP-DOWN)/bun-v$(BUN-VERSION)/completions
+SHELL-DEPS += $(BUN) $(BUN-COMP)
 
 override PATH := $(BUN-LOCAL)/bin:$(PATH)
 export PATH
@@ -33,5 +39,17 @@ $(BUN): $(LOCAL-CACHE)/$(BUN-ZIP)
 $(LOCAL-CACHE)/$(BUN-ZIP):
 	@echo "* Installing 'bun' locally"
 	curl+ $(BUN-DOWN) > $@
+
+$(BUN-COMP-BASH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(BUN-COMP-DOWN)/bun.bash > $@
+
+$(BUN-COMP-ZSH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(BUN-COMP-DOWN)/bun.zsh > $@
+
+$(BUN-COMP-FISH):
+	$Q mkdir -p $(@D)
+	$Q curl+ $(BUN-COMP-DOWN)/bun.fish > $@
 
 endif
