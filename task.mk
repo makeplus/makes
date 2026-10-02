@@ -1,4 +1,4 @@
-TASK-VERSION ?= 3.53.1
+TASK-VERSION ?= 3.54.0
 # https://github.com/go-task/task
 
 ifndef TASK-LOADED
