@@ -33,17 +33,17 @@ check_platform() {
 }
 
 check_platform linux int64 \
-  yamlstar-0.1.21-linux-x64.tar.xz yaml
+  yamlstar-0.1.23-linux-x64.tar.xz yaml
 check_platform linux arm64 \
-  yamlstar-0.1.21-linux-aarch64.tar.xz yaml
+  yamlstar-0.1.23-linux-aarch64.tar.xz yaml
 check_platform macos int64 \
-  yamlstar-0.1.21-macos-x64.tar.xz yaml
+  yamlstar-0.1.23-macos-x64.tar.xz yaml
 check_platform macos arm64 \
-  yamlstar-0.1.21-macos-arm64.tar.xz yaml
+  yamlstar-0.1.23-macos-arm64.tar.xz yaml
 check_platform windows int64 \
-  yamlstar-0.1.21-windows-x64.zip yaml.exe
+  yamlstar-0.1.23-windows-x64.zip yaml.exe
 check_platform windows arm64 \
-  yamlstar-0.1.21-windows-arm64.zip yaml.exe
+  yamlstar-0.1.23-windows-arm64.zip yaml.exe
 
 out=$(
   make --no-print-directory -f "$makefile" \
@@ -52,7 +52,7 @@ out=$(
 has "$out" 'archive=yamlstar-9.8.7-linux-x64.tar.xz' \
   'YAMLSTAR-VERSION overrides the archive version'
 has "$out" \
-  'download=https://github.com/yaml/yamlstar/releases/download/9.8.7/' \
+  'download=https://github.com/yaml/yamlstar/releases/download/v9.8.7/' \
   'YAMLSTAR-VERSION overrides the download version'
 has "$out" 'version=9.8.7' \
   'YAMLSTAR-VERSION overrides the module version'
@@ -83,8 +83,8 @@ has "$out" "$yamlstar_version" \
 
 out=$(
   printf '%s\n' 'foo: bar' |
-    "$ROOT/local/yamlstar-$yamlstar_version/bin/yaml"
+    "$ROOT/local/yamlstar-$yamlstar_version/bin/yaml" -A
 )
-is "$out" '{"foo":"bar"}' 'yaml loads YAML from stdin'
+is "$out" '{"foo":"bar"}' 'yaml loads first YAML document from stdin'
 
 done-testing
