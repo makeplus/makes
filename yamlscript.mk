@@ -8,7 +8,7 @@ $(eval $(call include-local))
 
 OA-linux-arm64 := linux-aarch64
 OA-linux-int64 := linux-x64
-OA-macos-arm64 := macos-aarch64
+OA-macos-arm64 := macos-arm64
 OA-macos-int64 := macos-x64
 OA-windows-int64 := windows-x64
 
