@@ -1,4 +1,4 @@
-LIBYAMLSTAR-VERSION ?= 0.1.21
+LIBYAMLSTAR-VERSION ?= 0.1.23
 # https://github.com/yaml/yamlstar
 
 ifndef LIBYAMLSTAR-LOADED
