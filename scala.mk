@@ -1,4 +1,4 @@
-SCALA-CLI-VERSION ?= 1.17.1
+SCALA-CLI-VERSION ?= 1.18.0
 # https://github.com/VirtusLab/scala-cli
 
 ifndef SCALA-LOADED
