@@ -1,4 +1,4 @@
-KOTLIN-VERSION ?= 2.4.20
+KOTLIN-VERSION ?= 2.4.21
 # https://github.com/JetBrains/kotlin
 
 ifndef KOTLIN-LOADED

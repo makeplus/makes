@@ -1,4 +1,4 @@
-PANDOC-VERSION ?= 3.10.2
+PANDOC-VERSION ?= 3.12.1
 # https://github.com/jgm/pandoc
 
 ifndef PANDOC-LOADED

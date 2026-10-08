@@ -1,4 +1,4 @@
-BALLERINA-VERSION ?= 2201.13.6
+BALLERINA-VERSION ?= 2201.13.7
 # https://github.com/ballerina-platform/ballerina-distribution
 
 ifndef BALLERINA-LOADED
