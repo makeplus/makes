@@ -1,4 +1,4 @@
-PHARO-VERSION ?= 3.4.4
+PHARO-VERSION ?= 3.4.5
 # https://github.com/pharo-project/pharo-launcher
 
 ifndef PHARO-LOADED
