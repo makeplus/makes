@@ -1,4 +1,4 @@
-TINYGO-VERSION ?= 0.42.0
+TINYGO-VERSION ?= 0.43.0
 # https://github.com/tinygo-org/tinygo
 
 ifndef TINYGO-LOADED
