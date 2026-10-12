@@ -1,4 +1,4 @@
-GLEAM-VERSION ?= 1.19.1
+GLEAM-VERSION ?= 1.19.2
 # https://github.com/gleam-lang/gleam
 
 ifndef GLEAM-LOADED
