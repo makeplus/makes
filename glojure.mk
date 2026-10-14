@@ -8,6 +8,8 @@ $(eval $(call include-local))
 OA-linux-arm64 := linux_arm64
 OA-linux-int64 := linux_amd64
 OA-macos-arm64 := darwin_arm64
+OA-macos-int64 := darwin_amd64
+OA-windows-int64 := win-amd64
 
 ifeq (,$(OA-$(OS-ARCH)))
 ifndef GLOJURE_DIR
