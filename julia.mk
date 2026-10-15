@@ -1,4 +1,4 @@
-JULIA-VERSION ?= 1.13.1
+JULIA-VERSION ?= 1.13.2
 JULIA-MAJOR := $(word 1,$(subst ., ,$(JULIA-VERSION)))
 JULIA-MINOR := $(word 2,$(subst ., ,$(JULIA-VERSION)))
 JULIA-VER ?= $(JULIA-MAJOR).$(JULIA-MINOR)
