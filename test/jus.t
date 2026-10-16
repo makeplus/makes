@@ -53,6 +53,10 @@ out=$(make --no-print-directory -n -f "$work/Makefile" \
   JUS-VERSION=9.8.7 "$ROOT/local/jus-9.8.7/bin/jus")
 has "$out" "BABASHKA_BBIN_BIN_DIR=$ROOT/local/jus-9.8.7/bin" \
   'Installation directs bbin to the versioned jus directory'
+has "$out" "BABASHKA_BBIN_DIR=$ROOT/local/cache/bbin-legacy" \
+  'Installation avoids legacy home directories'
+has "$out" "BABASHKA_BBIN_JARS_DIR=$ROOT/local/cache/bbin-jars" \
+  'Installation keeps JARs in the local cache'
 has "$out" 'install io.github.paintparty/jus --git/tag v9.8.7' \
   'Installation pins the requested upstream tag'
 
@@ -63,6 +67,12 @@ has "$out" "install '$work/source with spaces' --as jus" \
   'Source override installs a quoted local checkout as jus'
 has "$out" "test -f '$work/source with spaces/bb.edn'" \
   'Source override checks for the Jus project file'
+has "$out" "BABASHKA_BBIN_BIN_DIR=$ROOT/local/jus-dev/bin" \
+  'Source installation directs bbin to the versioned jus directory'
+has "$out" "BABASHKA_BBIN_DIR=$ROOT/local/cache/bbin-legacy" \
+  'Source installation avoids legacy home directories'
+has "$out" "BABASHKA_BBIN_JARS_DIR=$ROOT/local/cache/bbin-jars" \
+  'Source installation keeps JARs in the local cache'
 hasnt "$out" '--git/tag' 'Source override does not pin the published tag'
 
 if [[ -z ${slow-} ]]; then

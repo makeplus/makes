@@ -25,11 +25,6 @@ BBIN-COMP-BASH := $(LOCAL-SHARE)/bash-completion/completions/bbin
 BBIN-COMP-ZSH := $(LOCAL-SHARE)/zsh/site-functions/_bbin
 BBIN-COMP := $(BBIN-COMP-BASH) $(BBIN-COMP-ZSH)
 
-# Keep legacy home installations from taking precedence over these paths.
-export BABASHKA_BBIN_DIR := $(LOCAL-CACHE)/bbin-legacy
-export BABASHKA_BBIN_BIN_DIR := $(LOCAL-BIN)
-export BABASHKA_BBIN_JARS_DIR := $(LOCAL-CACHE)/bbin-jars
-
 SHELL-DEPS += $(BBIN) $(BBIN-COMP)
 
 override PATH := $(BBIN-LOCAL)/bin:$(PATH)

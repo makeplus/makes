@@ -22,10 +22,14 @@ $(JUS): $(BBIN) $(CLOJURE)
 	@$(ECHO) "* Installing 'jus' locally"
 ifneq (,$(JUS-SOURCE))
 	$Q test -f '$(JUS-SOURCE)/bb.edn'
-	$Q BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
+	$Q BABASHKA_BBIN_DIR=$(LOCAL-CACHE)/bbin-legacy \
+	  BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
+	  BABASHKA_BBIN_JARS_DIR=$(LOCAL-CACHE)/bbin-jars \
 	  $(BBIN) install '$(JUS-SOURCE)' --as jus
 else
-	$Q BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
+	$Q BABASHKA_BBIN_DIR=$(LOCAL-CACHE)/bbin-legacy \
+	  BABASHKA_BBIN_BIN_DIR=$(JUS-LOCAL)/bin \
+	  BABASHKA_BBIN_JARS_DIR=$(LOCAL-CACHE)/bbin-jars \
 	  $(BBIN) install io.github.paintparty/jus --git/tag v$(JUS-VERSION)
 endif
 	$Q test -x $@
