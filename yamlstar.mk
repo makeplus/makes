@@ -1,4 +1,4 @@
-YAMLSTAR-VERSION ?= 0.1.25
+YAMLSTAR-VERSION ?= 0.1.26
 # https://github.com/yaml/yamlstar
 
 ifndef YAMLSTAR-LOADED
