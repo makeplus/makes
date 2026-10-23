@@ -1,4 +1,4 @@
-BUN-VERSION ?= 1.4.3
+BUN-VERSION ?= 1.4.4
 # https://github.com/oven-sh/bun
 
 ifndef BUN-LOADED
