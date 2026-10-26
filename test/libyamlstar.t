@@ -32,18 +32,21 @@ check_platform() {
     "$os-$arch selects $library"
 }
 
+library_version=$(perl -ne \
+  'print $1 if /^LIBYAMLSTAR-VERSION \?= (\S+)/' libyamlstar.mk)
+
 check_platform linux int64 \
-  libyamlstar-0.1.21-linux-x64.tar.xz libyamlstar.so
+  "libyamlstar-$library_version-linux-x64.tar.xz" libyamlstar.so
 check_platform linux arm64 \
-  libyamlstar-0.1.21-linux-aarch64.tar.xz libyamlstar.so
+  "libyamlstar-$library_version-linux-aarch64.tar.xz" libyamlstar.so
 check_platform macos int64 \
-  libyamlstar-0.1.21-macos-x64.tar.xz libyamlstar.dylib
+  "libyamlstar-$library_version-macos-x64.tar.xz" libyamlstar.dylib
 check_platform macos arm64 \
-  libyamlstar-0.1.21-macos-arm64.tar.xz libyamlstar.dylib
+  "libyamlstar-$library_version-macos-arm64.tar.xz" libyamlstar.dylib
 check_platform windows int64 \
-  libyamlstar-0.1.21-windows-x64.zip libyamlstar.dll
+  "libyamlstar-$library_version-windows-x64.zip" libyamlstar.dll
 check_platform windows arm64 \
-  libyamlstar-0.1.21-windows-arm64.zip libyamlstar.dll
+  "libyamlstar-$library_version-windows-arm64.zip" libyamlstar.dll
 
 out=$(
   make --no-print-directory -f "$makefile" \
@@ -53,7 +56,7 @@ out=$(
 has "$out" 'archive=libyamlstar-9.8.7-linux-x64.tar.xz' \
   'LIBYAMLSTAR-VERSION overrides the archive version'
 has "$out" \
-  'download=https://github.com/yaml/yamlstar/releases/download/9.8.7/' \
+  'download=https://github.com/yaml/yamlstar/releases/download/v9.8.7/' \
   'LIBYAMLSTAR-VERSION overrides the download version'
 has "$out" 'version=9.8.7' \
   'LIBYAMLSTAR-VERSION overrides the module version'

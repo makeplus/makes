@@ -32,18 +32,21 @@ check_platform() {
     "$os-$arch selects $executable"
 }
 
+yamlstar_version=$(perl -ne \
+  'print $1 if /^YAMLSTAR-VERSION \?= (\S+)/' yamlstar.mk)
+
 check_platform linux int64 \
-  yamlstar-0.1.23-linux-x64.tar.xz yaml
+  "yamlstar-$yamlstar_version-linux-x64.tar.xz" yaml
 check_platform linux arm64 \
-  yamlstar-0.1.23-linux-aarch64.tar.xz yaml
+  "yamlstar-$yamlstar_version-linux-aarch64.tar.xz" yaml
 check_platform macos int64 \
-  yamlstar-0.1.23-macos-x64.tar.xz yaml
+  "yamlstar-$yamlstar_version-macos-x64.tar.xz" yaml
 check_platform macos arm64 \
-  yamlstar-0.1.23-macos-arm64.tar.xz yaml
+  "yamlstar-$yamlstar_version-macos-arm64.tar.xz" yaml
 check_platform windows int64 \
-  yamlstar-0.1.23-windows-x64.zip yaml.exe
+  "yamlstar-$yamlstar_version-windows-x64.zip" yaml.exe
 check_platform windows arm64 \
-  yamlstar-0.1.23-windows-arm64.zip yaml.exe
+  "yamlstar-$yamlstar_version-windows-arm64.zip" yaml.exe
 
 out=$(
   make --no-print-directory -f "$makefile" \
