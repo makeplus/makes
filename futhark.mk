@@ -1,4 +1,4 @@
-FUTHARK-VERSION ?= 0.28.1
+FUTHARK-VERSION ?= 0.28.2
 # https://github.com/diku-dk/futhark
 
 ifndef FUTHARK-LOADED
