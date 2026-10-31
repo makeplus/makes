@@ -1,4 +1,4 @@
-KSON-VERSION ?= 0.3.0
+KSON-VERSION ?= 0.3.0.2
 # https://github.com/kson-org/kson
 
 ifndef KSON-LOADED
