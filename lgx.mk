@@ -1,4 +1,4 @@
-LGX-VERSION ?= 0.5.3
+LGX-VERSION ?= 0.5.4
 # https://github.com/abogoyavlensky/lgx
 
 ifndef LGX-LOADED
