@@ -1,4 +1,4 @@
-PURESCRIPT-VERSION ?= 0.15.16
+PURESCRIPT-VERSION ?= 0.15.17
 # https://github.com/purescript/purescript
 
 ifndef PURESCRIPT-LOADED
