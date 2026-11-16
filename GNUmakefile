@@ -5,7 +5,10 @@ export MAKES_LOCAL_DIR := $(ROOT)/local
 
 include $M/bpan.mk
 include $M/perl.mk
+include $M/yamlscript.mk
 include $M/clean.mk
+
+export YS
 
 TARGETS := $(wildcard *.mk)
 TARGETS := $(TARGETS:%.mk=%)
@@ -37,7 +40,7 @@ v ?=
 t ?= test/*.t test/*/*.t
 
 
-test: $(BPAN) $(PERL)
+test: $(BPAN) $(PERL) $(YS)
 	prove -r$(if $(v), -v,) $t
 
 rev:

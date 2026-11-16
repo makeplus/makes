@@ -19,7 +19,6 @@ missing =::
 - gcc
 - gnat
 - graalvm
-- java
 - lein
 - ocaml
 - processing
@@ -77,6 +76,9 @@ defn version-files():
   files.filter(\(_:read.re-find(version-file-re)))
 
 defn automatic-files():
+  conj github-files(): 'java.mk'
+
+defn github-files():
   files: .remove(\(_:read.re-find(/www\.github/)))
     .remove(\(_.replace(/\.mk/).in?(missing)))
     .filter(\(_:read.re-find(parse-re)))
@@ -84,9 +86,10 @@ defn automatic-files():
 defn show-versions():
   say:
   say: 'Checking current versions:'
+  show-java-version:
 
   files =:
-    reduce _ [] automatic-files():
+    reduce _ [] github-files():
       fn(files file):
         _ ver url =:
           file:read =~ parse-re
@@ -105,6 +108,32 @@ defn show-versions():
 
   each file files:
     say: format('%-20s  %-10s -> %-10s  %s/tags' file*)
+
+# Oracle's download headings contain the full GA version, unlike the
+# moving major-only download URLs. Do not use OpenJDK tags or EA builds.
+defn show-java-version():
+  url =: 'https://www.oracle.com/java/technologies/downloads/'
+  say: format('* %-13s - %s' 'java.mk' url)
+  page =: ipc/sh-out('curl' '-fsSL' '--max-time' '60' url)
+  versions =:
+    re-seq: /Java SE Development Kit\s+(\d+(?:\.\d+)*)\s+downloads/ page
+  new =: versions.map(\(_.1)).sort-by(version-key).last()
+  when-not new:
+    die: 'Could not find an Oracle JDK release version'
+  old =: read('java.mk').re-find(current-version-re).1
+  when compare(version-key(new) version-key(old)) > 0:
+    major =: new.split(/\./).0
+    channel =:
+      if new =~ /\./: +
+        'archive'
+        'latest'
+    archive =: "https://download.oracle.com/java/$major/$channel/"
+    archive +=: +"jdk-" + new + '_linux-x64_bin.tar.gz'
+    ipc/sh-out 'curl' '-fsIL' '--max-time' '60': archive
+    say: format('%-20s  %-10s -> %-10s  %s' 'java.mk' old new url)
+
+defn version-key(version):
+  version.split(/\./).map(\(format('%010d' _:I))).join('.')
 
 defn show-by-hand():
   files =: files

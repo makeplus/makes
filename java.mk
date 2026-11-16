@@ -1,4 +1,4 @@
-JAVA-VERSION ?= 27
+JAVA-VERSION ?= 27.0.1.0.3
 
 ifndef JAVA-LOADED
 JAVA-LOADED := true
@@ -18,7 +18,9 @@ else
 JAVA-ARCHIVE := jdk-$(JAVA-VERSION)_$(OA-$(OS-ARCH))_bin.tar.gz
 endif
 JAVA-DOWN := https://download.oracle.com/java
-JAVA-DOWN := $(JAVA-DOWN)/$(JAVA-VERSION)/latest/$(JAVA-ARCHIVE)
+JAVA-MAJOR := $(firstword $(subst ., ,$(JAVA-VERSION)))
+JAVA-CHANNEL := $(if $(findstring .,$(JAVA-VERSION)),archive,latest)
+JAVA-DOWN := $(JAVA-DOWN)/$(JAVA-MAJOR)/$(JAVA-CHANNEL)/$(JAVA-ARCHIVE)
 
 JAVA-LOCAL := $(LOCAL-ROOT)/jdk-$(JAVA-VERSION)
 JAVA-TMP := $(LOCAL-TMP)/java-$(JAVA-VERSION)
