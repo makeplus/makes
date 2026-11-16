@@ -18,6 +18,10 @@ ERLANG-ARC := $(ERLANG-DIR).tar.gz
 endif
 ERLANG-DOWN := https://github.com/erlang/otp/releases/download
 ERLANG-DOWN := $(ERLANG-DOWN)/OTP-$(ERLANG-VERSION)/$(ERLANG-ARC)
+ERLANG-MAN-ARC := otp_doc_man_$(ERLANG-VERSION).tar.gz
+ERLANG-MAN-DOWN := https://github.com/erlang/otp/releases/download
+ERLANG-MAN-DOWN := \
+  $(ERLANG-MAN-DOWN)/OTP-$(ERLANG-VERSION)/$(ERLANG-MAN-ARC)
 
 ERLANG-LOCAL := $(LOCAL-ROOT)/erlang-$(ERLANG-VERSION)
 ERLANG-BIN := $(ERLANG-LOCAL)/bin
@@ -78,9 +82,13 @@ $(LOCAL-CACHE)/$(ERLANG-ARC):
 	curl+ $(ERLANG-DOWN) > $@
 
 ifneq ($(OS-NAME),windows)
-$(ERLANG-MAN): $(ERL)
+$(ERLANG-MAN): $(ERL) $(LOCAL-CACHE)/$(ERLANG-MAN-ARC)
 	$Q mkdir -p $(@D)
-	$Q cp $(ERLANG-LOCAL)/lib/erlang/man/man1/* $(@D)/
+	$Q tar -xzf $(LOCAL-CACHE)/$(ERLANG-MAN-ARC) \
+	  -C $(@D) --strip-components=2 man/man1
+
+$(LOCAL-CACHE)/$(ERLANG-MAN-ARC):
+	$Q curl+ $(ERLANG-MAN-DOWN) > $@
 endif
 
 endif
