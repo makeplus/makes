@@ -1,4 +1,4 @@
-CLANG-VERSION ?= 23.1.5
+CLANG-VERSION ?= 23.1.6
 # https://github.com/llvm/llvm-project
 #
 # NOTE: LLVM's prebuilt asset naming changed in 19.x and is inconsistent across
