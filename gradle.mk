@@ -1,4 +1,4 @@
-GRADLE-VERSION ?= 9.9.2
+GRADLE-VERSION ?= 9.9.3
 # https://github.com/gradle/gradle
 
 ifndef GRADLE-LOADED
